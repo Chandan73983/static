@@ -1,0 +1,3766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JavaScript Arrays Master Course - Hinglish</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* =========================
+       CORE THEME
+       Modern dark + glass look
+    ========================== */
+    :root {
+      --bg: #06101b;
+      --bg-soft: #0d1a2a;
+      --surface: rgba(11, 24, 39, 0.72);
+      --surface-strong: rgba(15, 32, 50, 0.92);
+      --surface-light: rgba(255, 255, 255, 0.06);
+      --border: rgba(255, 255, 255, 0.12);
+      --text: #ebf6ff;
+      --muted: #9db8c8;
+      --accent: #3bd3c2;
+      --accent-2: #ffb86b;
+      --accent-3: #7ed6ff;
+      --success: #6be6a3;
+      --danger: #ff7c7c;
+      --warning: #ffd66e;
+      --shadow: 0 25px 65px rgba(0, 0, 0, 0.35);
+      --radius-lg: 26px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --sidebar-width: 300px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(59, 211, 194, 0.18), transparent 34%),
+        radial-gradient(circle at 90% 10%, rgba(255, 184, 107, 0.12), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(126, 214, 255, 0.12), transparent 26%),
+        linear-gradient(140deg, #03101d 0%, #07111d 35%, #091a2a 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 38px 38px;
+      pointer-events: none;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2));
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* =========================
+       SIDEBAR
+    ========================== */
+    .sidebar {
+      width: var(--sidebar-width);
+      position: fixed;
+      inset: 0 auto 0 0;
+      padding: 24px 20px;
+      background: rgba(4, 12, 22, 0.78);
+      backdrop-filter: blur(18px);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 30;
+    }
+
+    .brand {
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(59, 211, 194, 0.16), rgba(126, 214, 255, 0.08));
+      border: 1px solid rgba(59, 211, 194, 0.18);
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    .brand h1 {
+      font-size: 1.25rem;
+      margin: 0 0 8px;
+      line-height: 1.2;
+    }
+
+    .brand p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.6;
+    }
+
+    .sidebar .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 16px 0 22px;
+    }
+
+    .mini-stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      text-align: center;
+    }
+
+    .mini-stat strong {
+      display: block;
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+
+    .mini-stat span {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .nav-title {
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin: 18px 0 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nav-links a {
+      padding: 12px 14px;
+      border-radius: 14px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text);
+      background: rgba(59, 211, 194, 0.1);
+      border-color: rgba(59, 211, 194, 0.2);
+    }
+
+    /* =========================
+       MAIN CONTENT AREA
+    ========================== */
+    .content {
+      margin-left: var(--sidebar-width);
+      width: calc(100% - var(--sidebar-width));
+      padding: 24px 28px 120px;
+    }
+
+    .mobile-bar {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 26;
+      margin-bottom: 16px;
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(4, 12, 22, 0.88);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    .hamburger {
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      color: #04111d;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(300px, 0.95fr);
+      gap: 22px;
+      margin-bottom: 28px;
+    }
+
+    .hero-panel,
+    .hero-side {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      padding: 28px;
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-panel::after,
+    .hero-side::after {
+      content: "";
+      position: absolute;
+      inset: auto -70px -70px auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59, 211, 194, 0.3), transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(59, 211, 194, 0.12);
+      border: 1px solid rgba(59, 211, 194, 0.22);
+      color: var(--accent);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .hero h2,
+    .hero h1 {
+      margin: 0 0 14px;
+      line-height: 1.08;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 4.6vw, 4.2rem);
+      max-width: 12ch;
+    }
+
+    .hero p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin: 0 0 14px;
+    }
+
+    .hero-actions,
+    .chip-row,
+    .button-row,
+    .inline-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 12px 16px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(59, 211, 194, 0.18), rgba(126, 214, 255, 0.16));
+      border: 1px solid rgba(59, 211, 194, 0.18);
+      color: var(--text);
+      box-shadow: 0 12px 32px rgba(2, 14, 24, 0.25);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      color: #04101a;
+      font-weight: 700;
+    }
+
+    .btn.warn {
+      background: linear-gradient(135deg, var(--accent-2), #ffe2a4);
+      color: #231405;
+      font-weight: 700;
+    }
+
+    .btn.danger {
+      background: linear-gradient(135deg, rgba(255, 124, 124, 0.95), rgba(255, 170, 170, 0.88));
+      color: #290a0a;
+      font-weight: 700;
+    }
+
+    .btn.ghost {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      border-color: var(--border);
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .hero-side .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .big-stat {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+    }
+
+    .big-stat strong {
+      display: block;
+      font-size: 1.7rem;
+      color: var(--accent-2);
+      margin-bottom: 8px;
+    }
+
+    .big-stat p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .section {
+      margin-top: 30px;
+      scroll-margin-top: 20px;
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      line-height: 1.15;
+    }
+
+    .section-header h2 span {
+      color: var(--accent);
+      margin-right: 10px;
+    }
+
+    .section-header p,
+    .section-intro {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 72ch;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card h3,
+    .card h4 {
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .card ul,
+    .card ol {
+      padding-left: 18px;
+      margin: 12px 0 0;
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: rgba(59, 211, 194, 0.08);
+      padding: 14px 16px;
+      border-radius: 14px;
+      color: var(--text);
+    }
+
+    .callout.warn {
+      border-left-color: var(--accent-2);
+      background: rgba(255, 184, 107, 0.08);
+    }
+
+    .code-block {
+      margin: 14px 0;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(2, 9, 17, 0.85);
+      border: 1px solid rgba(126, 214, 255, 0.14);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.92rem;
+      overflow-x: auto;
+      line-height: 1.7;
+      color: #d6f7ff;
+      white-space: pre-wrap;
+    }
+
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field span {
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      outline: none;
+    }
+
+    .field textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: rgba(59, 211, 194, 0.6);
+      box-shadow: 0 0 0 3px rgba(59, 211, 194, 0.12);
+    }
+
+    .span-12 { grid-column: span 12; }
+    .span-8 { grid-column: span 8; }
+    .span-6 { grid-column: span 6; }
+    .span-4 { grid-column: span 4; }
+    .span-3 { grid-column: span 3; }
+    .span-2 { grid-column: span 2; }
+
+    .output-panel,
+    .console-panel {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(1, 7, 13, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      min-height: 70px;
+    }
+
+    .output-panel h4,
+    .console-panel h4 {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .console-output {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.9rem;
+      color: #d6f7ff;
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+
+    /* =========================
+       ARRAY VISUALS
+    ========================== */
+    .array-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .array-box {
+      min-width: 90px;
+      min-height: 84px;
+      padding: 12px 12px 10px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(126, 214, 255, 0.16), rgba(255, 255, 255, 0.04));
+      border: 1px solid rgba(126, 214, 255, 0.18);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+      position: relative;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+      animation: floatUp 0.42s ease;
+    }
+
+    .array-box.highlight {
+      border-color: rgba(255, 184, 107, 0.8);
+      box-shadow: 0 0 0 3px rgba(255, 184, 107, 0.12), 0 12px 28px rgba(255, 184, 107, 0.18);
+      transform: translateY(-3px);
+    }
+
+    .array-box .index {
+      font-size: 0.75rem;
+      color: var(--accent-2);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .array-box .value {
+      font-size: 0.95rem;
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    .array-box.empty {
+      opacity: 0.7;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .method-toolbar,
+    .project-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      color: #031019;
+      font-weight: 700;
+    }
+
+    .method-grid,
+    .project-grid,
+    .interview-grid,
+    .practice-grid,
+    .mistakes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .method-card .topline,
+    .project-card .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .pill {
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .method-card .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .result-box {
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .result-box strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 0.88rem;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .matrix {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .matrix-row,
+    .ttt-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .matrix-cell,
+    .ttt-cell {
+      flex: 1;
+      min-height: 74px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      font-weight: 700;
+    }
+
+    .ttt-cell {
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .ttt-cell:hover {
+      background: rgba(59, 211, 194, 0.12);
+    }
+
+    .todo-list,
+    .cart-list,
+    .marks-list,
+    .expense-list,
+    .search-list,
+    .notes-list,
+    .tags-list,
+    .dom-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .list-item,
+    .note-card,
+    .product-card,
+    .tag-chip,
+    .dom-card {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .tag-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: rgba(59, 211, 194, 0.12);
+      border-color: rgba(59, 211, 194, 0.2);
+    }
+
+    .remove-x {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      padding: 4px 8px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+    }
+
+    .project-card .summary,
+    .small-summary {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    .products-grid,
+    .dom-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .accordion {
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .accordion button {
+      width: 100%;
+      text-align: left;
+      padding: 18px 20px;
+      background: transparent;
+      color: var(--text);
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .accordion .body {
+      padding: 0 20px 20px;
+      color: var(--muted);
+      line-height: 1.8;
+      display: none;
+    }
+
+    .accordion.open .body {
+      display: block;
+    }
+
+    .footer-note {
+      margin-top: 32px;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.8;
+      padding: 24px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .flash {
+      animation: flashPulse 0.7s ease;
+    }
+
+    .success-text { color: var(--success); }
+    .warning-text { color: var(--warning); }
+    .danger-text { color: var(--danger); }
+
+    @keyframes floatUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes flashPulse {
+      0% { box-shadow: 0 0 0 0 rgba(59, 211, 194, 0.35); }
+      100% { box-shadow: 0 0 0 18px rgba(59, 211, 194, 0); }
+    }
+
+    /* =========================
+       RESPONSIVE LAYOUT
+    ========================== */
+    @media (max-width: 1180px) {
+      .grid.three,
+      .method-grid,
+      .project-grid,
+      .interview-grid,
+      .practice-grid,
+      .mistakes-grid,
+      .products-grid,
+      .dom-card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero,
+      .grid.two {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .sidebar {
+        transform: translateX(-104%);
+        transition: transform 0.3s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .content {
+        width: 100%;
+        margin-left: 0;
+        padding: 16px 16px 90px;
+      }
+
+      .mobile-bar {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .hero-panel,
+      .hero-side,
+      .card {
+        padding: 18px;
+        border-radius: 22px;
+      }
+
+      .form-row {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
+      .span-12,
+      .span-8,
+      .span-6,
+      .span-4,
+      .span-3,
+      .span-2 {
+        grid-column: auto;
+      }
+
+      .method-card .result-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <h1>JavaScript Arrays Full Hinglish Course</h1>
+        <p>Beginner se advanced tak. Theory bhi, visual demos bhi, aur real projects bhi. Matlab poora array universe ek hi HTML file me.</p>
+      </div>
+
+      <div class="quick-stats">
+        <div class="mini-stat">
+          <strong>16</strong>
+          <span>Sections</span>
+        </div>
+        <div class="mini-stat">
+          <strong>19+</strong>
+          <span>Methods</span>
+        </div>
+        <div class="mini-stat">
+          <strong>10</strong>
+          <span>Mini Projects</span>
+        </div>
+        <div class="mini-stat">
+          <strong>Live</strong>
+          <span>Playground</span>
+        </div>
+      </div>
+
+      <div class="nav-title">Course Map</div>
+      <nav class="nav-links" id="navLinks">
+        <a href="#hero">Start Here</a>
+        <a href="#section-1">1. What is Array</a>
+        <a href="#section-2">2. Creating Arrays</a>
+        <a href="#section-3">3. Accessing Values</a>
+        <a href="#section-4">4. Array Methods</a>
+        <a href="#section-5">5. Loops with Arrays</a>
+        <a href="#section-6">6. Destructuring</a>
+        <a href="#section-7">7. Spread Operator</a>
+        <a href="#section-8">8. Nested Arrays</a>
+        <a href="#section-9">9. Real Projects</a>
+        <a href="#section-10">10. Array Visualizer</a>
+        <a href="#section-11">11. Array + DOM</a>
+        <a href="#section-12">12. Common Mistakes</a>
+        <a href="#section-13">13. Performance</a>
+        <a href="#section-14">14. Interview Questions</a>
+        <a href="#section-15">15. Practice Tasks</a>
+        <a href="#section-16">16. Master Playground</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="mobile-bar">
+        <strong>JS Arrays Course</strong>
+        <button class="hamburger" id="menuToggle">Menu</button>
+      </div>
+
+      <section class="hero" id="hero">
+        <div class="hero-panel">
+          <div class="eyebrow">Full Hinglish Learning Platform</div>
+          <h1>JavaScript Arrays ko asli depth me samjho</h1>
+          <p>
+            Agar tum JavaScript seekh rahe ho, to array tumhara roz ka dost hai. Iska matlab ye hai ki jab bhi multiple values ko ek jagah store karna ho, unpe loop chalana ho, filter lagana ho, UI me list dikhani ho, shopping cart banana ho, notes save karne ho, ya API se aaya data process karna ho, almost har jagah array use hota hai.
+          </p>
+          <p>
+            Yeh page sirf notes nahi hai. Yeh ek interactive course hai jahan hum arrays ko bilkul beginner level se samjhenge: array hota kya hai, index kya hota hai, methods kaise kaam karte hain, JavaScript engine ke andar kya logic chalta hai, aur real frontend projects me arrays kaise use hote hain.
+          </p>
+          <div class="chip-row">
+            <div class="chip">Concept + Syntax + Real World</div>
+            <div class="chip">Live Output + Visual Boxes</div>
+            <div class="chip">Beginner Friendly Hinglish</div>
+          </div>
+          <div class="hero-actions" style="margin-top:18px;">
+            <a class="btn primary" href="#section-1">Course Start Karo</a>
+            <a class="btn warn" href="#section-16">Master Playground</a>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <div class="stack">
+            <div class="big-stat">
+              <strong>Array = Container</strong>
+              <p>Simple words me: array ek container hota hai jo multiple values ko order me rakhta hai. Har value ka ek index hota hai.</p>
+            </div>
+            <div class="big-stat">
+              <strong>Zero-based Indexing</strong>
+              <p>Sabse pehla item index <code>0</code> par hota hai. Isliye beginners ko sabse pehle yahi habit banana hota hai.</p>
+            </div>
+            <div class="big-stat">
+              <strong>Real Projects</strong>
+              <p>Todo list, cart, student marks, product list, search filter, notes app, tags input, render lists, charts, tables. Har jagah array.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="section-1">
+        <div class="section-header">
+          <div>
+            <h2><span>01</span>What Is Array</h2>
+            <p class="section-intro">
+              Sabse pehle basic intuition. Array ko feel karna zaroori hai. Sirf definition yaad karne se kaam nahi chalega. Hume samajhna hai ki array bana hi kyun, aur JavaScript me iska behavior kaisa hota hai.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <article class="card">
+            <div class="label">Core Idea</div>
+            <h3>Array ka simple matlab</h3>
+            <p>
+              Array ek container hota hai. Iska matlab ye hai ki agar tumhare paas ek hi type ki ya mixed type ki multiple values hain, to tum un sabko alag-alag variables me rakhne ke bajay ek hi structure me rakh sakte ho.
+            </p>
+            <p>
+              Example lo: agar 4 students ke names hain, to tum <code>student1</code>, <code>student2</code>, <code>student3</code>, <code>student4</code> bana sakte ho. Lekin ye scalable nahi hai. Iske badle hum ek array bana dete hain:
+            </p>
+            <div class="code-block">const students = ["Aman", "Riya", "Kabir", "Sana"];</div>
+            <p>
+              Ab saare names ek jagah par aa gaye. Aur sabse badi baat: hum loop use karke saare students ko ek saath process kar sakte hain.
+            </p>
+            <div class="callout">
+              Real life analogy: array ko shelves ki row samjho. Har shelf me ek item pada hai. Shelf number hi index hota hai.
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="label">Why Arrays Exist</div>
+            <h3>Array kyun banaya gaya?</h3>
+            <ul>
+              <li>Multiple values ko organized form me rakhne ke liye.</li>
+              <li>Data ko order ke saath store karne ke liye.</li>
+              <li>Loop aur methods ke saath easily process karne ke liye.</li>
+              <li>Frontend me lists, menus, cards, products, users, comments render karne ke liye.</li>
+              <li>API se aayi list ko transform, sort, filter aur display karne ke liye.</li>
+            </ul>
+            <p>
+              Browser aur JavaScript engine ke level par array ek special object hota hai. Beginner level par tum isko list samjho. Advanced level par yaad rakho: array object hi hota hai, bas usme numeric indexes aur <code>length</code> property hoti hai.
+            </p>
+            <div class="callout warn">
+              Engine ke andar optimized representation use ho sakti hai, lekin tumhare code ke point of view se array ek ordered collection hoti hai.
+            </div>
+          </article>
+        </div>
+
+        <div class="grid two" style="margin-top:18px;">
+          <article class="card">
+            <div class="label">Indexing</div>
+            <h3>Zero-based indexing ka magic</h3>
+            <p>
+              Index position hoti hai. JavaScript me array ka pehla item index <code>0</code> par hota hai. Doosra <code>1</code>, teesra <code>2</code>.
+            </p>
+            <div class="code-block">const products = ["Phone", "Laptop", "Mouse"];
+
+products[0]; // "Phone"
+products[1]; // "Laptop"
+products[2]; // "Mouse"</div>
+            <p>
+              Beginners yahan sabse zyada galti karte hain. Unhe lagta hai pehla item <code>1</code> par hoga. Nahi. Zero se start hota hai.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="label">Real Examples</div>
+            <h3>Array ka use kaha hota hai?</h3>
+            <ul>
+              <li><strong>Student names:</strong> class roster dikhana.</li>
+              <li><strong>Marks:</strong> average nikalna.</li>
+              <li><strong>Products:</strong> e-commerce cards render karna.</li>
+              <li><strong>Cart items:</strong> user ne kya-kya add kiya.</li>
+              <li><strong>Messages:</strong> chat app me old messages list.</li>
+              <li><strong>Tags:</strong> blog ya search keywords.</li>
+            </ul>
+            <div class="code-block">const cartItems = ["Milk", "Bread", "Eggs"];
+const marks = [72, 88, 91, 67];
+const tags = ["javascript", "frontend", "arrays"];</div>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:18px;">
+          <div class="label">Interactive Demo</div>
+          <h3>Index ko touch karke samjho</h3>
+          <p>
+            Neeche ek student names array dikh raha hai. Kisi index button par click karo aur dekho kaunsa item highlight hota hai. Yahi zero-based indexing ka practical feel hai.
+          </p>
+          <div class="button-row" id="conceptIndexButtons"></div>
+          <div class="array-strip" id="conceptArrayStrip"></div>
+          <div class="output-panel">
+            <h4>Output</h4>
+            <div class="console-output" id="conceptOutput">Abhi kisi index par click karo.</div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="section-2">
+        <div class="section-header">
+          <div>
+            <h2><span>02</span>Creating Arrays</h2>
+            <p class="section-intro">
+              Array banane ke do common tareeke hote hain: square brackets <code>[]</code> aur constructor style <code>new Array()</code>. Real projects me mostly <code>[]</code> use hota hai kyunki simple aur readable hota hai.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <article class="card">
+            <div class="label">Syntax</div>
+            <h3>Square brackets se array banana</h3>
+            <div class="code-block">// Numbers array
+const numbers = [10, 20, 30];
+
+// Strings array
+const fruits = ["apple", "mango", "banana"];
+
+// Mixed array
+const mixed = ["Aman", 24, true];
+
+// Nested array
+const matrix = [[1, 2], [3, 4]];</div>
+            <p>
+              Iska matlab ye hai ki hum values ko comma se separate karke square brackets ke andar likhte hain. Ye sabse common approach hai.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="label">Alternative</div>
+            <h3><code>new Array()</code> kab use hota hai?</h3>
+            <div class="code-block">const names = new Array("Aman", "Riya", "Sana");
+const values = new Array(5); // dikkat: 5 empty slots wala array</div>
+            <p>
+              Beginner ke liye ek important warning: <code>new Array(5)</code> ka matlab <code>[5]</code> nahi hota. Iska matlab hota hai length 5 ka empty array. Isi confusion ki wajah se zyada tar developers <code>[]</code> prefer karte hain.
+            </p>
+            <div class="callout warn">
+              Rule yaad rakho: unless special reason ho, normal code me <code>[]</code> use karo.
+            </div>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:18px;">
+          <div class="label">Interactive Creator</div>
+          <h3>Apna array khud banao</h3>
+          <p>
+            Comma separated values likho aur dekho JavaScript style array kaise banta hai. Preset buttons se numbers, strings, mixed aur nested arrays ka demo bhi dekh sakte ho.
+          </p>
+          <div class="form-row">
+            <label class="field span-8">
+              <span>Values likho, comma se separate karke</span>
+              <input id="creatorInput" value="10, 20, 30, 40" />
+            </label>
+            <label class="field span-4">
+              <span>Mode</span>
+              <select id="creatorMode">
+                <option value="auto">Auto detect</option>
+                <option value="string">Sab string</option>
+                <option value="number">Sab number</option>
+              </select>
+            </label>
+          </div>
+          <div class="button-row" style="margin-top:14px;">
+            <button class="btn primary" id="createArrayBtn">Create Array</button>
+            <button class="btn" data-preset="numbers">Preset Numbers</button>
+            <button class="btn" data-preset="strings">Preset Strings</button>
+            <button class="btn" data-preset="mixed">Preset Mixed</button>
+            <button class="btn warn" data-preset="nested">Preset Nested</button>
+          </div>
+          <div class="output-panel">
+            <h4>Created Array</h4>
+            <div class="console-output" id="creatorOutput"></div>
+            <div class="array-strip" id="creatorStrip"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="section-3">
+        <div class="section-header">
+          <div>
+            <h2><span>03</span>Accessing Values</h2>
+            <p class="section-intro">
+              Array ban gaya, ab uske items ko access kaise karte hain? Yahi actual day-to-day kaam hai. Kisi item ko read karna, kisi value ko update karna, aur array ki length check karna bahut common operations hain.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <article class="card">
+            <div class="label">Read + Update</div>
+            <div class="code-block">const techStack = ["HTML", "CSS", "JavaScript", "React"];
+
+techStack[0]; // "HTML"
+techStack[2]; // "JavaScript"
+
+techStack[3] = "Next.js";
+// array ab update ho gaya</div>
+            <p>
+              Square brackets ke andar index likho. Yahi syntax item ko access karne ke liye use hota hai. Agar tum left side me same syntax ke through value assign kar do, to existing item replace ho jata hai.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="label">Length</div>
+            <div class="code-block">const cart = ["Milk", "Bread", "Eggs"];
+
+cart.length; // 3</div>
+            <p>
+              <code>length</code> property array me kitne items hain ye batati hai. Real project me ye bahut useful hota hai: cart count dikhana, loop chalana, ya ye check karna ki list empty hai ya nahi.
+            </p>
+            <div class="callout">
+              Yaad rakho: last valid index hamesha <code>array.length - 1</code> hota hai.
+            </div>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:18px;">
+          <div class="label">Interactive Demo</div>
+          <h3>Index se value read karo aur update bhi karo</h3>
+          <div class="array-strip" id="accessStrip"></div>
+          <div class="form-row">
+            <label class="field span-3">
+              <span>Kaunsa index dekhna hai?</span>
+              <input id="accessIndex" type="number" min="0" value="2" />
+            </label>
+            <label class="field span-5">
+              <span>Update karne ke liye new value</span>
+              <input id="accessNewValue" value="TypeScript" />
+            </label>
+            <div class="field span-4">
+              <span>Actions</span>
+              <div class="inline-actions">
+                <button class="btn primary" id="readValueBtn">Read Value</button>
+                <button class="btn warn" id="updateValueBtn">Update Value</button>
+                <button class="btn ghost" id="resetAccessBtn">Reset</button>
+              </div>
+            </div>
+          </div>
+          <div class="output-panel">
+            <h4>Status</h4>
+            <div class="console-output" id="accessOutput"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="section-4">
+        <div class="section-header">
+          <div>
+            <h2><span>04</span>Array Methods</h2>
+            <p class="section-intro">
+              Ab hum array methods ke core jungle me aa gaye hain. Ye woh tools hain jo tumhe array ke saath superpower dete hain. Har method ke saath hum concept, syntax, parameters, return value, real-world use aur live demo dekhenge.
+            </p>
+          </div>
+          <div class="method-toolbar" id="methodFilters">
+            <button class="btn filter-btn active" data-filter="all">All</button>
+            <button class="btn filter-btn" data-filter="basic">Basic Methods</button>
+            <button class="btn filter-btn" data-filter="advanced">Advanced Methods</button>
+          </div>
+        </div>
+
+        <article class="card">
+          <div class="label">Important Foundation</div>
+          <h3>Mutating vs non-mutating methods</h3>
+          <p>
+            Bahut zaroori concept: kuch methods original array ko change kar dete hain. Inhe <strong>mutating methods</strong> bolte hain. Example: <code>push()</code>, <code>pop()</code>, <code>splice()</code>, <code>sort()</code>, <code>reverse()</code>.
+          </p>
+          <p>
+            Kuch methods original array ko untouched rakhte hain aur naya result return karte hain. Inhe <strong>non-mutating methods</strong> bolte hain. Example: <code>map()</code>, <code>filter()</code>, <code>slice()</code>, <code>concat()</code>.
+          </p>
+          <div class="callout warn">
+            Real projects me yeh difference bahut important hai. Agar tum React ya state management me kaam kar rahe ho, to galti se mutation bugs create kar sakta hai.
+          </div>
+        </article>
+
+        <div class="method-grid" id="methodsGrid" style="margin-top:18px;"></div>
+      </section>
+
+      <section class="section" id="section-5">
+        <div class="section-header">
+          <div>
+            <h2><span>05</span>Loops With Arrays</h2>
+            <p class="section-intro">
+              Loop array ke har element pe chalta hai. Jab bhi tumhe list ke saare items pe same kaam repeat karna ho, loop ka use hota hai. JavaScript me arrays ke saath teen common styles bahut dekhe jate hain: <code>for</code>, <code>for...of</code> aur <code>forEach()</code>.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid three">
+          <article class="card">
+            <div class="label">for loop</div>
+            <div class="code-block">for (let i = 0; i &lt; arr.length; i++) {
+  console.log(i, arr[i]);
+}</div>
+            <p>
+              Jab index bhi chahiye aur control bhi chahiye, tab classic <code>for</code> loop bahut useful hota hai.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="label">for...of</div>
+            <div class="code-block">for (const item of arr) {
+  console.log(item);
+}</div>
+            <p>
+              Jab tumhe sirf values chahiye aur code clean rakhna ho, tab <code>for...of</code> bahut readable option hai.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="label">forEach()</div>
+            <div class="code-block">arr.forEach((item, index) =&gt; {
+  console.log(index, item);
+});</div>
+            <p>
+              Jab UI render karna ho ya side effects karne ho, <code>forEach()</code> common choice hai. Ye naya array return nahi karta.
+            </p>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:18px;">
+          <div class="label">Interactive Loop Demo</div>
+          <h3>Ek hi array ko teen loops se chala kar dekho</h3>
+          <div class="array-strip" id="loopStrip"></div>
+          <div class="button-row" style="margin-top:14px;">
+            <button class="btn primary" data-loop="for">Run for loop</button>
+            <button class="btn" data-loop="forof">Run for...of</button>
+            <button class="btn warn" data-loop="foreach">Run forEach()</button>
+          </div>
+          <div class="console-panel">
+            <h4>Console Output</h4>
+            <div class="console-output" id="loopOutput">Koi loop button click karo.</div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="section-6">
+        <div class="section-header">
+          <div>
+            <h2><span>06</span>Array Destructuring</h2>
+            <p class="section-intro">
+              Destructuring ka matlab hai array se values nikalna ek short aur clean syntax me. Real projects me API response, function return values, ya tuple-like arrays ke saath bahut use hota hai.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <article class="card">
+            <div class="label">Basic Syntax</div>
+            <div class="code-block">const colors = ["red", "green", "blue"];
+const [first, second, third] = colors;
+
+// first = "red"
+// second = "green"</div>
+            <p>
+              Iska matlab ye hai ki array ke items left side variables me order ke hisaab se aa jate hain.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="label">Advanced Little Tricks</div>
+            <div class="code-block">const nums = [10, 20, 30, 40];
+const [a, , c] = nums; // 20 skip ho gaya
+
+let x = 1;
+let y = 2;
+[x, y] = [y, x]; // swap</div>
+            <p>
+              Yahan tum values skip bhi kar sakte ho aur variables ko extra temp variable ke bina swap bhi kar sakte ho.
+            </p>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:18px;">
+          <div class="label">Interactive Demo</div>
+          <h3>Destructuring live dekho</h3>
+          <div class="array-strip" id="destructureStrip"></div>
+          <div class="button-row" style="margin-top:14px;">
+            <button class="btn primary" id="runBasicDestructure">Basic Extract</button>
+            <button class="btn" id="runSkipDestructure">Skip Middle Value</button>
+            <button class="btn warn" id="runSwapDestructure">Swap Variables</button>
+          </div>
+          <div class="console-panel">
+            <h4>Destructuring Output</h4>
+            <div class="console-output" id="destructureOutput">Button click karo.</div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="section-7">
+        <div class="section-header">
+          <div>
+            <h2><span>07</span>Spread Operator</h2>
+            <p class="section-intro">
+              Spread operator <code>...</code> ka use arrays ko copy karne, merge karne aur accidental mutation se bachne ke liye hota hai. Modern JavaScript ka yeh bahut important feature hai.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <article class="card">
+            <div class="label">Copy</div>
+            <div class="code-block">const original = ["A", "B", "C"];
+const copy = [...original];</div>
+            <p>
+              Agar tum seedha <code>const copy = original;</code> likh do, to dono variables same array ko point karte hain. Isliye ek me change karoge to doosre me bhi dikh jayega.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="label">Merge</div>
+            <div class="code-block">const frontend = ["HTML", "CSS"];
+const backend = ["Node", "MongoDB"];
+
+const fullStack = [...frontend, ...backend];</div>
+            <p>
+              Iska matlab ye hai ki do arrays ko ek nayi array me combine karna super easy ho jata hai.
+            </p>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:18px;">
+          <div class="label">Interactive Demo</div>
+          <h3>Reference vs copy samjho</h3>
+          <div class="button-row">
+            <button class="btn primary" id="spreadDirectRef">Direct Reference</button>
+            <button class="btn" id="spreadCopy">Copy With Spread</button>
+            <button class="btn warn" id="spreadMerge">Merge Arrays</button>
+          </div>
+          <div class="output-panel">
+            <h4>Spread Result</h4>
+            <div class="console-output" id="spreadOutput"></div>
+            <div class="array-strip" id="spreadStrip"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="section-8">
+        <div class="section-header">
+          <div>
+            <h2><span>08</span>Nested Arrays</h2>
+            <p class="section-intro">
+              Nested arrays ka matlab hota hai array ke andar doosra array. Inse 2D data represent hota hai. Matrix, table rows, calendar grids, board games, spreadsheet-like data, sab me nested arrays ka use hota hai.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <article class="card">
+            <div class="label">2D Matrix</div>
+            <div class="code-block">const matrix = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+];
+
+matrix[1][2]; // 6</div>
+            <p>
+              Pehla index row ko choose karta hai, doosra index us row ke andar column choose karta hai.
+            </p>
+            <div class="form-row">
+              <label class="field span-4">
+                <span>Row index</span>
+                <input type="number" id="matrixRowInput" value="1" min="0" max="2" />
+              </label>
+              <label class="field span-4">
+                <span>Column index</span>
+                <input type="number" id="matrixColInput" value="2" min="0" max="2" />
+              </label>
+              <div class="field span-4">
+                <span>Action</span>
+                <button class="btn primary" id="readMatrixBtn">Read Matrix Value</button>
+              </div>
+            </div>
+            <div class="matrix" id="matrixBoard"></div>
+            <div class="output-panel">
+              <h4>Matrix Output</h4>
+              <div class="console-output" id="matrixOutput"></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="label">Tic Tac Toe Example</div>
+            <div class="code-block">const board = [
+  ["", "", ""],
+  ["", "", ""],
+  ["", "", ""]
+];</div>
+            <p>
+              Game boards nested arrays ka perfect example hote hain. Har row ek array hai. Har cell ek string value hai. Neeche board par click karke X aur O place karo.
+            </p>
+            <div class="small-summary">Current player: <strong id="tttPlayer">X</strong></div>
+            <div class="matrix" id="tttBoard"></div>
+            <div class="button-row" style="margin-top:14px;">
+              <button class="btn ghost" id="resetTttBtn">Reset Board</button>
+            </div>
+            <div class="console-panel">
+              <h4>Board Array</h4>
+              <div class="console-output" id="tttOutput"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="section-9">
+        <div class="section-header">
+          <div>
+            <h2><span>09</span>Real Projects</h2>
+            <p class="section-intro">
+              Theory tab tak strong nahi hoti jab tak tum use kisi project me na dekho. Is section me hum 10 mini projects bana rahe hain jo dikhayenge ki real frontend work me arrays kaise chalti hain.
+            </p>
+          </div>
+        </div>
+
+        <div class="project-grid">
+          <article class="card project-card">
+            <div class="topline">
+              <h3>1. Todo List</h3>
+              <span class="pill">push + splice</span>
+            </div>
+            <p>Todo app me har task ek item hota hai. Sare tasks milkar ek array bante hain.</p>
+            <div class="form-row">
+              <label class="field span-8">
+                <span>New todo</span>
+                <input id="todoInput" value="JavaScript arrays revise karna" />
+              </label>
+              <div class="field span-4">
+                <span>Action</span>
+                <button class="btn primary" id="addTodoBtn">Add Todo</button>
+              </div>
+            </div>
+            <div class="todo-list" id="todoList"></div>
+            <div class="summary" id="todoSummary"></div>
+          </article>
+
+          <article class="card project-card">
+            <div class="topline">
+              <h3>2. Shopping Cart</h3>
+              <span class="pill">push + reduce</span>
+            </div>
+            <p>Cart items ko array me store karna e-commerce ka fundamental pattern hai.</p>
+            <div class="button-row" id="cartProductButtons"></div>
+            <div class="cart-list" id="cartList"></div>
+            <div class="summary" id="cartSummary"></div>
+          </article>
+
+          <article class="card project-card">
+            <div class="topline">
+              <h3>3. Student Marks System</h3>
+              <span class="pill">objects + reduce</span>
+            </div>
+            <p>Student records ko objects ke array me store karke average aur topper nikal sakte ho.</p>
+            <div class="form-row">
+              <label class="field span-6">
+                <span>Student Name</span>
+                <input id="studentNameInput" value="Aman" />
+              </label>
+              <label class="field span-3">
+                <span>Marks</span>
+                <input id="studentMarksInput" type="number" value="86" />
+              </label>
+              <div class="field span-3">
+                <span>Action</span>
+                <button class="btn primary" id="addStudentBtn">Add Student</button>
+              </div>
+            </div>
+            <div class="marks-list" id="marksList"></div>
+            <div class="summary" id="marksSummary"></div>
+          </article>
+
+          <article class="card project-card">
+            <div class="topline">
+              <h3>4. Expense Tracker</h3>
+              <span class="pill">push + reduce</span>
+            </div>
+            <p>Expenses ko array me rakhkar total, categories aur summaries bana sakte ho.</p>
+            <div class="form-row">
+              <label class="field span-5">
+                <span>Expense Title</span>
+                <input id="expenseTitleInput" value="Internet Bill" />
+              </label>
+              <label class="field span-4">
+                <span>Amount</span>
+                <input id="expenseAmountInput" type="number" value="799" />
+              </label>
+              <div class="field span-3">
+                <span>Action</span>
+                <button class="btn primary" id="addExpenseBtn">Add Expense</button>
+              </div>
+            </div>
+            <div class="expense-list" id="expenseList"></div>
+            <div class="summary" id="expenseSummary"></div>
+          </article>
+
+          <article class="card project-card">
+            <div class="topline">
+              <h3>5. Search Filter</h3>
+              <span class="pill">filter</span>
+            </div>
+            <p>Search bars almost hamesha arrays ko filter karte hain. Type karo aur list live filter hogi.</p>
+            <div class="form-row">
+              <label class="field span-12">
+                <span>Search term</span>
+                <input id="searchFilterInput" placeholder="Laptop, camera, mouse..." />
+              </label>
+            </div>
+            <div class="search-list" id="searchList"></div>
+          </article>
+
+          <article class="card project-card">
+            <div class="topline">
+              <h3>6. Product List</h3>
+              <span class="pill">sort + map</span>
+            </div>
+            <p>Products ka array render hota hai, phir sort hota hai, phir cards me dikhaya jata hai.</p>
+            <div class="button-row">
+              <button class="btn primary" data-product-sort="name">Sort by Name</button>
+              <button class="btn" data-product-sort="low">Price Low to High</button>
+              <button class="btn warn" data-product-sort="high">Price High to Low</button>
+            </div>
+            <div class="products-grid" id="productsGrid"></div>
+          </article>
+
+          <article class="card project-card">
+            <div class="topline">
+              <h3>7. Random Picker</h3>
+              <span class="pill">length + random index</span>
+            </div>
+            <p>Lucky draw, random winner, spin alternatives, team selection. Ye sab arrays ke random indexing se hota hai.</p>
+            <div class="form-row">
+              <label class="field span-12">
+                <span>Comma separated names</span>
+                <input id="pickerInput" value="Aman, Riya, Kabir, Sana, Neha" />
+              </label>
+            </div>
+            <div class="button-row" style="margin-top:14px;">
+              <button class="btn primary" id="pickRandomBtn">Pick Random Name</button>
+            </div>
+            <div class="summary" id="pickerSummary"></div>
+          </article>
+
+          <article class="card project-card">
+            <div class="topline">
+              <h3>8. Notes App</h3>
+              <span class="pill">push + render</span>
+            </div>
+            <p>Notes app me notes array se cards generate hote hain.</p>
+            <div class="form-row">
+              <label class="field span-9">
+                <span>Note text</span>
+                <textarea id="notesInput">Array methods ko revise karo aur map/filter/reduce ka flow yaad rakho.</textarea>
+              </label>
+              <div class="field span-3">
+                <span>Action</span>
+                <button class="btn primary" id="addNoteBtn">Add Note</button>
+              </div>
+            </div>
+            <div class="notes-list" id="notesList"></div>
+          </article>
+
+          <article class="card project-card">
+            <div class="topline">
+              <h3>9. Tag Input System</h3>
+              <span class="pill">includes + push</span>
+            </div>
+            <p>Blog tags, skills input, labels, filters. Array + chip UI ka common pattern.</p>
+            <div class="form-row">
+              <label class="field span-9">
+                <span>Tag name</span>
+                <input id="tagInput" value="javascript" />
+              </label>
+              <div class="field span-3">
+                <span>Action</span>
+                <button class="btn primary" id="addTagBtn">Add Tag</button>
+              </div>
+            </div>
+            <div class="tag-wrap" id="tagsWrap"></div>
+          </article>
+
+          <article class="card project-card">
+            <div class="topline">
+              <h3>10. Mini Array Visualizer</h3>
+              <span class="pill">visual state</span>
+            </div>
+            <p>Array ko boxes ke form me dekhna concepts ko instant clear karta hai. Neeche mini demo hai, full version section 10 me milega.</p>
+            <div class="button-row">
+              <button class="btn primary" id="miniVizAdd">Add Random</button>
+              <button class="btn" id="miniVizRemove">Remove Last</button>
+              <button class="btn warn" id="miniVizHighlight">Highlight Random Index</button>
+            </div>
+            <div class="array-strip" id="miniVizStrip"></div>
+            <div class="summary" id="miniVizSummary"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="section-10">
+        <div class="section-header">
+          <div>
+            <h2><span>10</span>Array Visualizer</h2>
+            <p class="section-intro">
+              Ye section visual learning ke liye hai. Jab array ko boxes ki form me dekhte ho, to add, remove, insert, highlight, length aur index sab crystal clear ho jata hai.
+            </p>
+          </div>
+        </div>
+
+        <article class="card">
+          <div class="label">Full Interactive Visualizer</div>
+          <h3>Array ko aankhon ke saamne change hote dekho</h3>
+          <p>
+            Add end, add start, remove end, remove start, insert at index, remove at index aur highlight index. Har action ke baad array boxes update honge.
+          </p>
+          <div class="form-row">
+            <label class="field span-4">
+              <span>Item value</span>
+              <input id="vizValueInput" value="99" />
+            </label>
+            <label class="field span-4">
+              <span>Index</span>
+              <input id="vizIndexInput" type="number" min="0" value="1" />
+            </label>
+            <label class="field span-4">
+              <span>Second value (splice insert)</span>
+              <input id="vizSecondValueInput" value="77" />
+            </label>
+          </div>
+          <div class="button-row" style="margin-top:14px;">
+            <button class="btn primary" id="vizPushBtn">Add End</button>
+            <button class="btn" id="vizUnshiftBtn">Add Start</button>
+            <button class="btn" id="vizPopBtn">Remove End</button>
+            <button class="btn" id="vizShiftBtn">Remove Start</button>
+            <button class="btn warn" id="vizInsertBtn">Insert At Index</button>
+            <button class="btn warn" id="vizRemoveAtBtn">Remove At Index</button>
+            <button class="btn ghost" id="vizHighlightBtn">Highlight Index</button>
+            <button class="btn danger" id="vizResetBtn">Reset</button>
+          </div>
+          <div class="array-strip" id="visualizerStrip"></div>
+          <div class="console-panel">
+            <h4>Visualizer Log</h4>
+            <div class="console-output" id="visualizerOutput"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="section-11">
+        <div class="section-header">
+          <div>
+            <h2><span>11</span>Array + DOM</h2>
+            <p class="section-intro">
+              Frontend development me sabse common kaam hota hai: array lo aur HTML me render karo. Menu, list, cards, table, comments, notifications, sab arrays se hi aate hain.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <article class="card">
+            <div class="label">Render Idea</div>
+            <div class="code-block">const skills = ["HTML", "CSS", "JavaScript"];
+
+const html = skills.map(skill =&gt; `&lt;li&gt;${skill}&lt;/li&gt;`).join("");
+list.innerHTML = html;</div>
+            <p>
+              Iska matlab ye hai ki array ke har item se hum ek HTML string bana rahe hain. Fir sabko join karke page me inject kar rahe hain.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="label">When Used</div>
+            <ul>
+              <li>API se products aaye to cards render karo</li>
+              <li>Comments array ko list me badlo</li>
+              <li>Navigation links array se create karo</li>
+              <li>Profile skills ya tags chips me render karo</li>
+              <li>Table rows array se generate karo</li>
+            </ul>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:18px;">
+          <div class="label">Interactive DOM Demo</div>
+          <h3>Same array ko list aur cards dono tarah render karo</h3>
+          <div class="button-row">
+            <button class="btn primary" id="renderDomListBtn">Render as List</button>
+            <button class="btn" id="renderDomCardsBtn">Render as Cards</button>
+            <button class="btn ghost" id="clearDomRenderBtn">Clear</button>
+          </div>
+          <div class="output-panel" id="domRenderArea">
+            <h4>Rendered Output</h4>
+            <div class="dom-list" id="domListOutput"></div>
+            <div class="dom-card-grid" id="domCardsOutput"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="section-12">
+        <div class="section-header">
+          <div>
+            <h2><span>12</span>Common Mistakes</h2>
+            <p class="section-intro">
+              Beginners arrays me kuch classic mistakes karte hain. Agar ye mistakes pehle hi clear ho jayein, to debugging bahut easy ho jati hai.
+            </p>
+          </div>
+        </div>
+
+        <div class="mistakes-grid" id="mistakesGrid"></div>
+      </section>
+
+      <section class="section" id="section-13">
+        <div class="section-header">
+          <div>
+            <h2><span>13</span>Performance</h2>
+            <p class="section-intro">
+              Performance ko beginner level par samajhne ka matlab ye nahi ki tum micro-optimization ke chakkar me pad jao. Bas itna samjho ki kaunsi operations mutation karti hain, kaunsi copies banati hain, aur kab extra memory use hoti hai.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <article class="card">
+            <div class="label">Concept</div>
+            <h3>Fast aur slow ka basic intuition</h3>
+            <ul>
+              <li><code>push()</code> generally fast hota hai kyunki end me item add hota hai.</li>
+              <li><code>unshift()</code> costlier ho sakta hai kyunki saare indexes shift hote hain.</li>
+              <li><code>map()</code> aur <code>filter()</code> naya array banate hain.</li>
+              <li><code>splice()</code> beech me items remove/insert kare to positions move hoti hain.</li>
+              <li>Immutability safer hoti hai, lekin copies banne se memory use badh sakta hai.</li>
+            </ul>
+            <div class="callout">
+              Real rule: pehle readable code likho, phir actual bottleneck aaye to optimize karo.
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="label">Engine Note</div>
+            <h3>Browser ya JavaScript engine ke andar kya hota hai?</h3>
+            <p>
+              JavaScript engines arrays ko optimize karne ki koshish karte hain, especially jab data predictable ho. Lekin agar tum sparse arrays, mixed unpredictable patterns, ya beech-beech me heavy mutations karte ho, to engine ko different internal strategy leni pad sakti hai.
+            </p>
+            <p>
+              Beginner takeaway: clean arrays use karo, predictable access rakho, aur unnecessary deep copies mat banao.
+            </p>
+          </article>
+        </div>
+
+        <article class="card" style="margin-top:18px;">
+          <div class="label">Tiny Benchmark</div>
+          <h3>push vs concat ka feel lo</h3>
+          <p>
+            Ye scientific benchmark nahi hai, bas intuition ke liye hai. Size choose karo aur compare karo ki repeated push aur concat ka approximate time kya aa raha hai.
+          </p>
+          <div class="form-row">
+            <label class="field span-4">
+              <span>Iterations</span>
+              <input id="benchmarkSize" type="number" value="5000" min="100" step="100" />
+            </label>
+            <div class="field span-8">
+              <span>Action</span>
+              <button class="btn primary" id="runBenchmarkBtn">Run Benchmark</button>
+            </div>
+          </div>
+          <div class="console-panel">
+            <h4>Benchmark Result</h4>
+            <div class="console-output" id="benchmarkOutput"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="section-14">
+        <div class="section-header">
+          <div>
+            <h2><span>14</span>Interview Questions</h2>
+            <p class="section-intro">
+              Interview me arrays se related common questions repeatedly pooche jate hain. Sirf answer ratna nahi, intuition samajhna important hai.
+            </p>
+          </div>
+        </div>
+
+        <div class="interview-grid" id="interviewGrid"></div>
+      </section>
+
+      <section class="section" id="section-15">
+        <div class="section-header">
+          <div>
+            <h2><span>15</span>Practice Tasks</h2>
+            <p class="section-intro">
+              Practice ke bina arrays kabhi pakki nahi hoti. Neeche beginner, intermediate aur mini challenge level ke tasks diye gaye hain. Har task ke saath hint bhi milega.
+            </p>
+          </div>
+        </div>
+
+        <div class="practice-grid" id="practiceGrid"></div>
+      </section>
+
+      <section class="section" id="section-16">
+        <div class="section-header">
+          <div>
+            <h2><span>16</span>Array Master Playground</h2>
+            <p class="section-intro">
+              Ab saari theory ko ek jagah practice karo. Yahan tum apna array create kar sakte ho, items add/remove kar sakte ho, sort, reverse, filter, map aur live logs dekh sakte ho.
+            </p>
+          </div>
+        </div>
+
+        <article class="card">
+          <div class="label">Live Lab</div>
+          <h3>Apna khud ka array lab</h3>
+          <div class="form-row">
+            <label class="field span-12">
+              <span>Array literal ya comma separated values</span>
+              <textarea id="playgroundArrayInput">["mango", "apple", "banana", "kiwi"]</textarea>
+            </label>
+            <label class="field span-4">
+              <span>Item input</span>
+              <input id="playgroundItemInput" value="orange" />
+            </label>
+            <label class="field span-4">
+              <span>Filter / search term</span>
+              <input id="playgroundFilterInput" value="a" />
+            </label>
+            <label class="field span-4">
+              <span>Number multiplier</span>
+              <input id="playgroundMultiplierInput" type="number" value="2" />
+            </label>
+          </div>
+
+          <div class="button-row" style="margin-top:14px;">
+            <button class="btn primary" id="pgLoadBtn">Load Array</button>
+            <button class="btn" id="pgPushBtn">Push</button>
+            <button class="btn" id="pgUnshiftBtn">Unshift</button>
+            <button class="btn" id="pgPopBtn">Pop</button>
+            <button class="btn" id="pgShiftBtn">Shift</button>
+            <button class="btn warn" id="pgSortBtn">Sort</button>
+            <button class="btn warn" id="pgReverseBtn">Reverse</button>
+            <button class="btn" id="pgFilterBtn">Filter Contains</button>
+            <button class="btn" id="pgMapUpperBtn">Map Uppercase</button>
+            <button class="btn" id="pgMapMultiplyBtn">Map x Multiplier</button>
+            <button class="btn danger" id="pgResetBtn">Reset</button>
+          </div>
+
+          <div class="output-panel">
+            <h4>Current Array</h4>
+            <div class="array-strip" id="playgroundStrip"></div>
+          </div>
+
+          <div class="grid two" style="margin-top:16px;">
+            <div class="console-panel">
+              <h4>Live JSON Output</h4>
+              <div class="console-output" id="playgroundJson"></div>
+            </div>
+            <div class="console-panel">
+              <h4>Console-style Log</h4>
+              <div class="console-output" id="playgroundLog"></div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <div class="footer-note">
+        Array mastery ka real secret hai: tum sirf method names yaad na karo. Socho ki data ka flow kya hai. Kya tum original array ko change karna chahte ho? Kya tum naya array chahte ho? Kya tum list ko UI me render kar rahe ho? Jitna zyada tum real examples ke saath practice karoge, utna arrays natural lagne lagenge.
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // =========================
+    // UTILITY HELPERS
+    // Reusable functions jo poori file me kaam aayengi.
+    // =========================
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => Array.from(document.querySelectorAll(selector));
+
+    const deepClone = (value) => {
+      if (window.structuredClone) return structuredClone(value);
+      return JSON.parse(JSON.stringify(value));
+    };
+
+    const escapeHtml = (value) =>
+      String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+    const formatValue = (value) => {
+      if (typeof value === "string") return `"${value}"`;
+      return JSON.stringify(value);
+    };
+
+    const parseSmartValue = (raw) => {
+      const text = String(raw ?? "").trim();
+      if (!text) return "";
+      if (text === "true") return true;
+      if (text === "false") return false;
+      if (text === "null") return null;
+      if (!Number.isNaN(Number(text)) && text !== "") return Number(text);
+      if (
+        (text.startsWith("[") && text.endsWith("]")) ||
+        (text.startsWith("{") && text.endsWith("}")) ||
+        (text.startsWith('"') && text.endsWith('"'))
+      ) {
+        try {
+          return JSON.parse(text);
+        } catch (error) {
+          return text;
+        }
+      }
+      return text;
+    };
+
+    const parseCsvInput = (raw, mode = "auto") =>
+      String(raw)
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean)
+        .map((item) => {
+          if (mode === "string") return item;
+          if (mode === "number") return Number(item);
+          return parseSmartValue(item);
+        });
+
+    const parseArrayText = (raw) => {
+      const text = String(raw).trim();
+      if (!text) return [];
+      try {
+        const parsed = JSON.parse(text);
+        if (Array.isArray(parsed)) return parsed;
+      } catch (error) {
+        // Fallback below.
+      }
+      return parseCsvInput(text);
+    };
+
+    const flash = (element) => {
+      if (!element) return;
+      element.classList.remove("flash");
+      void element.offsetWidth;
+      element.classList.add("flash");
+    };
+
+    const renderArrayStrip = (container, array, options = {}) => {
+      const { highlightIndex = null } = options;
+      container.innerHTML = "";
+
+      if (!Array.isArray(array) || array.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "array-box empty";
+        empty.innerHTML = '<div class="value">Array empty hai</div>';
+        container.appendChild(empty);
+        return;
+      }
+
+      array.forEach((item, index) => {
+        const box = document.createElement("div");
+        box.className = "array-box";
+        if (index === highlightIndex) box.classList.add("highlight");
+        box.innerHTML = `
+          <div class="index">index ${index}</div>
+          <div class="value">${escapeHtml(formatValue(item))}</div>
+        `;
+        container.appendChild(box);
+      });
+    };
+
+    const setText = (selector, text) => {
+      const el = typeof selector === "string" ? $(selector) : selector;
+      if (el) el.textContent = text;
+    };
+
+    const renderKeyValueLines = (obj) =>
+      Object.entries(obj)
+        .map(([key, value]) => `${key}: ${typeof value === "string" ? value : JSON.stringify(value)}`)
+        .join("\n");
+
+    // =========================
+    // MOBILE SIDEBAR
+    // =========================
+    $("#menuToggle").addEventListener("click", () => {
+      $("#sidebar").classList.toggle("open");
+    });
+
+    $$("#navLinks a").forEach((link) => {
+      link.addEventListener("click", () => $("#sidebar").classList.remove("open"));
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const id = entry.target.id;
+          $$("#navLinks a").forEach((link) => {
+            link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
+          });
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    $$("section[id]").forEach((section) => observer.observe(section));
+
+    // =========================
+    // SECTION 1: WHAT IS ARRAY
+    // =========================
+    const conceptArray = ["Aman", "Riya", "Kabir", "Sana"];
+    const conceptStrip = $("#conceptArrayStrip");
+    const conceptOutput = $("#conceptOutput");
+
+    renderArrayStrip(conceptStrip, conceptArray);
+    conceptArray.forEach((_, index) => {
+      const btn = document.createElement("button");
+      btn.className = "btn";
+      btn.textContent = `Highlight index ${index}`;
+      btn.addEventListener("click", () => {
+        renderArrayStrip(conceptStrip, conceptArray, { highlightIndex: index });
+        conceptOutput.textContent = `Index ${index} par value ${formatValue(conceptArray[index])} hai. Zero-based indexing ki wajah se pehla item index 0 par hota hai.`;
+        flash(conceptStrip);
+      });
+      $("#conceptIndexButtons").appendChild(btn);
+    });
+
+    // =========================
+    // SECTION 2: CREATING ARRAYS
+    // =========================
+    const creatorStrip = $("#creatorStrip");
+    const creatorOutput = $("#creatorOutput");
+
+    const renderCreator = (array, note) => {
+      creatorOutput.textContent = `${note}\nArray literal: ${JSON.stringify(array)}`;
+      renderArrayStrip(creatorStrip, Array.isArray(array) ? array : [array]);
+    };
+
+    $("#createArrayBtn").addEventListener("click", () => {
+      const input = $("#creatorInput").value;
+      const mode = $("#creatorMode").value;
+      const array = parseCsvInput(input, mode);
+      renderCreator(array, "Yeh tumhara newly created array hai.");
+    });
+
+    $$("[data-preset]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const preset = btn.dataset.preset;
+        if (preset === "numbers") {
+          $("#creatorInput").value = "5, 10, 15, 20";
+          $("#creatorMode").value = "number";
+          renderCreator([5, 10, 15, 20], "Number array example.");
+        }
+        if (preset === "strings") {
+          $("#creatorInput").value = "apple, mango, banana, kiwi";
+          $("#creatorMode").value = "string";
+          renderCreator(["apple", "mango", "banana", "kiwi"], "String array example.");
+        }
+        if (preset === "mixed") {
+          $("#creatorInput").value = 'Aman, 22, true, frontend';
+          $("#creatorMode").value = "auto";
+          renderCreator(["Aman", 22, true, "frontend"], "Mixed array example. JavaScript mixed values allow karta hai.");
+        }
+        if (preset === "nested") {
+          $("#creatorInput").value = "[1,2], [3,4], [5,6]";
+          $("#creatorMode").value = "auto";
+          renderCreator([[1, 2], [3, 4], [5, 6]], "Nested array example. Array ke andar arrays.");
+        }
+      });
+    });
+    renderCreator([10, 20, 30, 40], "Starting example.");
+
+    // =========================
+    // SECTION 3: ACCESS / UPDATE
+    // =========================
+    const accessInitial = ["HTML", "CSS", "JavaScript", "React"];
+    const accessState = { array: deepClone(accessInitial) };
+
+    const renderAccess = (highlightIndex = null, note = "") => {
+      renderArrayStrip($("#accessStrip"), accessState.array, { highlightIndex });
+      const lastIndex = accessState.array.length - 1;
+      $("#accessOutput").textContent =
+        `${note}\nCurrent length: ${accessState.array.length}\nLast valid index: ${lastIndex}\nCurrent array: ${JSON.stringify(accessState.array)}`;
+    };
+
+    $("#readValueBtn").addEventListener("click", () => {
+      const index = Number($("#accessIndex").value);
+      const value = accessState.array[index];
+      const note =
+        value === undefined
+          ? `Index ${index} par koi value nahi hai. JavaScript yahan undefined return karta hai.`
+          : `Index ${index} par value ${formatValue(value)} hai.`;
+      renderAccess(index, note);
+      flash($("#accessStrip"));
+    });
+
+    $("#updateValueBtn").addEventListener("click", () => {
+      const index = Number($("#accessIndex").value);
+      const newValue = parseSmartValue($("#accessNewValue").value);
+      accessState.array[index] = newValue;
+      renderAccess(index, `Index ${index} ko update karke ${formatValue(newValue)} kar diya gaya.`);
+      flash($("#accessStrip"));
+    });
+
+    $("#resetAccessBtn").addEventListener("click", () => {
+      accessState.array = deepClone(accessInitial);
+      renderAccess(null, "Array reset ho gaya.");
+    });
+    renderAccess();
+
+    // =========================
+    // SECTION 4: METHOD DATA
+    // Har method ka config yahan rakha gaya hai.
+    // =========================
+    const methodConfigs = [
+      {
+        id: "push",
+        title: "push()",
+        level: "basic",
+        mutates: true,
+        syntax: "array.push(item1, item2, ...)",
+        params: "Jo items end me add karne hain.",
+        returns: "New array length.",
+        explain:
+          "push array ke end me naya item add karta hai. Iska use tab hota hai jab tumhe list me new item last position par append karna ho.",
+        realWorld:
+          "Todo list me new task add karna ya cart me new product add karna.",
+        example: `const tasks = ["Study", "Practice"];
+tasks.push("Revision");`,
+        steps: [
+          "Engine current length dekhta hai.",
+          "Naya item next available index par rakh diya jata hai.",
+          "length badh jati hai.",
+        ],
+        initial: ["HTML", "CSS", "JS"],
+        controls: [{ key: "value", label: "Add item", placeholder: "React", defaultValue: "React" }],
+        run(array, values) {
+          const after = deepClone(array);
+          const returned = after.push(parseSmartValue(values.value));
+          return {
+            before: array,
+            after,
+            returned,
+            note: "Original array mutate ho gaya kyunki push mutating method hai.",
+          };
+        },
+      },
+      {
+        id: "pop",
+        title: "pop()",
+        level: "basic",
+        mutates: true,
+        syntax: "array.pop()",
+        params: "Koi parameter nahi.",
+        returns: "Removed last item.",
+        explain:
+          "pop array ke end se last item hata deta hai. Jab tum recent item ya last entry remove karna chaho tab useful hota hai.",
+        realWorld: "Undo stack, last cart item remove, last notification dismiss.",
+        example: `const stack = ["A", "B", "C"];
+const removed = stack.pop();`,
+        steps: [
+          "Array ka last index nikala jata hai.",
+          "Us item ko remove kiya jata hai.",
+          "Removed item return hota hai.",
+        ],
+        initial: ["A", "B", "C", "D"],
+        controls: [],
+        run(array) {
+          const after = deepClone(array);
+          const returned = after.pop();
+          return { before: array, after, returned, note: "pop bhi original array ko change karta hai." };
+        },
+      },
+      {
+        id: "shift",
+        title: "shift()",
+        level: "basic",
+        mutates: true,
+        syntax: "array.shift()",
+        params: "Koi parameter nahi.",
+        returns: "Removed first item.",
+        explain:
+          "shift first item remove karta hai. Ye tab useful hota hai jab queue jaisa behavior chahiye jahan oldest item pehle nikle.",
+        realWorld: "Support ticket queue, first notification remove, line-based systems.",
+        example: `const queue = ["User1", "User2", "User3"];
+queue.shift();`,
+        steps: [
+          "Index 0 wala item remove hota hai.",
+          "Baaki saare items left shift hote hain.",
+          "length 1 se kam ho jati hai.",
+        ],
+        initial: ["First", "Second", "Third"],
+        controls: [],
+        run(array) {
+          const after = deepClone(array);
+          const returned = after.shift();
+          return { before: array, after, returned, note: "shift ke baad saare indexes change ho sakte hain." };
+        },
+      },
+      {
+        id: "unshift",
+        title: "unshift()",
+        level: "basic",
+        mutates: true,
+        syntax: "array.unshift(item1, item2, ...)",
+        params: "Start me add hone wale items.",
+        returns: "New length.",
+        explain:
+          "unshift array ke shuru me item add karta hai. Iska use tab hota hai jab latest item ko first position par dikhana ho.",
+        realWorld: "Recent chat message top par insert karna, latest activity first dikhana.",
+        example: `const feed = ["Old Post"];
+feed.unshift("New Post");`,
+        steps: [
+          "Existing items ke indexes right shift hote hain.",
+          "Naya item index 0 par aata hai.",
+          "Array mutate hota hai.",
+        ],
+        initial: ["CSS", "JS"],
+        controls: [{ key: "value", label: "Add at start", placeholder: "HTML", defaultValue: "HTML" }],
+        run(array, values) {
+          const after = deepClone(array);
+          const returned = after.unshift(parseSmartValue(values.value));
+          return { before: array, after, returned, note: "Start me insert hua aur original array change ho gaya." };
+        },
+      },
+      {
+        id: "includes",
+        title: "includes()",
+        level: "basic",
+        mutates: false,
+        syntax: "array.includes(value)",
+        params: "Jis value ko check karna hai.",
+        returns: "Boolean: true ya false.",
+        explain:
+          "includes check karta hai ki array ke andar koi value present hai ya nahi.",
+        realWorld: "Tag already added hai ya nahi, selected item exist karta hai ya nahi.",
+        example: `const tags = ["js", "css"];
+tags.includes("js"); // true`,
+        steps: [
+          "Method array me target value search karta hai.",
+          "Milne par true, nahi milne par false deta hai.",
+          "Original array untouched rehta hai.",
+        ],
+        initial: ["js", "react", "node"],
+        controls: [{ key: "value", label: "Check item", placeholder: "react", defaultValue: "react" }],
+        run(array, values) {
+          const returned = array.includes(parseSmartValue(values.value));
+          return { before: array, after: array, returned, note: "includes sirf check karta hai, array mutate nahi karta." };
+        },
+      },
+      {
+        id: "indexOf",
+        title: "indexOf()",
+        level: "basic",
+        mutates: false,
+        syntax: "array.indexOf(value)",
+        params: "Jis value ka index chahiye.",
+        returns: "Index number ya -1.",
+        explain:
+          "indexOf batata hai ki given value kis position par hai. Agar nahi mili to -1 return hota hai.",
+        realWorld: "Selected item ka position nikalna, remove operation se pehle item locate karna.",
+        example: `const users = ["Aman", "Riya"];
+users.indexOf("Riya"); // 1`,
+        steps: [
+          "Array first match search karta hai.",
+          "Match milne par uska index deta hai.",
+          "Nahi mila to -1.",
+        ],
+        initial: ["apple", "mango", "banana"],
+        controls: [{ key: "value", label: "Find index of", placeholder: "banana", defaultValue: "banana" }],
+        run(array, values) {
+          const returned = array.indexOf(parseSmartValue(values.value));
+          return { before: array, after: array, returned, note: "indexOf searching ke liye use hota hai." };
+        },
+      },
+      {
+        id: "map",
+        title: "map()",
+        level: "advanced",
+        mutates: false,
+        syntax: "array.map(callback)",
+        params: "Callback har item ke liye run hota hai aur new value return karta hai.",
+        returns: "Naya transformed array.",
+        explain:
+          "map ka use tab hota hai jab tumhe har item ko kisi nayi shape me convert karna ho.",
+        realWorld: "Prices par tax add karna, usernames ko uppercase karna, data ko UI-friendly structure me transform karna.",
+        example: `const prices = [100, 200, 300];
+const doubled = prices.map(price => price * 2);`,
+        steps: [
+          "Har item callback ke paas jata hai.",
+          "Callback ek new value return karta hai.",
+          "Sab new values milkar ek new array banati hain.",
+        ],
+        initial: [10, 20, 30],
+        controls: [{ key: "value", label: "Multiplier", placeholder: "2", defaultValue: "2" }],
+        run(array, values) {
+          const multiplier = Number(values.value || 1);
+          const returned = array.map((item) => Number(item) * multiplier);
+          return {
+            before: array,
+            after: returned,
+            returned,
+            note: "map original array ko change nahi karta, naya transformed array deta hai.",
+          };
+        },
+      },
+      {
+        id: "filter",
+        title: "filter()",
+        level: "advanced",
+        mutates: false,
+        syntax: "array.filter(callback)",
+        params: "Callback true ya false return karta hai.",
+        returns: "Filtered new array.",
+        explain:
+          "filter un items ko rakhta hai jo condition pass karte hain. Jo fail karte hain wo nikal jate hain.",
+        realWorld: "Search results, active users list, price range filter, completed tasks filter.",
+        example: `const marks = [45, 82, 67, 91];
+const passed = marks.filter(mark => mark >= 50);`,
+        steps: [
+          "Har item callback ke through check hota hai.",
+          "Agar callback true return kare to item result me aata hai.",
+          "Naya array return hota hai.",
+        ],
+        initial: [10, 25, 40, 55, 70],
+        controls: [{ key: "value", label: "Keep values >=", placeholder: "40", defaultValue: "40" }],
+        run(array, values) {
+          const threshold = Number(values.value || 0);
+          const returned = array.filter((item) => Number(item) >= threshold);
+          return { before: array, after: returned, returned, note: "filter se original array same rehta hai." };
+        },
+      },
+      {
+        id: "reduce",
+        title: "reduce()",
+        level: "advanced",
+        mutates: false,
+        syntax: "array.reduce((acc, item) => ..., initialValue)",
+        params: "Accumulator, current item, optional initial value.",
+        returns: "Single final value.",
+        explain:
+          "reduce bahut powerful method hai. Ye array ke saare items ko combine karke ek single result banata hai.",
+        realWorld: "Total bill, average, grouped objects, cart total, vote counting.",
+        example: `const nums = [10, 20, 30];
+const total = nums.reduce((sum, n) => sum + n, 0);`,
+        steps: [
+          "Accumulator ek running total ki tarah chalta hai.",
+          "Har item accumulator ko update karta hai.",
+          "Last me single final result milta hai.",
+        ],
+        initial: [100, 250, 75],
+        controls: [{ key: "value", label: "Initial value", placeholder: "0", defaultValue: "0" }],
+        run(array, values) {
+          const initial = Number(values.value || 0);
+          const returned = array.reduce((sum, item) => sum + Number(item), initial);
+          return { before: array, after: array, returned, note: "reduce mostly single value nikalne ke liye use hota hai." };
+        },
+      },
+      {
+        id: "find",
+        title: "find()",
+        level: "advanced",
+        mutates: false,
+        syntax: "array.find(callback)",
+        params: "Condition callback.",
+        returns: "First matching item ya undefined.",
+        explain:
+          "find first aisa item return karta hai jo condition satisfy karta ho.",
+        realWorld: "User list me specific user object dhoondna, first expensive product find karna.",
+        example: `const ages = [14, 17, 22, 25];
+const adult = ages.find(age => age >= 18);`,
+        steps: [
+          "Array left se right scan hota hai.",
+          "Pehla match milte hi process stop ho jata hai.",
+          "Matched item return hota hai.",
+        ],
+        initial: [12, 15, 18, 23],
+        controls: [{ key: "value", label: "Find first >=", placeholder: "18", defaultValue: "18" }],
+        run(array, values) {
+          const threshold = Number(values.value || 0);
+          const returned = array.find((item) => Number(item) >= threshold);
+          return { before: array, after: array, returned, note: "find ek hi item deta hai, array nahi." };
+        },
+      },
+      {
+        id: "findIndex",
+        title: "findIndex()",
+        level: "advanced",
+        mutates: false,
+        syntax: "array.findIndex(callback)",
+        params: "Condition callback.",
+        returns: "First matching index ya -1.",
+        explain:
+          "findIndex bilkul find jaisa hai, bas item ki jagah index return karta hai.",
+        realWorld: "Specific record ka position nikalna taaki baad me splice karke remove kar sako.",
+        example: `const ages = [12, 15, 18, 23];
+const index = ages.findIndex(age => age >= 18);`,
+        steps: [
+          "Array sequentially scan hota hai.",
+          "Condition pass karne wale first item ka index return hota hai.",
+          "Nahi mila to -1.",
+        ],
+        initial: [5, 9, 12, 20],
+        controls: [{ key: "value", label: "Find first index >=", placeholder: "10", defaultValue: "10" }],
+        run(array, values) {
+          const threshold = Number(values.value || 0);
+          const returned = array.findIndex((item) => Number(item) >= threshold);
+          return { before: array, after: array, returned, note: "findIndex search + index combination hai." };
+        },
+      },
+      {
+        id: "some",
+        title: "some()",
+        level: "advanced",
+        mutates: false,
+        syntax: "array.some(callback)",
+        params: "Condition callback.",
+        returns: "true ya false.",
+        explain:
+          "some check karta hai ki kya kam se kam ek item condition pass karta hai.",
+        realWorld: "Kya cart me koi out-of-stock product hai? Kya class me koi student fail hua?",
+        example: `const marks = [55, 63, 41];
+marks.some(mark => mark < 50);`,
+        steps: [
+          "Har item check hota hai.",
+          "Ek bhi true mil gaya to result true.",
+          "Sab fail hue to false.",
+        ],
+        initial: [20, 35, 48, 60],
+        controls: [{ key: "value", label: "Any item >", placeholder: "50", defaultValue: "50" }],
+        run(array, values) {
+          const threshold = Number(values.value || 0);
+          const returned = array.some((item) => Number(item) > threshold);
+          return { before: array, after: array, returned, note: "some existence style condition check ke liye useful hai." };
+        },
+      },
+      {
+        id: "every",
+        title: "every()",
+        level: "advanced",
+        mutates: false,
+        syntax: "array.every(callback)",
+        params: "Condition callback.",
+        returns: "true ya false.",
+        explain:
+          "every tab true return karta hai jab har item condition pass kare.",
+        realWorld: "Kya saare form fields filled hain? Kya saari payments valid hain?",
+        example: `const marks = [60, 72, 81];
+marks.every(mark => mark >= 50);`,
+        steps: [
+          "Har item validate hota hai.",
+          "Ek bhi fail hua to result false.",
+          "Sab pass hue to true.",
+        ],
+        initial: [55, 68, 92],
+        controls: [{ key: "value", label: "Every item >=", placeholder: "50", defaultValue: "50" }],
+        run(array, values) {
+          const threshold = Number(values.value || 0);
+          const returned = array.every((item) => Number(item) >= threshold);
+          return { before: array, after: array, returned, note: "every strict validation ke liye useful hota hai." };
+        },
+      },
+      {
+        id: "sort",
+        title: "sort()",
+        level: "advanced",
+        mutates: true,
+        syntax: "array.sort(compareFn?)",
+        params: "Optional compare function.",
+        returns: "Sorted original array.",
+        explain:
+          "sort array ko order me arrange karta hai. Important warning: number arrays ke liye compare function use karna chahiye.",
+        realWorld: "Products sort by price, names alphabetical sort, recent items order karna.",
+        example: `const nums = [100, 5, 20];
+nums.sort((a, b) => a - b);`,
+        steps: [
+          "Default sort values ko strings ki tarah compare kar sakta hai.",
+          "Numbers ke liye compare function best hota hai.",
+          "Original array change ho jata hai.",
+        ],
+        initial: [100, 5, 20, 50],
+        controls: [],
+        extraButtons: [
+          { mode: "default", label: "Default Sort" },
+          { mode: "numeric", label: "Numeric Sort" },
+        ],
+        run(array, values, mode = "default") {
+          const after = deepClone(array);
+          if (mode === "numeric") after.sort((a, b) => Number(a) - Number(b));
+          else after.sort();
+          return {
+            before: array,
+            after,
+            returned: after,
+            note:
+              mode === "numeric"
+                ? "Numeric compare function laga kar sahi order mila."
+                : "Default sort strings ki tarah compare kar sakta hai, isliye numbers me confusing result aa sakta hai.",
+          };
+        },
+      },
+      {
+        id: "reverse",
+        title: "reverse()",
+        level: "advanced",
+        mutates: true,
+        syntax: "array.reverse()",
+        params: "Koi parameter nahi.",
+        returns: "Reversed original array.",
+        explain:
+          "reverse array ke order ko ulta kar deta hai.",
+        realWorld: "Recent messages ko newest-first dikhana, order ulatna.",
+        example: `const order = [1, 2, 3];
+order.reverse();`,
+        steps: [
+          "First last ban jata hai.",
+          "Last first ban jata hai.",
+          "Original array mutate hota hai.",
+        ],
+        initial: ["Mon", "Tue", "Wed", "Thu"],
+        controls: [],
+        run(array) {
+          const after = deepClone(array);
+          after.reverse();
+          return { before: array, after, returned: after, note: "reverse in-place mutation karta hai." };
+        },
+      },
+      {
+        id: "slice",
+        title: "slice()",
+        level: "advanced",
+        mutates: false,
+        syntax: "array.slice(start, end)",
+        params: "Start included, end excluded.",
+        returns: "New copied portion of array.",
+        explain:
+          "slice array ka selected part copy karke naya array return karta hai.",
+        realWorld: "Pagination, top 5 items, preview list, copy without mutation.",
+        example: `const letters = ["a", "b", "c", "d"];
+letters.slice(1, 3); // ["b", "c"]`,
+        steps: [
+          "start se elements liye jate hain.",
+          "end index include nahi hota.",
+          "Original array same rehta hai.",
+        ],
+        initial: ["a", "b", "c", "d", "e"],
+        controls: [
+          { key: "start", label: "Start index", placeholder: "1", defaultValue: "1" },
+          { key: "end", label: "End index", placeholder: "4", defaultValue: "4" },
+        ],
+        run(array, values) {
+          const start = Number(values.start || 0);
+          const end = Number(values.end || array.length);
+          const returned = array.slice(start, end);
+          return { before: array, after: returned, returned, note: "slice copy deta hai, cut nahi karta." };
+        },
+      },
+      {
+        id: "splice",
+        title: "splice()",
+        level: "advanced",
+        mutates: true,
+        syntax: "array.splice(start, deleteCount, item?)",
+        params: "Kahan se start karna, kitne items delete karne hain, optional insert items.",
+        returns: "Removed items ka array.",
+        explain:
+          "splice ek Swiss army knife jaisa method hai. Ye remove bhi kar sakta hai, insert bhi kar sakta hai, aur replace bhi.",
+        realWorld: "Todo delete karna, beech me item insert karna, list edit karna.",
+        example: `const arr = ["A", "B", "C"];
+arr.splice(1, 1, "X");`,
+        steps: [
+          "Start index par operation begin hota hai.",
+          "deleteCount ke hisaab se items nikalte hain.",
+          "Agar extra item diye to wahi insert ho jate hain.",
+        ],
+        initial: ["A", "B", "C", "D"],
+        controls: [
+          { key: "start", label: "Start index", placeholder: "1", defaultValue: "1" },
+          { key: "deleteCount", label: "Delete count", placeholder: "1", defaultValue: "1" },
+          { key: "value", label: "Insert item", placeholder: "X", defaultValue: "X" },
+        ],
+        run(array, values) {
+          const after = deepClone(array);
+          const start = Number(values.start || 0);
+          const deleteCount = Number(values.deleteCount || 0);
+          const insertValue = values.value === "" ? undefined : parseSmartValue(values.value);
+          const returned =
+            insertValue === undefined
+              ? after.splice(start, deleteCount)
+              : after.splice(start, deleteCount, insertValue);
+          return {
+            before: array,
+            after,
+            returned,
+            note: "splice powerful hai, but yaad rakho ye original array ko mutate karta hai.",
+          };
+        },
+      },
+      {
+        id: "concat",
+        title: "concat()",
+        level: "advanced",
+        mutates: false,
+        syntax: "array.concat(otherArray)",
+        params: "One or more arrays/items.",
+        returns: "New merged array.",
+        explain:
+          "concat arrays ko jod kar nayi array banata hai, bina original array ko change kiye.",
+        realWorld: "Category lists combine karna, paginated data append karna, multi-source lists merge karna.",
+        example: `const a = [1, 2];
+const b = [3, 4];
+const c = a.concat(b);`,
+        steps: [
+          "Original arrays padhe jate hain.",
+          "Unke items copy hoke new array me jate hain.",
+          "Old arrays untouched rehte hain.",
+        ],
+        initial: [1, 2, 3],
+        controls: [{ key: "value", label: "Second array", placeholder: "[4,5]", defaultValue: "[4,5]" }],
+        run(array, values) {
+          const secondArray = Array.isArray(parseSmartValue(values.value)) ? parseSmartValue(values.value) : [parseSmartValue(values.value)];
+          const returned = array.concat(secondArray);
+          return { before: array, after: returned, returned, note: "concat merge karta hai aur naya array return karta hai." };
+        },
+      },
+      {
+        id: "flat",
+        title: "flat()",
+        level: "advanced",
+        mutates: false,
+        syntax: "array.flat(depth)",
+        params: "Kitni depth tak flatten karna hai.",
+        returns: "Flattened new array.",
+        explain:
+          "flat nested arrays ko ek single level array me badalne ke kaam aata hai.",
+        realWorld: "API se nested category lists aayi ho, tags grouped form me ho, matrix-like data flatten karna ho.",
+        example: `const nested = [1, [2, 3], [4, [5]]];
+nested.flat(2);`,
+        steps: [
+          "Method nested arrays ke andar jata hai.",
+          "Given depth tak structure ko unwrap karta hai.",
+          "Naya flattened array deta hai.",
+        ],
+        initial: [1, [2, 3], [4, [5, 6]]],
+        controls: [{ key: "value", label: "Depth", placeholder: "2", defaultValue: "2" }],
+        run(array, values) {
+          const depth = Number(values.value || 1);
+          const returned = array.flat(depth);
+          return { before: array, after: returned, returned, note: "flat nested arrays ko seedha kar deta hai." };
+        },
+      },
+    ];
+
+    const methodStates = Object.fromEntries(
+      methodConfigs.map((config) => [config.id, { current: deepClone(config.initial), lastResult: null }])
+    );
+
+    const renderMethodCard = (config) => {
+      const card = document.createElement("article");
+      card.className = `card method-card`;
+      card.dataset.level = config.level;
+
+      const controlsHtml =
+        config.controls.length > 0
+          ? `<div class="form-row">
+              ${config.controls
+                .map(
+                  (control) => `
+                  <label class="field span-${Math.max(3, Math.floor(12 / config.controls.length))}">
+                    <span>${escapeHtml(control.label)}</span>
+                    <input data-method-input="${config.id}:${control.key}" placeholder="${escapeHtml(
+                      control.placeholder
+                    )}" value="${escapeHtml(control.defaultValue ?? "")}" />
+                  </label>`
+                )
+                .join("")}
+            </div>`
+          : "";
+
+      const runButtons =
+        config.extraButtons && config.extraButtons.length
+          ? config.extraButtons
+              .map(
+                (btn, index) => `
+                <button class="btn ${index === 0 ? "primary" : "warn"}" data-method-run="${config.id}" data-mode="${btn.mode}">
+                  ${escapeHtml(btn.label)}
+                </button>`
+              )
+              .join("")
+          : `<button class="btn primary" data-method-run="${config.id}" data-mode="default">Run Demo</button>`;
+
+      card.innerHTML = `
+        <div class="topline">
+          <h3>${escapeHtml(config.title)}</h3>
+          <span class="pill">${config.level === "basic" ? "Basic" : "Advanced"} - ${
+        config.mutates ? "Mutating" : "Non-mutating"
+      }</span>
+        </div>
+        <p>${escapeHtml(config.explain)}</p>
+        <div class="code-block">// Syntax
+${escapeHtml(config.syntax)}
+
+// Simple Example
+${escapeHtml(config.example)}</div>
+        <p><strong>Parameters:</strong> <span class="muted">${escapeHtml(config.params)}</span></p>
+        <p><strong>Return value:</strong> <span class="muted">${escapeHtml(config.returns)}</span></p>
+        <p><strong>Real-world usage:</strong> <span class="muted">${escapeHtml(config.realWorld)}</span></p>
+        <ul>${config.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ul>
+        ${controlsHtml}
+        <div class="button-row" style="margin-top:14px;">
+          ${runButtons}
+          <button class="btn ghost" data-method-reset="${config.id}">Reset</button>
+        </div>
+        <div class="result-grid">
+          <div class="result-box">
+            <strong>Current Array</strong>
+            <div class="array-strip" id="method-current-${config.id}"></div>
+          </div>
+          <div class="result-box">
+            <strong>Result / After</strong>
+            <div class="array-strip" id="method-after-${config.id}"></div>
+          </div>
+        </div>
+        <div class="console-panel">
+          <h4>Method Output</h4>
+          <div class="console-output" id="method-log-${config.id}"></div>
+        </div>
+      `;
+
+      $("#methodsGrid").appendChild(card);
+      renderArrayStrip($(`#method-current-${config.id}`), methodStates[config.id].current);
+      renderArrayStrip($(`#method-after-${config.id}`), methodStates[config.id].current);
+      $(`#method-log-${config.id}`).textContent = "Run Demo click karo aur result dekho.";
+    };
+
+    methodConfigs.forEach(renderMethodCard);
+
+    const runMethodDemo = (methodId, mode = "default") => {
+      const config = methodConfigs.find((item) => item.id === methodId);
+      const state = methodStates[methodId];
+      const values = {};
+
+      config.controls.forEach((control) => {
+        const input = document.querySelector(`[data-method-input="${methodId}:${control.key}"]`);
+        values[control.key] = input ? input.value : "";
+      });
+
+      const result = config.run(deepClone(state.current), values, mode);
+      if (config.mutates) state.current = deepClone(result.after);
+
+      renderArrayStrip($(`#method-current-${methodId}`), state.current);
+      renderArrayStrip($(`#method-after-${methodId}`), result.after);
+
+      $(`#method-log-${methodId}`).textContent = renderKeyValueLines({
+        before: result.before,
+        after: result.after,
+        returned: result.returned,
+        note: result.note,
+      });
+
+      flash($(`#method-after-${methodId}`));
+    };
+
+    const resetMethodDemo = (methodId) => {
+      const config = methodConfigs.find((item) => item.id === methodId);
+      methodStates[methodId].current = deepClone(config.initial);
+      renderArrayStrip($(`#method-current-${methodId}`), methodStates[methodId].current);
+      renderArrayStrip($(`#method-after-${methodId}`), methodStates[methodId].current);
+      $(`#method-log-${methodId}`).textContent = "Method state reset ho gaya.";
+    };
+
+    document.addEventListener("click", (event) => {
+      const runBtn = event.target.closest("[data-method-run]");
+      if (runBtn) {
+        runMethodDemo(runBtn.dataset.methodRun, runBtn.dataset.mode || "default");
+      }
+
+      const resetBtn = event.target.closest("[data-method-reset]");
+      if (resetBtn) {
+        resetMethodDemo(resetBtn.dataset.methodReset);
+      }
+    });
+
+    $("#methodFilters").addEventListener("click", (event) => {
+      const btn = event.target.closest("[data-filter]");
+      if (!btn) return;
+      const filter = btn.dataset.filter;
+      $$("#methodFilters .filter-btn").forEach((item) => item.classList.remove("active"));
+      btn.classList.add("active");
+
+      $$("#methodsGrid .method-card").forEach((card) => {
+        const level = card.dataset.level;
+        card.classList.toggle("hidden", filter !== "all" && level !== filter);
+      });
+    });
+
+    // =========================
+    // SECTION 5: LOOPS
+    // =========================
+    const loopArray = ["cart", "wishlist", "orders", "profile"];
+    renderArrayStrip($("#loopStrip"), loopArray);
+
+    $$("[data-loop]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const type = button.dataset.loop;
+        const lines = [];
+        if (type === "for") {
+          lines.push("Classic for loop run ho raha hai:");
+          for (let i = 0; i < loopArray.length; i++) {
+            lines.push(`i = ${i}, value = ${loopArray[i]}`);
+          }
+          lines.push("Use case: jab index aur control dono chahiye.");
+        }
+        if (type === "forof") {
+          lines.push("for...of run ho raha hai:");
+          for (const item of loopArray) {
+            lines.push(`value = ${item}`);
+          }
+          lines.push("Use case: jab clean readable value iteration chahiye.");
+        }
+        if (type === "foreach") {
+          lines.push("forEach run ho raha hai:");
+          loopArray.forEach((item, index) => lines.push(`index = ${index}, value = ${item}`));
+          lines.push("Use case: side effects aur rendering logic.");
+        }
+        $("#loopOutput").textContent = lines.join("\n");
+      });
+    });
+
+    // =========================
+    // SECTION 6: DESTRUCTURING
+    // =========================
+    const destructureArray = ["HTML", "CSS", "JavaScript", "React"];
+    renderArrayStrip($("#destructureStrip"), destructureArray);
+
+    $("#runBasicDestructure").addEventListener("click", () => {
+      const [first, second, third] = destructureArray;
+      $("#destructureOutput").textContent =
+        `const [first, second, third] = arr;\nfirst = ${first}\nsecond = ${second}\nthird = ${third}`;
+    });
+
+    $("#runSkipDestructure").addEventListener("click", () => {
+      const [first, , third] = destructureArray;
+      $("#destructureOutput").textContent =
+        `const [first, , third] = arr;\nfirst = ${first}\nthird = ${third}\nBeech wali value skip ho gayi.`;
+    });
+
+    $("#runSwapDestructure").addEventListener("click", () => {
+      let x = "Frontend";
+      let y = "Backend";
+      [x, y] = [y, x];
+      $("#destructureOutput").textContent =
+        `Swap result:\nBefore: x = "Frontend", y = "Backend"\nAfter: x = ${x}, y = ${y}`;
+    });
+
+    // =========================
+    // SECTION 7: SPREAD
+    // =========================
+    const spreadBase = ["HTML", "CSS"];
+    const spreadSecond = ["JavaScript", "React"];
+
+    const renderSpreadOutput = (lines, stripData) => {
+      $("#spreadOutput").textContent = lines.join("\n");
+      renderArrayStrip($("#spreadStrip"), stripData);
+    };
+
+    $("#spreadDirectRef").addEventListener("click", () => {
+      const original = deepClone(spreadBase);
+      const alias = original;
+      alias.push("Mutated");
+      renderSpreadOutput(
+        [
+          "Direct reference example:",
+          `original = ${JSON.stringify(original)}`,
+          `alias = ${JSON.stringify(alias)}`,
+          "Dono same array ko point kar rahe the, isliye mutation dono me dikha.",
+        ],
+        original
+      );
+    });
+
+    $("#spreadCopy").addEventListener("click", () => {
+      const original = deepClone(spreadBase);
+      const copy = [...original];
+      copy.push("Safe Copy");
+      renderSpreadOutput(
+        [
+          "Spread copy example:",
+          `original = ${JSON.stringify(original)}`,
+          `copy = ${JSON.stringify(copy)}`,
+          "Yahan original safe raha kyunki spread ne naya array banaya.",
+        ],
+        copy
+      );
+    });
+
+    $("#spreadMerge").addEventListener("click", () => {
+      const merged = [...spreadBase, ...spreadSecond];
+      renderSpreadOutput(
+        [
+          "Merged array:",
+          JSON.stringify(merged),
+          "Ye frontend + second array dono ko combine karke bana hai.",
+        ],
+        merged
+      );
+    });
+
+    renderSpreadOutput(["Spread operator ka demo yahan aayega."], spreadBase);
+
+    // =========================
+    // SECTION 8: NESTED ARRAYS
+    // =========================
+    const matrixData = [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+    ];
+
+    const renderMatrix = () => {
+      $("#matrixBoard").innerHTML = "";
+      matrixData.forEach((row) => {
+        const rowEl = document.createElement("div");
+        rowEl.className = "matrix-row";
+        row.forEach((value) => {
+          const cell = document.createElement("div");
+          cell.className = "matrix-cell";
+          cell.textContent = value;
+          rowEl.appendChild(cell);
+        });
+        $("#matrixBoard").appendChild(rowEl);
+      });
+    };
+    renderMatrix();
+
+    $("#readMatrixBtn").addEventListener("click", () => {
+      const row = Number($("#matrixRowInput").value);
+      const col = Number($("#matrixColInput").value);
+      const value = matrixData?.[row]?.[col];
+      $("#matrixOutput").textContent =
+        value === undefined
+          ? `matrix[${row}][${col}] invalid hai. Yahan koi value nahi mili.`
+          : `matrix[${row}][${col}] = ${value}`;
+    });
+
+    const tttState = {
+      player: "X",
+      board: [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""],
+      ],
+    };
+
+    const renderTtt = () => {
+      $("#tttBoard").innerHTML = "";
+      tttState.board.forEach((row, rowIndex) => {
+        const rowEl = document.createElement("div");
+        rowEl.className = "ttt-row";
+        row.forEach((value, colIndex) => {
+          const cell = document.createElement("button");
+          cell.className = "ttt-cell";
+          cell.textContent = value;
+          cell.addEventListener("click", () => {
+            if (tttState.board[rowIndex][colIndex]) return;
+            tttState.board[rowIndex][colIndex] = tttState.player;
+            tttState.player = tttState.player === "X" ? "O" : "X";
+            renderTtt();
+          });
+          rowEl.appendChild(cell);
+        });
+        $("#tttBoard").appendChild(rowEl);
+      });
+      $("#tttPlayer").textContent = tttState.player;
+      $("#tttOutput").textContent = JSON.stringify(tttState.board, null, 2);
+    };
+
+    $("#resetTttBtn").addEventListener("click", () => {
+      tttState.player = "X";
+      tttState.board = [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""],
+      ];
+      renderTtt();
+    });
+    renderTtt();
+
+    // =========================
+    // SECTION 9: MINI PROJECTS
+    // =========================
+    const projectState = {
+      todos: ["Array methods revise karna", "map aur filter ka difference likhna"],
+      cartProducts: [
+        { name: "Mouse", price: 699 },
+        { name: "Keyboard", price: 1499 },
+        { name: "Headphones", price: 2499 },
+      ],
+      cart: [],
+      students: [
+        { name: "Riya", marks: 90 },
+        { name: "Kabir", marks: 74 },
+      ],
+      expenses: [
+        { title: "Electricity", amount: 1200 },
+        { title: "Internet", amount: 799 },
+      ],
+      searchItems: ["Laptop", "Mouse", "Monitor", "Mechanical Keyboard", "Camera", "Tripod"],
+      products: [
+        { name: "Laptop Stand", price: 1199, category: "Accessories" },
+        { name: "USB Hub", price: 899, category: "Accessories" },
+        { name: "Monitor", price: 12999, category: "Display" },
+        { name: "Webcam", price: 2499, category: "Camera" },
+      ],
+      notes: ["Array ke saath length property hamesha yaad rakho."],
+      tags: ["javascript", "arrays"],
+      miniViz: [10, 20, 30, 40],
+      miniVizHighlight: null,
+    };
+
+    const renderTodos = () => {
+      $("#todoList").innerHTML = "";
+      projectState.todos.forEach((todo, index) => {
+        const item = document.createElement("div");
+        item.className = "list-item";
+        item.innerHTML = `
+          <strong>${escapeHtml(todo)}</strong>
+          <div class="button-row" style="margin-top:10px;">
+            <button class="btn ghost" data-remove-todo="${index}">Remove</button>
+          </div>`;
+        $("#todoList").appendChild(item);
+      });
+      $("#todoSummary").textContent = `Total todos: ${projectState.todos.length}`;
+    };
+
+    $("#addTodoBtn").addEventListener("click", () => {
+      const value = $("#todoInput").value.trim();
+      if (!value) return;
+      projectState.todos.push(value);
+      $("#todoInput").value = "";
+      renderTodos();
+    });
+
+    document.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-remove-todo]");
+      if (!button) return;
+      const index = Number(button.dataset.removeTodo);
+      projectState.todos.splice(index, 1);
+      renderTodos();
+    });
+    renderTodos();
+
+    const renderCart = () => {
+      $("#cartList").innerHTML = "";
+      projectState.cart.forEach((item, index) => {
+        const row = document.createElement("div");
+        row.className = "list-item";
+        row.innerHTML = `
+          <strong>${escapeHtml(item.name)}</strong>
+          <div class="muted">Price: Rs ${item.price}</div>
+          <div class="button-row" style="margin-top:10px;">
+            <button class="btn ghost" data-remove-cart="${index}">Remove</button>
+          </div>`;
+        $("#cartList").appendChild(row);
+      });
+      const total = projectState.cart.reduce((sum, item) => sum + item.price, 0);
+      $("#cartSummary").textContent = `Items: ${projectState.cart.length} | Total: Rs ${total}`;
+    };
+
+    projectState.cartProducts.forEach((product, index) => {
+      const btn = document.createElement("button");
+      btn.className = "btn";
+      btn.textContent = `Add ${product.name}`;
+      btn.addEventListener("click", () => {
+        projectState.cart.push(product);
+        renderCart();
+      });
+      $("#cartProductButtons").appendChild(btn);
+    });
+
+    document.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-remove-cart]");
+      if (!button) return;
+      projectState.cart.splice(Number(button.dataset.removeCart), 1);
+      renderCart();
+    });
+    renderCart();
+
+    const renderStudents = () => {
+      $("#marksList").innerHTML = "";
+      projectState.students.forEach((student) => {
+        const item = document.createElement("div");
+        item.className = "list-item";
+        item.innerHTML = `<strong>${escapeHtml(student.name)}</strong><div class="muted">Marks: ${student.marks}</div>`;
+        $("#marksList").appendChild(item);
+      });
+      const total = projectState.students.reduce((sum, item) => sum + item.marks, 0);
+      const average = projectState.students.length ? (total / projectState.students.length).toFixed(2) : 0;
+      const topper = projectState.students.reduce((best, item) => (item.marks > best.marks ? item : best), projectState.students[0]);
+      $("#marksSummary").textContent = `Average: ${average} | Topper: ${topper ? `${topper.name} (${topper.marks})` : "N/A"}`;
+    };
+
+    $("#addStudentBtn").addEventListener("click", () => {
+      const name = $("#studentNameInput").value.trim();
+      const marks = Number($("#studentMarksInput").value);
+      if (!name) return;
+      projectState.students.push({ name, marks });
+      renderStudents();
+    });
+    renderStudents();
+
+    const renderExpenses = () => {
+      $("#expenseList").innerHTML = "";
+      projectState.expenses.forEach((expense) => {
+        const item = document.createElement("div");
+        item.className = "list-item";
+        item.innerHTML = `<strong>${escapeHtml(expense.title)}</strong><div class="muted">Rs ${expense.amount}</div>`;
+        $("#expenseList").appendChild(item);
+      });
+      const total = projectState.expenses.reduce((sum, item) => sum + item.amount, 0);
+      $("#expenseSummary").textContent = `Total expenses: Rs ${total}`;
+    };
+
+    $("#addExpenseBtn").addEventListener("click", () => {
+      const title = $("#expenseTitleInput").value.trim();
+      const amount = Number($("#expenseAmountInput").value);
+      if (!title) return;
+      projectState.expenses.push({ title, amount });
+      renderExpenses();
+    });
+    renderExpenses();
+
+    const renderSearch = () => {
+      const term = $("#searchFilterInput").value.trim().toLowerCase();
+      const filtered = projectState.searchItems.filter((item) => item.toLowerCase().includes(term));
+      $("#searchList").innerHTML = "";
+      filtered.forEach((item) => {
+        const row = document.createElement("div");
+        row.className = "list-item";
+        row.textContent = item;
+        $("#searchList").appendChild(row);
+      });
+      if (filtered.length === 0) {
+        $("#searchList").innerHTML = '<div class="list-item">Koi result nahi mila.</div>';
+      }
+    };
+    $("#searchFilterInput").addEventListener("input", renderSearch);
+    renderSearch();
+
+    const renderProducts = () => {
+      $("#productsGrid").innerHTML = "";
+      projectState.products.forEach((product) => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.innerHTML = `
+          <strong>${escapeHtml(product.name)}</strong>
+          <div class="muted">${escapeHtml(product.category)}</div>
+          <div style="margin-top:8px; color: var(--accent-2);">Rs ${product.price}</div>`;
+        $("#productsGrid").appendChild(card);
+      });
+    };
+
+    $$("[data-product-sort]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const type = button.dataset.productSort;
+        if (type === "name") projectState.products.sort((a, b) => a.name.localeCompare(b.name));
+        if (type === "low") projectState.products.sort((a, b) => a.price - b.price);
+        if (type === "high") projectState.products.sort((a, b) => b.price - a.price);
+        renderProducts();
+      });
+    });
+    renderProducts();
+
+    $("#pickRandomBtn").addEventListener("click", () => {
+      const names = parseCsvInput($("#pickerInput").value, "string");
+      if (names.length === 0) return;
+      const index = Math.floor(Math.random() * names.length);
+      $("#pickerSummary").textContent = `Random index ${index} choose hua. Winner: ${names[index]}`;
+    });
+    $("#pickerSummary").textContent = "Button click karke random name choose karo.";
+
+    const renderNotes = () => {
+      $("#notesList").innerHTML = "";
+      projectState.notes.forEach((note) => {
+        const card = document.createElement("div");
+        card.className = "note-card";
+        card.textContent = note;
+        $("#notesList").appendChild(card);
+      });
+    };
+    $("#addNoteBtn").addEventListener("click", () => {
+      const text = $("#notesInput").value.trim();
+      if (!text) return;
+      projectState.notes.push(text);
+      $("#notesInput").value = "";
+      renderNotes();
+    });
+    renderNotes();
+
+    const renderTags = () => {
+      $("#tagsWrap").innerHTML = "";
+      projectState.tags.forEach((tag, index) => {
+        const tagEl = document.createElement("div");
+        tagEl.className = "tag-chip";
+        tagEl.innerHTML = `${escapeHtml(tag)} <button class="remove-x" data-remove-tag="${index}">x</button>`;
+        $("#tagsWrap").appendChild(tagEl);
+      });
+    };
+
+    $("#addTagBtn").addEventListener("click", () => {
+      const tag = $("#tagInput").value.trim();
+      if (!tag) return;
+      if (!projectState.tags.includes(tag)) projectState.tags.push(tag);
+      $("#tagInput").value = "";
+      renderTags();
+    });
+
+    $("#tagInput").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        $("#addTagBtn").click();
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-remove-tag]");
+      if (!button) return;
+      projectState.tags.splice(Number(button.dataset.removeTag), 1);
+      renderTags();
+    });
+    renderTags();
+
+    const renderMiniViz = () => {
+      renderArrayStrip($("#miniVizStrip"), projectState.miniViz, {
+        highlightIndex: projectState.miniVizHighlight,
+      });
+      $("#miniVizSummary").textContent = `Array: ${JSON.stringify(projectState.miniViz)} | Length: ${projectState.miniViz.length}`;
+    };
+
+    $("#miniVizAdd").addEventListener("click", () => {
+      projectState.miniViz.push(Math.floor(Math.random() * 100));
+      projectState.miniVizHighlight = projectState.miniViz.length - 1;
+      renderMiniViz();
+    });
+
+    $("#miniVizRemove").addEventListener("click", () => {
+      projectState.miniViz.pop();
+      projectState.miniVizHighlight = null;
+      renderMiniViz();
+    });
+
+    $("#miniVizHighlight").addEventListener("click", () => {
+      if (projectState.miniViz.length === 0) return;
+      projectState.miniVizHighlight = Math.floor(Math.random() * projectState.miniViz.length);
+      renderMiniViz();
+    });
+    renderMiniViz();
+
+    // =========================
+    // SECTION 10: FULL VISUALIZER
+    // =========================
+    const visualizerState = {
+      array: [12, 24, 36, 48],
+      highlightIndex: null,
+    };
+
+    const renderVisualizer = (note = "Array ready hai.") => {
+      renderArrayStrip($("#visualizerStrip"), visualizerState.array, {
+        highlightIndex: visualizerState.highlightIndex,
+      });
+      $("#visualizerOutput").textContent =
+        `${note}\nLength: ${visualizerState.array.length}\nCurrent array: ${JSON.stringify(visualizerState.array)}`;
+      flash($("#visualizerStrip"));
+    };
+
+    const getVizIndex = () => Number($("#vizIndexInput").value || 0);
+    const getVizValue = () => parseSmartValue($("#vizValueInput").value);
+    const getVizSecondValue = () => parseSmartValue($("#vizSecondValueInput").value);
+
+    $("#vizPushBtn").addEventListener("click", () => {
+      visualizerState.array.push(getVizValue());
+      visualizerState.highlightIndex = visualizerState.array.length - 1;
+      renderVisualizer("push use hua: item end me add ho gaya.");
+    });
+
+    $("#vizUnshiftBtn").addEventListener("click", () => {
+      visualizerState.array.unshift(getVizValue());
+      visualizerState.highlightIndex = 0;
+      renderVisualizer("unshift use hua: item start me add ho gaya.");
+    });
+
+    $("#vizPopBtn").addEventListener("click", () => {
+      const removed = visualizerState.array.pop();
+      visualizerState.highlightIndex = null;
+      renderVisualizer(`pop use hua: removed item = ${formatValue(removed)}`);
+    });
+
+    $("#vizShiftBtn").addEventListener("click", () => {
+      const removed = visualizerState.array.shift();
+      visualizerState.highlightIndex = null;
+      renderVisualizer(`shift use hua: first item remove hua = ${formatValue(removed)}`);
+    });
+
+    $("#vizInsertBtn").addEventListener("click", () => {
+      const index = getVizIndex();
+      const firstValue = getVizValue();
+      const secondValue = getVizSecondValue();
+      visualizerState.array.splice(index, 0, firstValue, secondValue);
+      visualizerState.highlightIndex = index;
+      renderVisualizer(`splice se index ${index} par do items insert hue.`);
+    });
+
+    $("#vizRemoveAtBtn").addEventListener("click", () => {
+      const index = getVizIndex();
+      const removed = visualizerState.array.splice(index, 1);
+      visualizerState.highlightIndex = null;
+      renderVisualizer(`splice se index ${index} par removed item = ${JSON.stringify(removed)}`);
+    });
+
+    $("#vizHighlightBtn").addEventListener("click", () => {
+      visualizerState.highlightIndex = getVizIndex();
+      renderVisualizer(`Index ${visualizerState.highlightIndex} highlight hua.`);
+    });
+
+    $("#vizResetBtn").addEventListener("click", () => {
+      visualizerState.array = [12, 24, 36, 48];
+      visualizerState.highlightIndex = null;
+      renderVisualizer("Visualizer reset ho gaya.");
+    });
+    renderVisualizer();
+
+    // =========================
+    // SECTION 11: ARRAY + DOM
+    // =========================
+    const domSkills = ["HTML", "CSS", "JavaScript", "React", "Node.js"];
+
+    $("#renderDomListBtn").addEventListener("click", () => {
+      $("#domCardsOutput").innerHTML = "";
+      $("#domListOutput").innerHTML = "";
+      domSkills.forEach((skill, index) => {
+        const item = document.createElement("div");
+        item.className = "list-item";
+        item.innerHTML = `<strong>${index}</strong> - ${escapeHtml(skill)}`;
+        $("#domListOutput").appendChild(item);
+      });
+    });
+
+    $("#renderDomCardsBtn").addEventListener("click", () => {
+      $("#domListOutput").innerHTML = "";
+      $("#domCardsOutput").innerHTML = "";
+      domSkills.forEach((skill) => {
+        const card = document.createElement("div");
+        card.className = "dom-card";
+        card.innerHTML = `<strong>${escapeHtml(skill)}</strong><div class="muted">Ye skill array se dynamically render hui hai.</div>`;
+        $("#domCardsOutput").appendChild(card);
+      });
+    });
+
+    $("#clearDomRenderBtn").addEventListener("click", () => {
+      $("#domListOutput").innerHTML = "";
+      $("#domCardsOutput").innerHTML = "";
+    });
+
+    // =========================
+    // SECTION 12: COMMON MISTAKES
+    // =========================
+    const mistakes = [
+      {
+        title: "Undefined index access",
+        wrong: `const arr = ["A", "B"];
+console.log(arr[5]);`,
+        fix: `if (index >= 0 && index < arr.length) {
+  console.log(arr[index]);
+}`,
+        why: "Agar requested index array me exist nahi karta, to JavaScript undefined return karta hai. Error nahi bhi aaye, to bug quietly reh sakta hai.",
+      },
+      {
+        title: "Reference copy ko true copy samajhna",
+        wrong: `const a = [1, 2];
+const b = a;
+b.push(3);`,
+        fix: `const a = [1, 2];
+const b = [...a];
+b.push(3);`,
+        why: "b = a ka matlab naya array nahi, same reference hota hai. Isi se accidental mutation hota hai.",
+      },
+      {
+        title: "slice aur splice confuse karna",
+        wrong: `arr.splice(1, 3) // socha copy milegi`,
+        fix: `arr.slice(1, 3) // copy\narr.splice(1, 3) // mutate/remove`,
+        why: "slice copy deta hai, splice original array change karta hai. Dono names similar lagte hain, isliye confusion common hai.",
+      },
+      {
+        title: "forEach se naya array expect karna",
+        wrong: `const result = arr.forEach(x => x * 2);`,
+        fix: `const result = arr.map(x => x * 2);`,
+        why: "forEach return value ke liye nahi, side effects ke liye hota hai. Transform karna ho to map use karo.",
+      },
+      {
+        title: "sort numbers without compare function",
+        wrong: `[100, 5, 20].sort();`,
+        fix: `[100, 5, 20].sort((a, b) => a - b);`,
+        why: "Default sort values ko strings ki tarah compare kar sakta hai. Isliye 100, 20, 5 jaisa weird order aa sakta hai.",
+      },
+      {
+        title: "length ko last index samajhna",
+        wrong: `arr[arr.length]`,
+        fix: `arr[arr.length - 1]`,
+        why: "length total items batata hai. Last valid index usse 1 kam hota hai.",
+      },
+    ];
+
+    mistakes.forEach((item) => {
+      const card = document.createElement("article");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="label">Common Pitfall</div>
+        <h3>${escapeHtml(item.title)}</h3>
+        <p>${escapeHtml(item.why)}</p>
+        <div class="code-block">// Wrong
+${escapeHtml(item.wrong)}
+
+// Correct
+${escapeHtml(item.fix)}</div>
+      `;
+      $("#mistakesGrid").appendChild(card);
+    });
+
+    // =========================
+    // SECTION 13: PERFORMANCE
+    // =========================
+    $("#runBenchmarkBtn").addEventListener("click", () => {
+      const size = Number($("#benchmarkSize").value || 5000);
+
+      const startPush = performance.now();
+      const arrPush = [];
+      for (let i = 0; i < size; i++) {
+        arrPush.push(i);
+      }
+      const endPush = performance.now();
+
+      const startConcat = performance.now();
+      let arrConcat = [];
+      for (let i = 0; i < size; i++) {
+        arrConcat = arrConcat.concat(i);
+      }
+      const endConcat = performance.now();
+
+      $("#benchmarkOutput").textContent = [
+        `Iterations: ${size}`,
+        `push loop time: ${(endPush - startPush).toFixed(2)} ms`,
+        `concat loop time: ${(endConcat - startConcat).toFixed(2)} ms`,
+        "Note: exact numbers browser aur machine ke hisaab se change honge.",
+        "Intuition: concat har step par new array create kar sakta hai, isliye repeated use expensive lag sakta hai.",
+      ].join("\n");
+    });
+    $("#benchmarkOutput").textContent = "Benchmark run karo aur intuition build karo.";
+
+    // =========================
+    // SECTION 14: INTERVIEW QUESTIONS
+    // =========================
+    const interviewQuestions = [
+      {
+        q: "map() aur forEach() me difference kya hai?",
+        a: "map naya array return karta hai, isliye transformation ke liye use hota hai. forEach kuch return nahi karta jo useful ho, isliye side effects jaise DOM updates, console logs ke liye use hota hai.",
+      },
+      {
+        q: "filter() aur find() me difference?",
+        a: "filter saare matching items ka naya array return karta hai. find sirf pehla matching item return karta hai.",
+      },
+      {
+        q: "slice() aur splice() me difference?",
+        a: "slice original array ko touch nahi karta, selected part ka copy return karta hai. splice original array ko mutate karta hai aur remove/insert dono kar sakta hai.",
+      },
+      {
+        q: "Shallow copy kya hota hai?",
+        a: "Top level array copy ho jati hai, lekin andar agar objects ya nested arrays hain to unke references same reh sakte hain. Spread operator simple arrays ke liye okay hai, deep nested data ke liye nahi.",
+      },
+      {
+        q: "sort numbers ke saath compare function kyun chahiye?",
+        a: "Default sort values ko string ki tarah compare kar sakta hai. Compare function numeric order ko clearly define karta hai.",
+      },
+      {
+        q: "Why arrays start with index 0?",
+        a: "Programming me zero-based indexing common hai. Conceptually memory offset 0 se start socha jata hai. Beginner ke liye bas yaad rakho: pehla item index 0 par hota hai.",
+      },
+    ];
+
+    interviewQuestions.forEach((item) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "accordion";
+      wrapper.innerHTML = `
+        <button type="button">
+          <span>${escapeHtml(item.q)}</span>
+          <span>+</span>
+        </button>
+        <div class="body">
+          <p>${escapeHtml(item.a)}</p>
+        </div>`;
+      const button = wrapper.querySelector("button");
+      button.addEventListener("click", () => {
+        wrapper.classList.toggle("open");
+      });
+      $("#interviewGrid").appendChild(wrapper);
+    });
+
+    // =========================
+    // SECTION 15: PRACTICE TASKS
+    // =========================
+    const practiceTasks = [
+      {
+        level: "Beginner",
+        title: "Names array banao aur second name print karo",
+        hint: "Indexing use karo. Second name ka index 1 hoga.",
+      },
+      {
+        level: "Beginner",
+        title: "Numbers array ka total reduce se nikaalo",
+        hint: "Accumulator ko 0 se start karo aur har number add karo.",
+      },
+      {
+        level: "Intermediate",
+        title: "Student marks me sirf pass students ko filter karo",
+        hint: "Condition kuch aisi hogi: mark >= 50",
+      },
+      {
+        level: "Intermediate",
+        title: "Product names ko uppercase map se convert karo",
+        hint: "map ke andar string methods use kar sakte ho.",
+      },
+      {
+        level: "Intermediate",
+        title: "Todo array me ek item splice se delete karo",
+        hint: "Pehle findIndex nikaalo, phir splice use karo.",
+      },
+      {
+        level: "Challenge",
+        title: "Cart objects array ka total bill reduce se nikalo",
+        hint: "Har object se price lo aur accumulator me add karo.",
+      },
+      {
+        level: "Challenge",
+        title: "Nested array matrix ka diagonal nikaalo",
+        hint: "Row index aur column index same honge.",
+      },
+      {
+        level: "Challenge",
+        title: "Search input se live filter list banao",
+        hint: "input event + filter + includes + lowercase.",
+      },
+    ];
+
+    practiceTasks.forEach((task) => {
+      const card = document.createElement("div");
+      card.className = "accordion";
+      card.innerHTML = `
+        <button type="button">
+          <span>${escapeHtml(task.level)} - ${escapeHtml(task.title)}</span>
+          <span>Hint</span>
+        </button>
+        <div class="body">
+          <p>${escapeHtml(task.hint)}</p>
+        </div>
+      `;
+      card.querySelector("button").addEventListener("click", () => card.classList.toggle("open"));
+      $("#practiceGrid").appendChild(card);
+    });
+
+    // =========================
+    // SECTION 16: MASTER PLAYGROUND
+    // =========================
+    const playgroundInitial = ["mango", "apple", "banana", "kiwi"];
+    const playgroundState = {
+      array: deepClone(playgroundInitial),
+      logs: ["Playground ready. Array operations try karo."],
+    };
+
+    const renderPlayground = () => {
+      renderArrayStrip($("#playgroundStrip"), playgroundState.array);
+      $("#playgroundJson").textContent = JSON.stringify(playgroundState.array, null, 2);
+      $("#playgroundLog").textContent = playgroundState.logs.slice(-10).join("\n");
+    };
+
+    const logPlayground = (message) => {
+      playgroundState.logs.push(message);
+      renderPlayground();
+      flash($("#playgroundStrip"));
+    };
+
+    $("#pgLoadBtn").addEventListener("click", () => {
+      try {
+        const parsed = parseArrayText($("#playgroundArrayInput").value);
+        playgroundState.array = parsed;
+        logPlayground(`Array load ho gaya: ${JSON.stringify(parsed)}`);
+      } catch (error) {
+        logPlayground("Array parse nahi ho paya. JSON array ya comma-separated values try karo.");
+      }
+    });
+
+    $("#pgPushBtn").addEventListener("click", () => {
+      const item = parseSmartValue($("#playgroundItemInput").value);
+      playgroundState.array.push(item);
+      logPlayground(`push -> ${formatValue(item)} add hua.`);
+    });
+
+    $("#pgUnshiftBtn").addEventListener("click", () => {
+      const item = parseSmartValue($("#playgroundItemInput").value);
+      playgroundState.array.unshift(item);
+      logPlayground(`unshift -> ${formatValue(item)} start me add hua.`);
+    });
+
+    $("#pgPopBtn").addEventListener("click", () => {
+      const removed = playgroundState.array.pop();
+      logPlayground(`pop -> removed ${formatValue(removed)}`);
+    });
+
+    $("#pgShiftBtn").addEventListener("click", () => {
+      const removed = playgroundState.array.shift();
+      logPlayground(`shift -> removed ${formatValue(removed)}`);
+    });
+
+    $("#pgSortBtn").addEventListener("click", () => {
+      playgroundState.array.sort((a, b) => String(a).localeCompare(String(b)));
+      logPlayground("sort -> alphabetical sort apply hua.");
+    });
+
+    $("#pgReverseBtn").addEventListener("click", () => {
+      playgroundState.array.reverse();
+      logPlayground("reverse -> order ulta ho gaya.");
+    });
+
+    $("#pgFilterBtn").addEventListener("click", () => {
+      const term = $("#playgroundFilterInput").value.toLowerCase();
+      playgroundState.array = playgroundState.array.filter((item) =>
+        String(item).toLowerCase().includes(term)
+      );
+      logPlayground(`filter -> sirf woh items bache jinme "${term}" aata hai.`);
+    });
+
+    $("#pgMapUpperBtn").addEventListener("click", () => {
+      playgroundState.array = playgroundState.array.map((item) => String(item).toUpperCase());
+      logPlayground("map -> sab items uppercase me convert ho gaye.");
+    });
+
+    $("#pgMapMultiplyBtn").addEventListener("click", () => {
+      const multiplier = Number($("#playgroundMultiplierInput").value || 1);
+      playgroundState.array = playgroundState.array.map((item) => {
+        const num = Number(item);
+        return Number.isNaN(num) ? item : num * multiplier;
+      });
+      logPlayground(`map -> numeric items ${multiplier} se multiply ho gaye.`);
+    });
+
+    $("#pgResetBtn").addEventListener("click", () => {
+      playgroundState.array = deepClone(playgroundInitial);
+      playgroundState.logs.push("Playground reset ho gaya.");
+      $("#playgroundArrayInput").value = JSON.stringify(playgroundInitial);
+      renderPlayground();
+    });
+
+    $("#playgroundArrayInput").value = JSON.stringify(playgroundInitial);
+    renderPlayground();
+  </script>
+<!-- Code injected by live-server -->
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{background: pink;}
+        .p1{color: yellow;}
+    </style>
+</head>
+
+<body>
+    <h2>Pop</h2>
+    <p class="p1">The pop() method removes the last element from an array.</p>
+    <p id="demo1"></p>
+    <p id="demo2"></p>
+    <h2>Push</h2>
+    <p class="p1">The push() method appends a new element to an array:</p>
+    <p id="demo3"></p>
+    <p id="demo4"></p>
+    <h2>shift</h2>
+    <p class="p1">The shift() method removes the first element of an array (and "shifts" the other elements to the left):</p>
+    <p id="demo5"></p>
+    <p id="demo6"></p>
+    <h2>unshift</h2>
+    <p class="p1">The unshift() method adds new elements to the beginning of an array:</p>
+    <p id="demo7"></p>
+    <p id="demo8"></p>
+    <script>
+        let a = ["Banana", "Orange", "Apple", "Mango"];
+        
+        document.getElementById("demo1").innerHTML = a;
+        a.pop();
+
+        document.getElementById("demo2").innerHTML = a;
+
+
+        let b = ["Banana", "Orange", "Apple", "Mango"];
+        document.getElementById("demo3").innerHTML = b;
+        b.push("Kiwi");
+        document.getElementById("demo4").innerHTML = b;
+
+
+        let c = ["Banana", "Orange", "Apple", "Mango"];
+        document.getElementById("demo5").innerHTML = c;
+        c.shift();
+        document.getElementById("demo6").innerHTML = c;
+
+
+        let d = ["Banana", "Orange", "Apple", "Mango"];
+        document.getElementById("demo7").innerHTML = d;
+        d.unshift("Lemon");
+        document.getElementById("demo8").innerHTML = d;
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let i = [12, 45, 75, 685, , 78, 52];
+
+        let [chandan, prince, himanshu, ...rest] = i;
+        console.log(chandan);
+        console.log(prince);
+        console.log(himanshu);
+        console.log(rest);
+
+        //Destructuring an Nested  objects
+        let x = {
+            name: "chandan",
+            address: {
+                city: "delhi",
+                pin: 110033
+            },
+            contact: {
+                email: "chandan45465@gmail.com",
+                phone: 465461133
+            }
+
+        }
+        let {
+            address: {
+                city,
+                pin
+            },
+            contact: {
+                email,
+                phone
+            }
+        } = x;
+        console.log(city);
+        console.log(pin);
+        console.log(email);
+        console.log(phone);
+        //objects 
+        let person = {
+            name1: "Ravi",
+            age: 22,
+            city1: "Uttar Pradesh"
+        }
+        let {
+            name1,
+            age,
+            city1
+        } = person;
+
+
+        console.log(name1);
+        console.log(age);
+        console.log(city1);
+        //Rest opertor
+        let numbers = [55, 50, 20, 10, 70, 80, 90, 100];
+        let [chandan1, prince1, ...rest1] = numbers
+        console.log(chandan1);
+        console.log(prince1);
+        console.log(...rest1);
+    </script>
+</body>
+
+</html>

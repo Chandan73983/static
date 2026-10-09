@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p id="demo"></p>
+    <p id="demo1"></p>
+    <script>
+
+        let chandan = {
+            name: "ravi",
+            age: 20,
+            city: "Delhi",
+        };
+        for (let key in chandan) {
+            document.writeln(chandan[key])
+        }
+
+
+        const person = {
+            firstname: "John",
+            lastname: "Doe",
+            age: 50,
+        };
+        delete person.age;
+        document.getElementById("demo").innerHTML = person.firstname + " is " + person.age;
+
+
+
+        // Create nested Objects
+        const myObj = {
+            name: "John",
+            age: 30,
+            myCars: {
+                car1: "Ford",
+                car2: "BMW",
+                car3: "Fiat"
+            }
+        }
+        document.getElementById("demo1").innerHTML = myObj.myCars.car2;
+
+
+        // Create an Object
+        const person1 = {
+            name: "John",
+            age: 30,
+            city: "New York"
+        };
+
+        // Display Properties
+        let text = person1.name + " " + person1.age + " " + person1.city;
+
+        document.getElementById("demo").innerHTML = text;
+        document.writeln("<br>");
+        //simple loop 
+        const arr = [10, 20, 30];
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] === 30) break; // stops the loop when 20 is found
+            document.writeln(arr[i]);
+        }
+        document.writeln("<br>");
+        document.writeln("<br>");
+        //For each loop
+        const arr1 = [10, 20, 30, 50, 40, 60, 80];
+        arr1.forEach((a, b) => {
+            if (b == 5) {
+                document.writeln(a, b);
+            }
+            else { document.writeln(a); }
+        });
+        //Looping Through Objects
+        const marks = {
+            maths: 90,
+            science: 85,
+            english: 88,
+            drawig: 95,
+            socialscience: 95
+        };
+
+        Object.entries(marks).forEach(([item, index]) => {
+            console.log(item + ": " + index);
+        });
+
+        //final
+        const user = {
+            id: 1,
+            name: "Pawan",
+            surname:"yadav",
+            skills: ["JavaScript"],
+            greet() {
+                return "Hi " + this.name;
+            }
+        };
+
+        const updatedUser = {
+            ...user,
+            skills: [...user.skills, "React"]
+        };
+
+        console.log(user.greet());
+        console.log(updatedUser);
+    </script>
+</body>
+
+</html>

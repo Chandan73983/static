@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{width: 200px;
+        height: 200px;
+    background-image: url(/images/pi.png);
+animation-name: myanimation;
+animation-duration: 5s;
+
+position: relative;}
+
+@keyframes myanimation{
+    0%{background-image: url(/images/itchi.jpg); left: 0px; top: 0px;}
+    25%{background-image: url(/images/luffy.jpg); left: 200px; top: 0px;}
+    50%{background-image: url(/images/nature.jpg); left: 200px; top: 200px;}
+    75%{background-image: url(/images/nature1.jpg); left: 0; top: 200px;}
+    100%{background-image: url(/images/cloud1.jpg); left: 0px; top: 0px;}
+}
+
+
+
+    </style>
+</head>
+<body>
+    <h1>CSS Animation</h1>
+
+<p><b>Note:</b> When an animation is finished, it goes back to its original style.</p>
+<div></div>
+
+</body>
+</html>

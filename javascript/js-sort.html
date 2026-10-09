@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var marks = [45, 67, 32, 89, 76];
+        num = window.prompt("ENTER A NUMBER TO SEARCH: ")
+        num = parseInt(num)
+        var inde = marks.findIndex(function(chandan) {
+            return chandan == num;
+        });
+        var value = marks.find(function(chandan) {
+            return chandan == num;
+        });
+        document.writeln(inde);
+        document.writeln("<br>" + value);
+        document.writeln("<br>");
+        document.write(marks.sort().reverse());
+        document.writeln("<br>");
+        document.writeln("<br>");
+
+        var marks = [45, 67, 32, 89, 76];
+
+        for (let k = 0; k < marks.length; k++) {
+            if (marks[k] < 50) {
+                result = marks[k];
+                break;
+            }
+        }
+        document.writeln(result);
+        //number
+        let arr = [12, 45, 85, 95, 65, 32, 45, 125, 25];
+        arr.sort(function(a, b) {
+            return b - a;
+        });
+        document.writeln(arr.join("<br>") + "<br><br>");
+        //name
+
+        let arr1 = ["chandan", "Akhilesh", "Akash", "Ajay", "Ravi", "Rahul", "Prince", "Himanshu", "Deepak"];
+        arr1.sort();
+        document.writeln(arr1.join("<br>"));
+    </script>
+</body>
+
+</html>

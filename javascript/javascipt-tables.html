@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+<body>
+    <script>
+        var students = [{
+            name: "Ravi",
+            course: "HTML",
+            fees: 1000,
+            status: "a",
+            Address: "Hariyana"
+        }, {
+            name: "Anjali",
+            course: "Tally",
+            fees: 1500,
+            status: "b",
+            Address: "Bihar"
+        }, {
+            name: "Manish",
+            course: "Photoshop",
+            fees: 1200,
+            status: "c",
+            Address: "Uttar Pradesh"
+
+        }, {
+            name: "patanjali",
+            course: "Tally",
+            fees: 1500,
+            status: "d",
+            Address: "Delhi"
+        }];
+
+        var output = "<table border='1' cellpadding='8' style='color: black; width: 500px;'>";
+        output += "<tr><th>Name</th><th>Course</th><th>Fees</th><th> Status</th><th>Address</th></tr>";
+
+        for (var i = 0; i < students.length; i++) {
+            output += "<tr>" + "<td>" + students[i].name + "</td>" + "<td>" +
+                students[i].course + "</td><td>" +
+                "₹" + students[i].fees + "</td><td>" + students[i].status + "</td><td>" + students[i].Address + "</td></t>";
+        };
+        output += "</table>";
+        document.writeln(output);
+    </script>
+</body>
+
+</html>

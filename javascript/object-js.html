@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Master JavaScript Objects - Complete Hinglish Course</title>
+    <style>
+        :root {
+            --ink: #151b22;
+            --muted: #56616d;
+            --paper: #f8f7f2;
+            --panel: #ffffff;
+            --line: #dbe1e7;
+            --accent: #0f766e;
+            --accent2: #b45309;
+            --accent3: #4f46e5;
+            --success: #15803d;
+            --danger: #b91c1c;
+            --code: #101923;
+            --code2: #172331;
+            --shadow: 0 18px 45px rgba(16, 24, 40, 0.12);
+            --radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background:
+                linear-gradient(120deg, rgba(15, 118, 110, 0.09), transparent 34%),
+                radial-gradient(circle at 90% 4%, rgba(180, 83, 9, 0.13), transparent 24rem),
+                var(--paper);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.65;
+        }
+
+        button,
+        textarea {
+            font: inherit;
+        }
+
+        .app {
+            display: grid;
+            grid-template-columns: 310px minmax(0, 1fr);
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: auto;
+            background: #f0f2ed;
+            border-right: 1px solid var(--line);
+            padding: 22px 18px;
+        }
+
+        .brand {
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: 1.15rem;
+            line-height: 1.25;
+            letter-spacing: 0;
+        }
+
+        .brand p {
+            margin: 8px 0 0;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .progress-card {
+            border: 1px solid var(--line);
+            background: #fffdf7;
+            border-radius: var(--radius);
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+
+        .progress-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 0.86rem;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .track {
+            height: 10px;
+            background: #e2e6e3;
+            border-radius: 99px;
+            overflow: hidden;
+        }
+
+        .bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            transition: width 0.2s ease;
+        }
+
+        nav {
+            display: grid;
+            gap: 6px;
+        }
+
+        .nav-link {
+            display: grid;
+            grid-template-columns: 30px 1fr;
+            gap: 8px;
+            align-items: start;
+            color: var(--ink);
+            text-decoration: none;
+            padding: 9px 10px;
+            border-radius: var(--radius);
+            border: 1px solid transparent;
+            font-size: 0.9rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: #fff;
+            border-color: var(--line);
+            box-shadow: 0 8px 20px rgba(16, 24, 40, 0.07);
+        }
+
+        .nav-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #dcebe8;
+            color: var(--accent);
+            display: grid;
+            place-items: center;
+            font-size: 0.76rem;
+            font-weight: 850;
+        }
+
+        main {
+            min-width: 0;
+            padding: 28px clamp(14px, 4vw, 56px) 70px;
+        }
+
+        .hero {
+            min-height: 84vh;
+            display: grid;
+            align-content: center;
+            gap: 20px;
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 24px;
+        }
+
+        .kicker {
+            width: max-content;
+            color: var(--accent);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.78rem;
+        }
+
+        .hero h2 {
+            margin: 0;
+            max-width: 980px;
+            font-size: clamp(2.4rem, 6vw, 5.6rem);
+            line-height: 0.98;
+            letter-spacing: 0;
+        }
+
+        .hero p {
+            margin: 0;
+            max-width: 850px;
+            color: var(--muted);
+            font-size: clamp(1.02rem, 1.4vw, 1.22rem);
+        }
+
+        .hero-actions,
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn {
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--ink);
+            min-height: 42px;
+            padding: 9px 14px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 800;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn.primary {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .btn:hover {
+            box-shadow: 0 8px 18px rgba(16, 24, 40, 0.10);
+            transform: translateY(-1px);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+            max-width: 940px;
+        }
+
+        .stat {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius);
+            padding: 14px;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 1.35rem;
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 0.86rem;
+        }
+
+        .chapter {
+            background: rgba(255, 255, 255, 0.86);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin: 22px 0;
+            overflow: hidden;
+        }
+
+        .chapter-head {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 18px;
+            align-items: center;
+            padding: 20px;
+            cursor: pointer;
+            background: linear-gradient(90deg, #fff, #f7faf8);
+        }
+
+        .chapter-head h3 {
+            margin: 0;
+            font-size: clamp(1.35rem, 2.5vw, 2rem);
+            line-height: 1.16;
+            letter-spacing: 0;
+        }
+
+        .chapter-head p {
+            margin: 5px 0 0;
+            color: var(--muted);
+        }
+
+        .chip {
+            border: 1px solid #cbd6d2;
+            background: #f4f8f6;
+            border-radius: 999px;
+            padding: 4px 9px;
+            color: var(--muted);
+            font-size: 0.78rem;
+            font-weight: 800;
+        }
+
+        .chev {
+            width: 42px;
+            height: 42px;
+            border: 1px solid var(--line);
+            background: #fff;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: var(--accent);
+            font-weight: 900;
+        }
+
+        .chapter.open .chev {
+            transform: rotate(180deg);
+        }
+
+        .chapter-body {
+            display: none;
+            padding: 0 20px 22px;
+        }
+
+        .chapter.open .chapter-body {
+            display: block;
+        }
+
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 330px;
+            gap: 18px;
+            align-items: start;
+        }
+
+        .card,
+        .quiz,
+        .try,
+        .side {
+            border: 1px solid var(--line);
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 16px;
+            margin: 14px 0;
+        }
+
+        .side {
+            position: sticky;
+            top: 16px;
+        }
+
+        .card h4,
+        .quiz h4,
+        .try h4 {
+            margin: 0 0 8px;
+            font-size: 1.08rem;
+            letter-spacing: 0;
+        }
+
+        .card p,
+        .card li,
+        .quiz p,
+        .try p {
+            color: #27343e;
+        }
+
+        code {
+            background: #eef3f1;
+            border: 1px solid #d9e4df;
+            padding: 1px 5px;
+            border-radius: 5px;
+            color: #8a3d08;
+        }
+
+        .code-wrap {
+            border: 1px solid #263544;
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin: 12px 0;
+            background: var(--code);
+        }
+
+        .code-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: var(--code2);
+            color: #d9e7ef;
+            padding: 9px 10px;
+            font-size: 0.82rem;
+        }
+
+        .copy {
+            border: 1px solid #506779;
+            background: #243545;
+            color: #fff;
+            border-radius: 6px;
+            padding: 5px 9px;
+            cursor: pointer;
+            min-width: 66px;
+        }
+
+        pre {
+            margin: 0;
+            padding: 14px;
+            overflow: auto;
+            color: #d9fce9;
+            background: var(--code);
+            font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.55;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 180px;
+            resize: vertical;
+            border: 1px solid #b8c6d1;
+            border-radius: var(--radius);
+            background: #0f1720;
+            color: #e6fff2;
+            padding: 12px;
+            font-family: "JetBrains Mono", Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .run-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            align-items: center;
+        }
+
+        .output {
+            border-left: 4px solid var(--accent);
+            background: #effaf6;
+            color: #153b2a;
+            padding: 12px 14px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            white-space: pre-wrap;
+            font-family: Consolas, monospace;
+            margin-top: 10px;
+            min-height: 46px;
+        }
+
+        .diagram {
+            border: 1px dashed #adc2bb;
+            background: #fbfffd;
+            border-radius: var(--radius);
+            padding: 14px;
+            margin: 12px 0;
+            overflow: auto;
+        }
+
+        .flow {
+            display: grid;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .flow.inline {
+            grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+        }
+
+        .node {
+            min-height: 50px;
+            border: 1px solid #bfd3cb;
+            background: #f6fffb;
+            border-radius: var(--radius);
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 10px;
+            font-weight: 850;
+        }
+
+        .arrow {
+            color: var(--accent2);
+            font-weight: 950;
+            text-align: center;
+            font-size: 1.25rem;
+        }
+
+        .memory-grid,
+        .table-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+        }
+
+        .memory-box {
+            border: 1px solid var(--line);
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 12px;
+        }
+
+        .memory-box strong {
+            color: var(--accent);
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: var(--radius);
+            margin: 10px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--line);
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #eef5f2;
+        }
+
+        .quiz-option {
+            display: block;
+            width: 100%;
+            border: 1px solid var(--line);
+            background: #fff;
+            text-align: left;
+            border-radius: var(--radius);
+            padding: 10px 12px;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: #eefaf2;
+        }
+
+        .quiz-option.wrong {
+            border-color: var(--danger);
+            background: #fff1ef;
+        }
+
+        .quiz-result {
+            min-height: 26px;
+            font-weight: 850;
+            margin-top: 8px;
+        }
+
+        .done {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-weight: 850;
+        }
+
+        .done input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent);
+        }
+
+        details {
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 10px 12px;
+            margin: 8px 0;
+            background: #fff;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: 800;
+        }
+
+        .mind {
+            display: grid;
+            gap: 12px;
+            padding: 10px;
+        }
+
+        .mind-center {
+            justify-self: center;
+            background: var(--accent);
+            color: #fff;
+            border-radius: var(--radius);
+            padding: 14px 20px;
+            font-size: 1.25rem;
+            font-weight: 950;
+        }
+
+        .branches {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+            gap: 12px;
+        }
+
+        .branch {
+            border: 1px solid var(--line);
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 12px;
+        }
+
+        .branch strong {
+            color: var(--accent2);
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--muted);
+            padding-top: 28px;
+        }
+
+        @media (max-width: 980px) {
+            .app {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                height: auto;
+                max-height: 56vh;
+            }
+
+            .lesson-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .side {
+                position: relative;
+                top: 0;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 42px 0;
+            }
+        }
+
+        @media (max-width: 560px) {
+            main {
+                padding-inline: 12px;
+            }
+
+            .chapter-head {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="brand">
+                <h1>Master JavaScript Objects</h1>
+                <p>Complete Hinglish Course: object basics se references, deep copy, methods, projects aur interview
+                    prep tak.</p>
+            </div>
+            <div class="progress-card">
+                <div class="progress-row"><span>Course Progress</span><strong id="progressText">0%</strong></div>
+                <div class="track">
+                    <div class="bar" id="progressBar"></div>
+                </div>
+            </div>
+            <nav id="nav"></nav>
+        </aside>
+
+        <main>
+            <section class="hero" id="top">
+                <div class="kicker">JavaScript Objects Course</div>
+                <h2>Master JavaScript Objects - Complete Hinglish Course</h2>
+                <p>
+                    Agar tumhe JavaScript basics aate hain but Objects thode mysterious lagte hain, yeh page tumhare
+                    liye hai.
+                    Yahan Objects ko variables ki mess se lekar memory, this, nested data, arrays of objects, copying,
+                    utility methods,
+                    real projects, debugging aur interviews tak mentor-style Hinglish me samjhaya gaya hai.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn primary" href="#chapter-1">Start Course</a>
+                    <button class="btn" id="openAll" type="button">Open All Chapters</button>
+                    <button class="btn" id="reset" type="button">Reset Progress</button>
+                </div>
+                <div class="stats">
+                    <div class="stat"><strong>20</strong><span>Deep chapters</span></div>
+                    <div class="stat"><strong>20</strong><span>Try It editors</span></div>
+                    <div class="stat"><strong>100+</strong><span>Interview Q&A</span></div>
+                    <div class="stat"><strong>One</strong><span>Self-contained HTML file</span></div>
+                </div>
+            </section>
+            <div id="chapters"></div>
+            <p class="footer">Single HTML file. Embedded CSS and JavaScript only. No external libraries.</p>
+        </main>
+    </div>
+
+    <script>
+        const chapters = [
+            {
+                title: "Why Objects Exist",
+                subtitle: "Variables messy kyun ho jaate hain aur Objects problem kaise solve karte hain.",
+                tags: ["problem", "grouping", "mental model"],
+                theory: "Ab maan lo tum Instagram bana rahe ho. Ek user ke paas name, username, followers, following aur posts hain. Agar tum har value ko alag variable me rakhoge, shuru me easy lagega. Lekin jaise hi dusra user, teesra user, profile settings, address, posts, comments add honge, variables ka jungle ban jayega. JavaScript Objects isi problem ko solve karte hain: related data ko ek single meaningful packet me group karna.",
+                analogy: "Object ko ek school admission form samjho. Form ke andar student ka name, age, class, city, parent phone sab ek jagah hota hai. Agar har field alag paper par hoti, office me chaos ho jata. Object wahi organized form hai.",
+                steps: ["Alag variables tab okay hain jab data tiny aur unrelated ho.", "Related data ko ek naam ke under group karna readable hota hai.", "Object ek container hai jisme key-value pairs hote hain.", "Object real-world entity ko represent karta hai: user, product, order, employee.", "Object ke saath code scalable aur maintainable hota hai."],
+                code: `let name = "Pawan";
+let age = 22;
+let city = "Delhi";
+
+const user = {
+  name: "Pawan",
+  age: 22,
+  city: "Delhi"
+};
+
+console.log(user);`,
+                output: `{ name: "Pawan", age: 22, city: "Delhi" }`,
+                tryCode: `const user = {
+  name: "Pawan",
+  age: 22,
+  city: "Delhi"
+};
+
+console.log("User name:", user.name);
+console.log("Full object:", user);`,
+                mistakes: ["Har user ke liye name1, age1, name2, age2 jaise variables banana.", "Related data ko group na karna.", "Object ko sirf syntax samajhna, real-world modeling nahi."],
+                best: ["Jab bhi ek entity ke multiple details ho, object socho.", "Object ka naam meaningful rakho: user, product, order.", "Keys ko consistent naming style me rakho."],
+                quiz: { q: "Objects ka main purpose kya hai?", options: ["Related data ko group karna", "CSS ko replace karna", "Browser close karna"], answer: 0 },
+                exercise: ["Ek `movie` object banao jisme title, rating, year ho.", "Ek `book` object banao aur uska title print karo."],
+                diagram: "why"
+            },
+            {
+                title: "Creating Objects",
+                subtitle: "Object literal syntax, {}, keys, values, properties, property names.",
+                tags: ["literal", "keys", "properties"],
+                theory: "JavaScript me object banane ka sabse common tareeka object literal hai. Literal ka matlab direct value likhna. Curly braces `{}` ke andar tum properties likhte ho. Property ek key-value pair hota hai. Key ko property name bhi bolte hain, aur value koi bhi JavaScript value ho sakti hai: string, number, boolean, array, function, ya dusra object.",
+                analogy: "Object literal ek contact card jaisa hai. Card ke left side labels hain: name, phone, email. Right side values hain: Pawan, 999..., pawan@example.com. Label key hai, actual information value hai.",
+                steps: ["`const user =` variable me object store karta hai.", "`{}` object boundary define karta hai.", "`name` key/property name hai.", "`\"Pawan\"` value hai.", "Comma multiple properties ko separate karta hai."],
+                code: `const user = {
+  name: "Pawan",
+  age: 22,
+  isStudent: true
+};
+
+console.log(user.name);
+console.log(user.age);`,
+                output: `Pawan
+22`,
+                tryCode: `const product = {
+  name: "Laptop",
+  price: 55000,
+  inStock: true
+};
+
+console.log(product);`,
+                mistakes: ["Colon ki jagah equal sign use karna inside object.", "Properties ke beech comma bhool jana.", "String value ko quote na karna."],
+                best: ["Object ko readable multi-line format me likho.", "Property names descriptive rakho.", "Boolean properties me `is`, `has`, `can` prefix useful hota hai."],
+                quiz: { q: "Object literal kis symbol se banta hai?", options: ["{}", "[]", "<>"], answer: 0 },
+                exercise: ["Ek `student` object banao with name, rollNo, passed.", "Line-by-line explain karo ki key aur value kya hai."],
+                diagram: "literal"
+            },
+            {
+                title: "Accessing Properties",
+                subtitle: "Dot notation, bracket notation, dynamic keys, when to use which.",
+                tags: ["dot", "bracket", "dynamic"],
+                theory: "Object banane ke baad uske andar ki values access karni hoti hain. Dot notation sabse clean hai: `user.name`. Bracket notation tab powerful hoti hai jab key dynamic ho, key me space/special character ho, ya key variable se aani ho. Dono ka goal same hai: object ke andar se property value nikalna.",
+                analogy: "Dot notation ghar ke fixed room tak seedha jaana hai: user.name. Bracket notation reception se room number puchkar jaana hai: user[key]. Jab room ka naam pehle se pata hai, dot easy. Jab naam runtime par decide ho, bracket useful.",
+                steps: ["Dot notation: objectName.propertyName.", "Bracket notation: objectName[\"propertyName\"].", "Variable key ke liye bracket use hota hai.", "Missing property access karoge to `undefined` milega.", "Property name me space ho to bracket notation zaruri."],
+                code: `const user = {
+  name: "Pawan",
+  "home city": "Delhi"
+};
+
+console.log(user.name);
+console.log(user["name"]);
+console.log(user["home city"]);
+
+const key = "name";
+console.log(user[key]);`,
+                output: `Pawan
+Pawan
+Delhi
+Pawan`,
+                tryCode: `const employee = {
+  name: "Riya",
+  role: "Frontend Developer",
+  "joining year": 2025
+};
+
+const field = "role";
+console.log(employee.name);
+console.log(employee[field]);
+console.log(employee["joining year"]);`,
+                mistakes: ["Dynamic key ke liye `user.key` likhna jab actual key variable me hai.", "Space wali property ko dot notation se access karna.", "Undefined ko error samajhna bina key spelling check kiye."],
+                best: ["Normal fixed keys ke liye dot notation use karo.", "Dynamic/special keys ke liye bracket notation use karo.", "Optional data access me default value rakho."],
+                quiz: { q: "Dynamic property access ke liye kaunsi notation best hai?", options: ["Bracket notation", "Dot notation only", "HTML notation"], answer: 0 },
+                exercise: ["Ek object me key variable se value access karo.", "Ek property name with space access karke dekho."],
+                diagram: "access"
+            },
+            {
+                title: "Modifying Objects",
+                subtitle: "Adding, updating, deleting properties with practical examples.",
+                tags: ["add", "update", "delete"],
+                theory: "Objects mutable hote hain. Matlab tum object banane ke baad usme property add kar sakte ho, existing property update kar sakte ho, aur property delete bhi kar sakte ho. Ye real apps me common hai: user login ke baad token add karna, product stock update karna, temporary field remove karna.",
+                analogy: "Object ek editable form hai. Pehle form me name aur age tha. Baad me phone number add kiya. Address galat tha to update kiya. Ek temporary note tha to delete kar diya.",
+                steps: ["Add: `object.newKey = value`.", "Update: same syntax existing key par new value assign karta hai.", "Delete: `delete object.key` property remove karta hai.", "`const` object ka reference fixed rakhta hai, properties still change ho sakti hain.", "Mutation ka impact references par hota hai, jo later chapters me deep hoga."],
+                code: `const user = {
+  name: "Pawan",
+  age: 22
+};
+
+user.city = "Delhi";
+user.age = 23;
+delete user.city;
+
+console.log(user);`,
+                output: `{ name: "Pawan", age: 23 }`,
+                tryCode: `const product = {
+  name: "Phone",
+  price: 20000
+};
+
+product.inStock = true;
+product.price = 18500;
+delete product.inStock;
+
+console.log(product);`,
+                mistakes: ["`const` object ko immutable samajhna.", "Delete ko array item remove jaise use karna without understanding.", "Accidental typo se new property create kar dena: `user.naem`."],
+                best: ["Update karte waqt key spelling carefully check karo.", "State management me direct mutation avoid karna pad sakta hai.", "Delete ka use thoughtfully karo; kabhi null set karna clearer hota hai."],
+                quiz: { q: "`const user = {}` ke andar properties update ho sakti hain?", options: ["Haan", "Nahi", "Sirf browser me nahi"], answer: 0 },
+                exercise: ["Student object me email add karo.", "Product price update karo.", "Temporary property delete karo."],
+                diagram: "modify"
+            },
+            {
+                title: "Objects and Memory",
+                subtitle: "Primitive values, reference values, and visual memory model.",
+                tags: ["memory", "primitive", "reference"],
+                theory: "JavaScript me primitive values jaise string, number, boolean directly value ke form me behave karte hain. Objects reference values hote hain. Variable ke andar poora object physically copy nahi hota; variable object ke memory location ka reference rakhta hai. Isi wajah se ek object ko dusre variable me assign karne par dono same object ko point kar sakte hain.",
+                analogy: "Primitive value photocopy jaisi hai: ek paper ka independent copy. Object reference Google Drive link jaisa hai: do logon ke paas same link hai, file same hai. Ek change karega to dusre ko bhi updated file dikhegi.",
+                steps: ["Primitive assignment me value copy hoti hai.", "Object assignment me reference copy hota hai.", "Heap memory me object stored hota hai.", "Variable stack-like environment me reference rakhta hai.", "Reference sharing mutations ko visible bana deta hai."],
+                code: `let a = 10;
+let b = a;
+b = 20;
+console.log(a);
+
+const user1 = { name: "Pawan" };
+const user2 = user1;
+user2.name = "Aman";
+console.log(user1.name);`,
+                output: `10
+Aman`,
+                tryCode: `const original = { score: 50 };
+const copy = original;
+
+copy.score = 99;
+
+console.log("original:", original.score);
+console.log("copy:", copy.score);`,
+                mistakes: ["Object assignment ko real copy samajhna.", "Shared reference mutation debug na kar paana.", "Primitive aur object behavior same expect karna."],
+                best: ["Jab object assign karo, socho: copy chahiye ya same reference?", "Mutation ke before/after logs dekho.", "Copying ke liye spread, Object.assign, structuredClone later use karoge."],
+                quiz: { q: "Object variable normally kya store karta hai?", options: ["Reference", "CSS selector", "Database table"], answer: 0 },
+                exercise: ["Primitive copy aur object reference ka example run karo.", "Ek shared object mutate karke output observe karo."],
+                diagram: "memory"
+            },
+            {
+                title: "Object Methods",
+                subtitle: "Functions inside objects, method vs function, real-world behavior.",
+                tags: ["methods", "behavior", "functions"],
+                theory: "Object ke andar function ko method bolte hain. Property data describe karti hai, method behavior describe karta hai. User object ke paas name property ho sakti hai aur greet method ho sakta hai. Product object ke paas price property aur applyDiscount method ho sakta hai. Object data + behavior ko ek meaningful unit bana sakta hai.",
+                analogy: "Car object me color aur model properties hain. Start, brake, horn methods hain. Properties batati hain car kaisi hai; methods batate hain car kya kar sakti hai.",
+                steps: ["Function object ke bahar ho to normal function.", "Function object ke andar property ke form me ho to method.", "Modern shorthand syntax: `greet() {}`.", "Method return kar sakta hai ya object update kar sakta hai.", "`this` method ke andar current object se connect karta hai, next chapter me deep."],
+                code: `const user = {
+  name: "Pawan",
+  greet() {
+    return "Hello";
+  }
+};
+
+console.log(user.greet());`,
+                output: `Hello`,
+                tryCode: `const calculator = {
+  add(a, b) {
+    return a + b;
+  },
+  multiply(a, b) {
+    return a * b;
+  }
+};
+
+console.log(calculator.add(5, 3));
+console.log(calculator.multiply(5, 3));`,
+                mistakes: ["Method call me parentheses bhoolna: `user.greet` vs `user.greet()`.", "Method ko property value samajhkar execute na karna.", "`this` ka meaning prematurely guess karna."],
+                best: ["Methods ko action names do: greet, calculateTotal, updateStock.", "Agar method object data use karta hai, `this` useful hota hai.", "Pure data objects aur behavior objects ka difference samjho."],
+                quiz: { q: "Object ke andar function ko kya bolte hain?", options: ["Method", "Tag", "Selector"], answer: 0 },
+                exercise: ["Product object me `getPrice` method banao.", "Student object me `introduce` method banao."],
+                diagram: "methods"
+            },
+            {
+                title: "Understanding this",
+                subtitle: "Deep explanation, execution flow, mistakes, interview focus.",
+                tags: ["this", "context", "interview"],
+                theory: "`this` JavaScript ka woh keyword hai jo current execution context ke hisab se value leta hai. Object method ke andar normal call `user.greet()` me `this` usually `user` ko point karta hai. Lekin function ko alag variable me store karke call karo, arrow function use karo, event handler use karo, ya bind/call/apply use karo, to behavior change ho sakta hai. `this` ko ratne ki jagah call-site se samjho: function kaise call hua?",
+                analogy: "`this` ko classroom ke 'main' word jaisa samjho. Agar Pawan bole 'main student hoon', main Pawan hai. Agar teacher bole 'main teacher hoon', main teacher hai. Same word, speaker ke context ke hisab se meaning change.",
+                steps: ["Method call: left side object important hota hai, `user.greet()`.", "Inside greet, `this.name` means current user ka name.", "Function detach kar doge to context lose ho sakta hai.", "Arrow function apna `this` create nahi karta.", "Interview answer: `this` depends on how function is called, not where it is written."],
+                code: `const user = {
+  name: "Pawan",
+  greet() {
+    return "Hello " + this.name;
+  }
+};
+
+console.log(user.greet());
+
+const greetFn = user.greet;
+console.log(greetFn());`,
+                output: `Hello Pawan
+Hello undefined  // strict/runtime context ke hisab se different ho sakta hai`,
+                tryCode: `const user = {
+  name: "Pawan",
+  normalMethod() {
+    console.log("normal:", this.name);
+  },
+  arrowMethod: () => {
+    console.log("arrow this is not user:", this);
+  }
+};
+
+user.normalMethod();
+user.arrowMethod();`,
+                mistakes: ["Arrow method me `this` ko object expect karna.", "Detached method me context lose hona.", "`this` ko variable ki tarah fixed value samajhna.", "Callback me `this` ka value badal jana."],
+                best: ["Object methods ke liye normal method syntax prefer karo.", "Call-site inspect karo: function kis object ke through call hua?", "Callbacks me arrow/bind thoughtfully use karo.", "Interview me examples ke saath answer do."],
+                quiz: { q: "`this` ko samajhne ka best rule kya hai?", options: ["Function kaise call hua dekho", "Function kis line pe likha hai bas wahi dekho", "CSS file dekho"], answer: 0 },
+                exercise: ["Normal method aur arrow method ka difference run karo.", "Ek method detach karke call karo aur output observe karo."],
+                diagram: "this"
+            },
+            {
+                title: "Nested Objects",
+                subtitle: "Objects inside objects: user, address, company, deep access.",
+                tags: ["nested", "deep access", "optional"],
+                theory: "Real-world data flat nahi hota. User ke andar address ho sakta hai. Address ke andar city, state, pincode. Employee ke andar company object. Company ke andar department object. Nested objects related sub-details ko group karte hain. Access karte waqt har level par dot ya bracket chain follow karni hoti hai.",
+                analogy: "Nested object ek folder ke andar folder jaisa hai. User folder ke andar address folder, address ke andar city file. City tak pahunchne ke liye path follow karna padega: user -> address -> city.",
+                steps: ["Outer object create karo.", "Property value ke form me another object rakho.", "Access: `user.address.city`.", "Agar beech ka level missing ho to error aa sakta hai.", "Optional chaining `?.` safe access me help karta hai."],
+                code: `const user = {
+  name: "Pawan",
+  address: {
+    city: "Delhi",
+    pincode: 110001
+  },
+  company: {
+    name: "TechKart",
+    role: "Developer"
+  }
+};
+
+console.log(user.address.city);
+console.log(user.company.role);`,
+                output: `Delhi
+Developer`,
+                tryCode: `const user = {
+  name: "Riya",
+  address: {
+    city: "Mumbai",
+    state: "Maharashtra"
+  }
+};
+
+console.log(user.address.city);
+console.log(user.profile?.bio || "Bio missing");`,
+                mistakes: ["Deep access me missing level par crash.", "Too much nesting create karna.", "Same info duplicate places me store karna."],
+                best: ["Nested data logically group karo.", "Unknown external data me optional chaining use karo.", "Deep structure ka sample documentation rakho."],
+                quiz: { q: "Safe deep access ke liye modern JS me kya useful hai?", options: ["Optional chaining ?. ", "HTML table", "delete always"], answer: 0 },
+                exercise: ["Employee object me company.address.city access karo.", "Missing profile.bio ko optional chaining se read karo."],
+                diagram: "nested"
+            },
+            {
+                title: "Arrays of Objects",
+                subtitle: "Students, products, employees, looping through object lists.",
+                tags: ["arrays", "lists", "loops"],
+                theory: "Real apps me ek user nahi, users ki list hoti hai. Ek product nahi, product catalog hota hai. Isliye arrays of objects bahut common hain. Array list manage karta hai, object har item ka detailed data manage karta hai. Students list me har student object; products list me har product object.",
+                analogy: "Class register array hai. Register ki har row ek student object hai. Row ke andar name, rollNo, marks. Array list structure deta hai, object each record ka structure deta hai.",
+                steps: ["Array square brackets se banta hai.", "Har item object ho sakta hai.", "Loop ke liye `forEach`, `map`, `filter` useful hain.", "Item properties dot notation se access hoti hain.", "Real UI cards/tables arrays of objects se render hote hain."],
+                code: `const students = [
+  { name: "Pawan", marks: 85 },
+  { name: "Riya", marks: 92 },
+  { name: "Aman", marks: 76 }
+];
+
+students.forEach(student => {
+  console.log(student.name, student.marks);
+});`,
+                output: `Pawan 85
+Riya 92
+Aman 76`,
+                tryCode: `const products = [
+  { name: "Laptop", price: 55000 },
+  { name: "Mouse", price: 700 },
+  { name: "Keyboard", price: 1500 }
+];
+
+const affordable = products.filter(product => product.price < 2000);
+console.table(affordable);`,
+                mistakes: ["Array item ko object access ke bina print karna aur confusion.", "Loop me wrong variable name use karna.", "Filter/map return values ignore karna."],
+                best: ["List data ke liye array of objects natural choice hai.", "Each object ka shape consistent rakho.", "IDs add karo for updates/deletes."],
+                quiz: { q: "Product catalog usually kis structure me hota hai?", options: ["Array of objects", "Single string", "Only boolean"], answer: 0 },
+                exercise: ["Employees array banao aur names print karo.", "Products me price > 1000 filter karo."],
+                diagram: "arrayObjects"
+            },
+            {
+                title: "Objects with Arrays",
+                subtitle: "Object property ke andar arrays: skills, posts, orders, tags.",
+                tags: ["arrays inside", "skills", "collections"],
+                theory: "Kabhi object ek entity represent karta hai, aur us entity ke andar list hoti hai. User ke skills array, product ke images array, order ke items array, Instagram user ke posts array. Object main entity hai, array uske multiple related values store karta hai.",
+                analogy: "Resume object samjho. Resume ka name single value hai, lekin skills multiple hain. Isliye `skills` property ek array ban jaati hai. Same tarah Amazon product ke multiple images hote hain.",
+                steps: ["Object property value array ho sakti hai.", "Access: `user.skills[0]`.", "Add: `user.skills.push(\"React\")`.", "Loop: `user.skills.forEach(...)`.", "Nested arrays ko carefully mutate karo."],
+                code: `const user = {
+  name: "Pawan",
+  skills: ["PHP", "JavaScript", "React"]
+};
+
+console.log(user.skills[1]);
+user.skills.push("Node.js");
+console.log(user.skills);`,
+                output: `JavaScript
+["PHP", "JavaScript", "React", "Node.js"]`,
+                tryCode: `const profile = {
+  username: "pawan_dev",
+  followers: 1200,
+  posts: ["JS Objects", "PHP Tips"]
+};
+
+profile.posts.push("React Notes");
+profile.posts.forEach(post => console.log(post));`,
+                mistakes: ["Array property ko string samajhna.", "Index out of range access karke undefined milna.", "Original array mutate karna jab copy expected thi."],
+                best: ["Array property names plural rakho: skills, posts, items.", "Push/splice mutation samajhkar use karo.", "UI state me immutable update patterns useful hote hain."],
+                quiz: { q: "`user.skills[0]` me `skills` kya hai?", options: ["Array property", "Function only", "HTML tag"], answer: 0 },
+                exercise: ["User skills me new skill add karo.", "Order items ka total calculate karo."],
+                diagram: "objectArrays"
+            },
+            {
+                title: "Looping Through Objects",
+                subtitle: "for...in, Object.keys(), Object.values(), Object.entries() with comparison table.",
+                tags: ["iteration", "keys", "entries"],
+                theory: "Kabhi object ki property names fixed nahi hoti. Tab tumhe object ke keys/values loop karne padte hain. `for...in` keys iterate karta hai. `Object.keys()` keys ka array deta hai. `Object.values()` values ka array deta hai. `Object.entries()` key-value pairs ka array deta hai. Modern code me Object.entries kaafi readable hota hai.",
+                analogy: "Object ek cupboard hai. `Object.keys()` drawers ke labels ki list deta hai. `Object.values()` drawers ke andar ka samaan deta hai. `Object.entries()` label + samaan dono pair me deta hai.",
+                steps: ["`for...in` se key milti hai.", "`object[key]` se value access hoti hai.", "`Object.keys(obj)` array of keys deta hai.", "`Object.values(obj)` array of values deta hai.", "`Object.entries(obj)` nested pairs deta hai: `[key, value]`."],
+                code: `const user = {
+  name: "Pawan",
+  age: 22,
+  city: "Delhi"
+};
+
+for (const key in user) {
+  console.log(key, user[key]);
+}
+
+console.log(Object.keys(user));
+console.log(Object.values(user));
+console.log(Object.entries(user));`,
+                output: `name Pawan
+age 22
+city Delhi
+["name", "age", "city"]
+["Pawan", 22, "Delhi"]
+[["name","Pawan"], ["age",22], ["city","Delhi"]]`,
+                tryCode: `const marks = {
+  maths: 90,
+  science: 85,
+  english: 88
+};
+
+Object.entries(marks).forEach(([subject, score]) => {
+  console.log(subject + ":", score);
+});`,
+                mistakes: ["for...in me value directly expect karna.", "Object.keys result ko object samajhna, array nahi.", "Inherited properties ka concept ignore karna in advanced cases."],
+                best: ["Own properties ke liye Object.keys/entries commonly use karo.", "Dynamic display ke liye entries useful.", "Comparison table ya mental model yaad rakho."],
+                quiz: { q: "Key-value pairs ka array kaunsa method deta hai?", options: ["Object.entries()", "Object.allPairsOnly()", "Array.object()"], answer: 0 },
+                exercise: ["Object.values se total marks calculate karo.", "Object.entries se settings print karo."],
+                diagram: "loop"
+            },
+            {
+                title: "Destructuring",
+                subtitle: "Basic destructuring, nested destructuring, real-world examples.",
+                tags: ["destructure", "clean code", "nested"],
+                theory: "Destructuring object se properties nikalne ka short syntax hai. Agar tum baar-baar `user.name`, `user.age` likh rahe ho, to `const { name, age } = user` se variables create kar sakte ho. Nested destructuring se nested object ki values directly nikal sakte ho. Function parameters me destructuring APIs aur components me bahut useful hoti hai.",
+                analogy: "Courier box me multiple items hain. Destructuring matlab box kholkar required items table par alag rakh lena: name yahan, age yahan. Ab baar-baar box me haath nahi dalna.",
+                steps: ["Left side pattern object shape jaisa hota hai.", "Property name same ho to variable same naam se ban jata hai.", "Rename: `{ name: userName }`.", "Default value: `{ role = \"guest\" }`.", "Nested: `{ address: { city } }`."],
+                code: `const user = {
+  name: "Pawan",
+  age: 22,
+  address: { city: "Delhi" }
+};
+
+const { name, age } = user;
+const { address: { city } } = user;
+
+console.log(name, age, city);`,
+                output: `Pawan 22 Delhi`,
+                tryCode: `const product = {
+  name: "Laptop",
+  price: 55000,
+  seller: { name: "TechStore" }
+};
+
+const { name, price } = product;
+const { seller: { name: sellerName } } = product;
+
+console.log(name, price, sellerName);`,
+                mistakes: ["Nested destructuring me missing object par crash.", "Rename syntax confuse karna.", "Destructuring ko mutation samajhna; ye sirf values extract karta hai."],
+                best: ["2-4 fields ke liye destructuring readability improve karta hai.", "Deep destructuring overuse mat karo.", "Function parameters me defaults useful hain."],
+                quiz: { q: "`const { name } = user` kya karta hai?", options: ["user.name ko name variable me nikalta hai", "user delete karta hai", "array sort karta hai"], answer: 0 },
+                exercise: ["User se name aur city destructure karo.", "Product seller name rename karke nikalo."],
+                diagram: "destructure"
+            },
+            {
+                title: "Spread Operator",
+                subtitle: "Copying, updating, merging objects and common mistakes.",
+                tags: ["spread", "copy", "merge"],
+                theory: "Object spread `...` object ki enumerable own properties ko ek naye object me spread karta hai. Isse shallow copy, update aur merge kar sakte ho. React/Redux style immutable updates me ye bahut common hai. Lekin spread deep copy nahi karta; nested objects references share kar sakte hain.",
+                analogy: "Spread ek photocopy machine jaisa hai jo top-level form copy kar deta hai. Lekin agar form ke saath ek attached folder ka link tha, woh link same reh sakta hai. Nested objects ke case me ye important hai.",
+                steps: ["Copy: `{ ...user }`.", "Update: `{ ...user, age: 23 }`.", "Merge: `{ ...defaults, ...settings }`.", "Later properties earlier properties ko override karti hain.", "Nested data ke liye shallow copy limitation yaad rakho."],
+                code: `const user = { name: "Pawan", age: 22 };
+
+const copiedUser = { ...user };
+const updatedUser = { ...user, age: 23 };
+const merged = { role: "student", ...user };
+
+console.log(copiedUser);
+console.log(updatedUser);
+console.log(merged);`,
+                output: `{ name: "Pawan", age: 22 }
+{ name: "Pawan", age: 23 }
+{ role: "student", name: "Pawan", age: 22 }`,
+                tryCode: `const defaults = {
+  theme: "light",
+  notifications: true
+};
+
+const userSettings = {
+  theme: "dark"
+};
+
+const finalSettings = { ...defaults, ...userSettings };
+console.log(finalSettings);`,
+                mistakes: ["Spread ko deep copy samajhna.", "Merge order galat rakhna.", "Nested object update me inner object copy bhoolna."],
+                best: ["Immutable top-level updates ke liye spread excellent hai.", "Merge order consciously choose karo.", "Nested update me nested spread use karo."],
+                quiz: { q: "Object spread copy kis level tak hoti hai?", options: ["Shallow/top-level", "Always infinite deep", "Only CSS level"], answer: 0 },
+                exercise: ["User age immutably update karo.", "Default settings aur user settings merge karo."],
+                diagram: "spread"
+            },
+            {
+                title: "Object References",
+                subtitle: "Reference vs copy with visual memory diagrams and interview focus.",
+                tags: ["reference", "copy", "interview"],
+                theory: "Object references interview ka favorite topic hai kyunki yahan se bugs bhi aate hain. Jab tum `const b = a` karte ho aur a object hai, to naya object nahi banta. `b` same object ka reference le leta hai. Agar `b.name` change hua, `a.name` bhi changed dikhega because actual object same hai. Real copy ke liye copy operation chahiye.",
+                analogy: "Agar do employees ko same shared Google Sheet ka link mila hai, ek employee cell edit karega to dusre ko bhi updated value dikhegi. Agar independent Excel copy chahiye to file duplicate karni padegi.",
+                steps: ["Object create hota hai heap-like memory area me.", "Variable reference rakhta hai.", "Assignment reference copy karta hai.", "Mutation shared object par hoti hai.", "Comparison `obj1 === obj2` true tab hota hai jab same reference ho."],
+                code: `const a = { count: 1 };
+const b = a;
+
+console.log(a === b);
+b.count = 2;
+console.log(a.count);
+
+const c = { count: 2 };
+console.log(a === c);`,
+                output: `true
+2
+false`,
+                tryCode: `const user1 = { name: "Pawan" };
+const user2 = user1;
+const user3 = { name: "Pawan" };
+
+console.log(user1 === user2);
+console.log(user1 === user3);
+
+user2.name = "Aman";
+console.log(user1.name);`,
+                mistakes: ["Same content wale objects ko equal expect karna.", "Reference copy ko clone samajhna.", "Shared mutation se old data corrupt karna."],
+                best: ["Equality me reference vs value difference yaad rakho.", "Original preserve karna ho to clone create karo.", "Interview me diagram bana kar explain karo."],
+                quiz: { q: "`{name:'A'} === {name:'A'}` ka result kya hota hai?", options: ["false", "true", "syntax error"], answer: 0 },
+                exercise: ["Same content ke do objects compare karo.", "Reference assignment mutate karke output dekho."],
+                diagram: "refs"
+            },
+            {
+                title: "Deep Copy vs Shallow Copy",
+                subtitle: "Spread, Object.assign(), structuredClone(), when to use which.",
+                tags: ["deep copy", "shallow copy", "structuredClone"],
+                theory: "Shallow copy top-level properties copy karta hai. Nested objects/arrays references share kar sakte hain. Spread aur Object.assign shallow copy dete hain. Deep copy nested structure ko bhi independent bana deta hai. Modern JavaScript me `structuredClone()` many cases me deep clone ke liye useful hai. Functions, DOM nodes jaise values ke limitations ho sakte hain.",
+                analogy: "Shallow copy ek form ki photocopy hai jisme attached folder ka link same hai. Deep copy form + attached folder ke andar ke documents sab duplicate kar deta hai.",
+                steps: ["Spread: simple top-level copy.", "Object.assign: older/common shallow copy.", "structuredClone: deeper independent copy for structured data.", "Nested mutation se test karo copy deep hai ya shallow.", "Performance aur data type limitations samjho."],
+                code: `const user = {
+  name: "Pawan",
+  address: { city: "Delhi" }
+};
+
+const shallow = { ...user };
+shallow.address.city = "Mumbai";
+console.log(user.address.city);
+
+const deep = structuredClone(user);
+deep.address.city = "Jaipur";
+console.log(user.address.city);`,
+                output: `Mumbai
+Mumbai`,
+                tryCode: `const original = {
+  name: "Pawan",
+  skills: ["JS", "React"]
+};
+
+const shallow = { ...original };
+shallow.skills.push("Node");
+
+console.log("original after shallow:", original.skills);
+
+const deep = structuredClone(original);
+deep.skills.push("PHP");
+
+console.log("original after deep:", original.skills);
+console.log("deep:", deep.skills);`,
+                mistakes: ["Spread ko deep clone bolna.", "JSON stringify/parse clone ke limitations ignore karna.", "structuredClone browser support/unsupported values na samajhna."],
+                best: ["Simple flat object ke liye spread enough.", "Nested structured data ke liye structuredClone consider karo.", "Huge data clone karte waqt performance socho."],
+                quiz: { q: "Spread operator object copy kis type ki hoti hai?", options: ["Shallow copy", "Deep copy always", "No copy"], answer: 0 },
+                exercise: ["Nested address shallow copy example run karo.", "structuredClone se independent copy banao."],
+                diagram: "copy"
+            },
+            {
+                title: "Object Utility Methods",
+                subtitle: "Object.keys, values, entries, freeze, seal, hasOwn with examples.",
+                tags: ["utilities", "freeze", "seal"],
+                theory: "JavaScript Object constructor ke paas useful static methods hain. `Object.keys`, `Object.values`, `Object.entries` iteration me help karte hain. `Object.freeze` object ko add/update/delete se protect karta hai. `Object.seal` add/delete block karta hai but existing writable properties update ho sakti hain. `Object.hasOwn` safe own-property check ke liye modern method hai.",
+                analogy: "Utility methods object ke toolbox jaise hain. Keys labels nikalne ka tool, values data nikalne ka tool, entries label+data pair tool, freeze locker, seal zip-lock bag, hasOwn verification stamp.",
+                steps: ["Object.keys(obj): property names.", "Object.values(obj): property values.", "Object.entries(obj): pairs.", "Object.freeze(obj): lock object strongly.", "Object.seal(obj): shape lock, existing values update possible.", "Object.hasOwn(obj, key): key object ki own property hai ya nahi."],
+                code: `const user = { name: "Pawan", age: 22 };
+
+console.log(Object.keys(user));
+console.log(Object.values(user));
+console.log(Object.entries(user));
+console.log(Object.hasOwn(user, "name"));
+
+Object.freeze(user);
+user.age = 23;
+console.log(user.age);`,
+                output: `["name", "age"]
+["Pawan", 22]
+[["name", "Pawan"], ["age", 22]]
+true
+22`,
+                tryCode: `const settings = {
+  theme: "dark",
+  language: "en"
+};
+
+console.log(Object.keys(settings));
+console.log(Object.hasOwn(settings, "theme"));
+
+Object.seal(settings);
+settings.theme = "light";
+settings.newOption = true;
+
+console.log(settings);`,
+                mistakes: ["freeze ko deep freeze samajhna.", "seal me existing property update allowed hai ye bhoolna.", "hasOwnProperty directly call karna unsafe objects par."],
+                best: ["Iteration ke liye keys/values/entries choose karo based on need.", "Critical config lock karne ke liye freeze useful.", "Property existence ke liye Object.hasOwn modern and safe."],
+                quiz: { q: "Own property check ke liye modern method kya hai?", options: ["Object.hasOwn()", "Object.checkKey()", "key.exists()"], answer: 0 },
+                exercise: ["Object.entries se table-like output print karo.", "freeze object mutate karke behavior observe karo."],
+                diagram: "utils"
+            },
+            {
+                title: "Real Projects",
+                subtitle: "Student, Employee, Product Catalog, Social Profile using Objects.",
+                tags: ["projects", "real world", "practice"],
+                theory: "Objects ka real power projects me dikhta hai. Student Management me student object, Employee Management me employee object, E-commerce me product object, Social Media me profile object. Jab tum entity ko object ke form me model karna seekh jaate ho, tum data-driven UI aur logic naturally build karne lagte ho.",
+                analogy: "Har real app ek collection of entities hoti hai. School app me student, teacher, class. Company app me employee, department, salary. Amazon me product, cart, order. Instagram me user, post, comment. Objects in entities ko code me shape dete hain.",
+                steps: ["Entity identify karo.", "Uski properties list karo.", "Behavior/methods decide karo.", "Single object se start karo.", "List chahiye to array of objects banao.", "CRUD style operations add karo."],
+                code: `const productCatalog = [
+  { id: 1, name: "Laptop", price: 55000, stock: 5 },
+  { id: 2, name: "Mouse", price: 700, stock: 25 }
+];
+
+function findProduct(id) {
+  return productCatalog.find(product => product.id === id);
+}
+
+function updateStock(id, quantity) {
+  const product = findProduct(id);
+  if (product) product.stock += quantity;
+  return product;
+}
+
+console.log(updateStock(1, -1));`,
+                output: `{ id: 1, name: "Laptop", price: 55000, stock: 4 }`,
+                tryCode: `const students = [
+  { id: 1, name: "Pawan", marks: 85 },
+  { id: 2, name: "Riya", marks: 92 }
+];
+
+function addStudent(name, marks) {
+  students.push({ id: Date.now(), name, marks });
+}
+
+function getTopStudents() {
+  return students.filter(student => student.marks >= 90);
+}
+
+addStudent("Aman", 91);
+console.table(getTopStudents());`,
+                mistakes: ["Project entity shape clear na karna.", "ID na rakhna aur update/delete difficult banana.", "Business logic aur display logic mix karna."],
+                best: ["Entity model pehle design karo.", "CRUD operations functions me rakho.", "Array of objects with stable IDs use karo.", "Methods and utilities ko small rakho."],
+                quiz: { q: "Update/delete project data ke liye object me kya hona useful hai?", options: ["Unique id", "Random color only", "Browser history"], answer: 0 },
+                exercise: ["Employee object design karo.", "Social profile object me posts array add karo.", "Product catalog me out-of-stock filter banao."],
+                diagram: "projects"
+            },
+            {
+                title: "Debugging Objects",
+                subtitle: "console.log, console.table, inspecting objects, undefined values, common bugs.",
+                tags: ["debug", "console", "undefined"],
+                theory: "Objects debug karna ek skill hai. `console.log` quick view deta hai. `console.table` arrays of objects ko table me dikhata hai. Undefined values ka reason usually spelling mistake, missing nested path, wrong access notation, ya async data not loaded hota hai. Debugging ka goal guess karna nahi, current data shape inspect karna hai.",
+                analogy: "Mechanic car kholkar parts inspect karta hai. Woh guess nahi karta ki engine issue hai ya battery. Same way developer object inspect karta hai: actual keys kya hain, values kya hain, nested path exist karta hai ya nahi.",
+                steps: ["Object ko console.log karo.", "Array of objects ko console.table karo.", "Object.keys se available keys dekho.", "Missing path me optional chaining use karo.", "Typos compare karo: `username` vs `userName`."],
+                code: `const user = {
+  username: "pawan_dev",
+  followers: 1200
+};
+
+console.log(user);
+console.log(Object.keys(user));
+console.log(user.userName);
+console.log(user.username);`,
+                output: `{ username: "pawan_dev", followers: 1200 }
+["username", "followers"]
+undefined
+pawan_dev`,
+                tryCode: `const employees = [
+  { name: "Pawan", department: "Engineering" },
+  { name: "Riya", department: "Design" }
+];
+
+console.table(employees);
+console.log("Keys:", Object.keys(employees[0]));
+console.log("Wrong key:", employees[0].dept);
+console.log("Right key:", employees[0].department);`,
+                mistakes: ["Undefined ko JavaScript bug bolna before checking key.", "console.log object reference changes confuse karna in browser devtools.", "Nested path directly access karke crash."],
+                best: ["Debug me data shape inspect karo.", "console.table lists ke liye great hai.", "Small reproducible example banao.", "Optional chaining and defaults use karo."],
+                quiz: { q: "Array of objects ko readable table me dekhne ke liye kya useful hai?", options: ["console.table()", "console.paint()", "alert.table()"], answer: 0 },
+                exercise: ["Object.keys se typo find karo.", "Missing nested value ko optional chaining se safely print karo."],
+                diagram: "debug"
+            },
+            {
+                title: "Interview Questions",
+                subtitle: "100+ object-related questions: beginner, intermediate, advanced with answers.",
+                tags: ["interview", "Q&A", "answers"],
+                theory: "JavaScript Objects interview me almost guaranteed topic hain. Interviewer check karta hai ki tum object literal, access, methods, this, references, shallow/deep copy, destructuring, spread, Object methods, loops aur real-world modeling samajhte ho ya nahi. Strong answer hamesha definition + example + trap + best practice ke saath hota hai.",
+                analogy: "Interview ko viva samjho. Agar question aaye 'object reference kya hota hai', to sirf 'reference hota hai' mat bolo. Example do: `const b = a`, mutation effect, equality behavior, aur copy solution. Ye mature answer hota hai.",
+                steps: ["Question ka category identify karo.", "Short definition do.", "Tiny code example do.", "Common mistake mention karo.", "Real-world use case connect karo."],
+                code: `const a = { count: 1 };
+const b = a;
+b.count = 2;
+
+console.log(a.count); // 2 because same reference`,
+                output: `2`,
+                tryCode: `const user = { name: "Pawan", age: 22 };
+const { name } = user;
+const copy = { ...user, age: 23 };
+
+console.log(name);
+console.log(copy);
+console.log(user);`,
+                mistakes: ["Definitions ratna without examples.", "`this` ko fixed value bolna.", "Spread ko deep copy bolna.", "Same content objects ko equal samajhna."],
+                best: ["Answer me code include karo.", "Memory diagrams mentally clear rakho.", "this ke liye call-site rule bolo.", "Copying questions me shallow/deep distinction zarur mention karo."],
+                quiz: { q: "Best interview answer style kya hai?", options: ["Definition + example + trap + best practice", "Sirf one-word answer", "Topic change kar dena"], answer: 0 },
+                exercise: ["10 questions aloud answer karo.", "Reference vs copy ka diagram khud draw karo."],
+                diagram: "interview",
+                interview: true
+            },
+            {
+                title: "Final Revision",
+                subtitle: "Cheat sheet, mind map, summary tables, traps, final exercises.",
+                tags: ["revision", "cheatsheet", "mind map"],
+                theory: "Final revision ka goal hai ki tum JavaScript Objects ko ek connected system ki tarah dekho. Object related data group karta hai. Properties data store karti hain. Methods behavior add karte hain. this current call context se connect hota hai. References memory behavior explain karte hain. Spread/destructuring clean code dete hain. Utility methods iteration and locking me help karte hain.",
+                analogy: "Objects ek toolkit hain. Hammer sirf ek tool hai, screwdriver sirf ek tool hai. Complete developer tab banta hai jab tum samajhte ho kis problem ke liye kaunsa object concept use karna hai.",
+                steps: ["Entity model banao.", "Properties and methods define karo.", "Access and update carefully karo.", "References/copies samjho.", "Loop/destructure/spread utilities use karo.", "Debug actual data shape se karo."],
+                code: `const user = {
+  id: 1,
+  name: "Pawan",
+  skills: ["JavaScript"],
+  greet() {
+    return "Hi " + this.name;
+  }
+};
+
+const updatedUser = {
+  ...user,
+  skills: [...user.skills, "React"]
+};
+
+console.log(user.greet());
+console.log(updatedUser.skills);`,
+                output: `Hi Pawan
+["JavaScript", "React"]`,
+                tryCode: `const employee = {
+  id: 101,
+  name: "Riya",
+  department: { name: "Engineering" },
+  skills: ["JS", "React"]
+};
+
+const { name, department: { name: departmentName } } = employee;
+const promoted = { ...employee, role: "Senior Developer" };
+
+console.log(name, departmentName);
+console.log(promoted);`,
+                mistakes: ["Object syntax knowing but modeling weak hona.", "Reference bugs ignore karna.", "Deep copy need ko shallow copy se solve karna.", "this ko arrow method me use karna without understanding."],
+                best: ["Every object question me shape, access, mutation, reference socho.", "Real-world examples se practice karo.", "Debugging and interview me small code snippets use karo."],
+                quiz: { q: "Objects ka final mental model kya hai?", options: ["Data + behavior + reference model", "Only CSS styling", "Only numbers list"], answer: 0 },
+                exercise: ["Student manager object model design karo.", "E-commerce cart object with methods banao.", "Reference/copy/output prediction questions solve karo."],
+                diagram: "mind"
+            }
+        ];
+
+        const interviewQuestions = [
+            ["JavaScript object kya hota hai?", "Key-value pairs ka collection jo related data aur behavior group karta hai."],
+            ["Object literal kya hai?", "Curly braces se directly object banana, jaise `{ name: 'Pawan' }`."],
+            ["Property kya hoti hai?", "Object ke andar ek key-value pair."],
+            ["Key aur value me difference?", "Key label/name hai, value actual data hai."],
+            ["Dot notation kab use karte hain?", "Jab property name fixed aur valid identifier ho."],
+            ["Bracket notation kab use karte hain?", "Dynamic keys, spaces/special names, ya variable key ke liye."],
+            ["Missing property access ka result?", "`undefined`."],
+            ["Object me property add kaise karte hain?", "`obj.newKey = value`."],
+            ["Property update kaise karte hain?", "Existing key par new value assign karke."],
+            ["Property delete kaise karte hain?", "`delete obj.key`."],
+            ["const object mutable hota hai?", "Haan, reference reassign nahi hota but properties change ho sakti hain."],
+            ["Primitive vs reference difference?", "Primitive value copy hoti hai, object reference copy hota hai."],
+            ["Object assignment copy hai?", "Nahi, normally same reference share hota hai."],
+            ["Same content wale do objects equal hote hain?", "Reference different ho to `===` false."],
+            ["Method kya hota hai?", "Object ke andar function."],
+            ["Function aur method difference?", "Method object property ke form me function hota hai."],
+            ["this kya hai?", "Current call context ke hisab se value lene wala keyword."],
+            ["this ka value kis par depend karta hai?", "Function kaise call hua, call-site par."],
+            ["Object method me this kya point karta hai?", "Usually method call ke left-side object ko."],
+            ["Arrow function ka this?", "Arrow apna this create nahi karta; lexical this use karta hai."],
+            ["Arrow method common mistake?", "Object method me this ko object expect karna."],
+            ["Detached method issue?", "Method ko variable me store karke call karne par context lose ho sakta hai."],
+            ["Nested object kya hai?", "Object ke andar property value ke form me object."],
+            ["Deep property access example?", "`user.address.city`."],
+            ["Optional chaining ka use?", "Missing nested path par crash avoid karna, `user.profile?.bio`."],
+            ["Array of objects kya hota hai?", "Array jisme har item object hota hai."],
+            ["Real array of objects example?", "Students list, products list, employees list."],
+            ["Object with array example?", "`user.skills = ['JS', 'React']`."],
+            ["Object keys loop kaise?", "`for...in` ya `Object.keys()`."],
+            ["Object.keys kya return karta hai?", "Keys ka array."],
+            ["Object.values kya return karta hai?", "Values ka array."],
+            ["Object.entries kya return karta hai?", "Key-value pairs ka array."],
+            ["for...in me kya milta hai?", "Keys/property names."],
+            ["Destructuring kya hai?", "Object properties ko variables me extract karne ka syntax."],
+            ["Basic destructuring example?", "`const { name } = user`."],
+            ["Rename destructuring?", "`const { name: userName } = user`."],
+            ["Default destructuring value?", "`const { role = 'guest' } = user`."],
+            ["Nested destructuring?", "`const { address: { city } } = user`."],
+            ["Spread operator object me kya karta hai?", "Properties ko new object me spread/copy/merge karta hai."],
+            ["Spread copy deep hai?", "Nahi, shallow copy."],
+            ["Object.assign kya karta hai?", "Source properties target object me assign/copy karta hai, shallow."],
+            ["structuredClone kya karta hai?", "Structured data ka deep clone create kar sakta hai."],
+            ["Shallow copy kya hai?", "Top-level copy, nested references shared ho sakte hain."],
+            ["Deep copy kya hai?", "Nested structure bhi independent copy hota hai."],
+            ["Spread merge order important kyun?", "Later properties earlier values override karte hain."],
+            ["Object.freeze kya karta hai?", "Object ko add/update/delete se prevent karta hai at top level."],
+            ["Object.seal kya karta hai?", "Add/delete prevent, existing writable properties update allowed."],
+            ["Object.hasOwn kya karta hai?", "Own property existence safely check karta hai."],
+            ["hasOwnProperty issue?", "Object par method absent/overridden ho sakta hai; Object.hasOwn safer."],
+            ["Object.freeze deep freeze hai?", "Nahi, default shallow freeze."],
+            ["Object comparison value-based hota hai?", "Nahi, objects reference-based compare hote hain."],
+            ["`delete` return kya karta hai?", "Boolean indicating deletion success in many cases."],
+            ["Property shorthand kya hai?", "Variable same naam ho to `{ name }` instead of `{ name: name }`."],
+            ["Computed property name kya hai?", "`{ [key]: value }` dynamic key create karta hai."],
+            ["Method shorthand kya hai?", "`greet() {}` syntax inside object."],
+            ["Getter kya hota hai?", "Property access jaisa syntax but function logic run hoti hai."],
+            ["Setter kya hota hai?", "Property assignment par function logic run hoti hai."],
+            ["Prototype kya hai?", "Objects ka inheritance link jahan shared properties/methods mil sakte hain."],
+            ["Own property vs inherited property?", "Own directly object par hoti hai, inherited prototype se milti hai."],
+            ["Object.create ka use?", "Specific prototype ke saath object create karna."],
+            ["`in` operator kya check karta hai?", "Property own ya inherited chain me exist karti hai ya nahi."],
+            ["Object.keys inherited keys deta hai?", "Nahi, own enumerable keys."],
+            ["Enumerable property kya hai?", "Jo normal iteration methods me appear hoti hai."],
+            ["Property descriptor kya hai?", "Value, writable, enumerable, configurable metadata."],
+            ["Object.defineProperty ka use?", "Property descriptor control karna."],
+            ["Seal vs freeze difference?", "Seal shape lock karta hai, freeze values update bhi block karta hai."],
+            ["Extensible object kya hai?", "Jisme new properties add ho sakti hain."],
+            ["Object.preventExtensions kya karta hai?", "New properties add hone se rokta hai."],
+            ["console.table kab useful?", "Array of objects inspect karne ke liye."],
+            ["Undefined property debug first step?", "Object.keys se actual keys inspect karo."],
+            ["Typo bug example?", "`user.userName` when actual key is `username`."],
+            ["State update me direct mutation issue?", "UI frameworks changes detect na kar paaye ya old state corrupt ho."],
+            ["Immutable update object me?", "`{ ...oldObj, key: newValue }`."],
+            ["Nested immutable update?", "`{ ...user, address: { ...user.address, city: 'Delhi' } }`."],
+            ["Object rest syntax?", "Destructuring ke baad remaining properties collect karna, `const { id, ...rest } = obj`."],
+            ["Object spread and rest same hai?", "Syntax similar, context different: spread expands, rest collects."],
+            ["Maps vs objects?", "Map arbitrary keys/order/size helpers ke liye; object structured records ke liye."],
+            ["Object property order guaranteed hai?", "Modern JS me defined rules hain, but business logic order par overdepend mat karo."],
+            ["Symbol keys kya hote hain?", "Unique property keys."],
+            ["Private object data kaise handle?", "Closures/classes/private fields depending design."],
+            ["Class instance bhi object hai?", "Haan, class se bana instance object hota hai."],
+            ["Constructor function kya karta hai?", "`new` ke saath object create/initialize karta hai."],
+            ["`this` in constructor?", "Newly created instance ko point karta hai."],
+            ["call/apply/bind kya karte hain?", "Function ka this explicitly set karte hain."],
+            ["bind ka result?", "New function with fixed this."],
+            ["call vs apply?", "call args separately, apply args array me."],
+            ["Object cloning me functions issue?", "structuredClone functions clone nahi karta."],
+            ["Circular reference problem?", "Simple stringify approaches fail kar sakte hain; structuredClone handle kar sakta hai in many cases."],
+            ["JSON comparison object topic me?", "JSON text data format hai, JS object memory structure; bas small comparison."],
+            ["Objects API response me kyun useful?", "Received data ko structured way me use karne ke liye."],
+            ["Object modeling first step?", "Entity identify karo aur properties list karo."],
+            ["Product object properties?", "id, name, price, stock, category."],
+            ["Student object properties?", "id, name, rollNo, marks, grade."],
+            ["Social profile object?", "username, followers, following, posts, bio."],
+            ["Common object trap?", "Reference sharing, wrong this, shallow copy, typos."],
+            ["Best debugging habit?", "Actual object shape inspect karo before guessing."],
+            ["Best interview habit?", "Tiny code example ke saath answer do."],
+            ["Objects master ka sign?", "Data shape, references, this, copying aur iteration clearly explain kar paana."]
+        ];
+
+        function esc(value) {
+            return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+        }
+
+        function codeBlock(code, label = "JavaScript Example") {
+            return `<div class="code-wrap"><div class="code-head"><span>${label}</span><button class="copy" type="button" data-copy="${encodeURIComponent(code)}">Copy</button></div><pre>${esc(code)}</pre></div>`;
+        }
+
+        function list(items) {
+            return `<ul>${items.map(item => `<li>${item}</li>`).join("")}</ul>`;
+        }
+
+        function mentor(chapter) {
+            return `<div class="card">
+        <h4>Mentor Deep Dive</h4>
+        <p><strong>Beginner lens:</strong> ${chapter.title} padhte waqt ek simple habit banao: data ka shape aankhon ke saamne lao. Object me kaunsi keys hain? Values ka type kya hai? Kya value primitive hai, array hai, function hai, ya nested object hai? Jab shape clear hota hai, syntax automatically easy lagne lagta hai.</p>
+        <p><strong>Real app lens:</strong> Instagram, Amazon, Swiggy, HR dashboard, student portal - sab apps entities par based hote hain. User, product, order, employee, student, post. JavaScript Objects in entities ko code me represent karte hain. Isliye objects sirf exam topic nahi, complete app thinking ka base hain.</p>
+        <p><strong>Debugging lens:</strong> Agar output wrong hai to pehle guess mat karo. <code>console.log(obj)</code>, <code>Object.keys(obj)</code>, aur <code>console.table(list)</code> use karo. Undefined mostly key typo, missing nested path, wrong bracket/dot notation, ya data load na hone ki wajah se aata hai.</p>
+        <p><strong>Interview lens:</strong> Strong answer ka formula yaad rakho: definition, small code, output, common trap, best practice. Example: spread operator explain karte waqt shallow copy trap zarur mention karo. <code>this</code> explain karte waqt call-site rule zarur bolo.</p>
+        <p><strong>Practice lens:</strong> Har chapter ke Try It editor me code run karo, phir ek value change karo, phir ek bug intentionally daalo. Jab tum bug ko khud create aur fix karte ho, concept memory me solid ho jata hai.</p>
+      </div>`;
+        }
+
+        function diagram(type) {
+            if (type === "mind") {
+                return `<div class="mind"><div class="mind-center">JavaScript Objects</div><div class="branches">${[
+                    ["Create", "object literal, keys, values"],
+                    ["Access", "dot, bracket, dynamic keys"],
+                    ["Modify", "add, update, delete"],
+                    ["Methods", "behavior inside objects"],
+                    ["this", "call-site context"],
+                    ["Nested", "objects and arrays inside"],
+                    ["Loop", "keys, values, entries"],
+                    ["Copy", "references, shallow, deep"],
+                    ["Utilities", "freeze, seal, hasOwn"],
+                    ["Projects", "student, employee, product, profile"]
+                ].map(([a, b]) => `<div class="branch"><strong>${a}</strong><br>${b}</div>`).join("")}</div></div>`;
+            }
+            const nodes = {
+                why: ["Separate variables", "Mess grows", "Group related data", "Object"],
+                literal: ["{ }", "key", ":", "value", "property"],
+                access: ["Known key", "Dot notation", "Dynamic key", "Bracket notation"],
+                modify: ["Object", "Add", "Update", "Delete", "New shape"],
+                memory: ["Primitive", "Value copy", "Object", "Reference copy", "Shared mutation"],
+                methods: ["Object", "Properties = data", "Methods = actions", "Call method"],
+                this: ["user.greet()", "left side user", "this -> user", "this.name"],
+                nested: ["User", "Address", "City", "Optional chaining"],
+                arrayObjects: ["Array", "Student object", "Student object", "Loop", "UI table"],
+                objectArrays: ["User object", "skills array", "push", "loop"],
+                loop: ["Object", "keys", "values", "entries"],
+                destructure: ["Object", "Extract properties", "Variables", "Cleaner code"],
+                spread: ["Original", "...spread", "Copy/update", "Shallow only"],
+                refs: ["objA", "reference", "same object", "objB"],
+                copy: ["Shallow copy", "Nested shared", "Deep copy", "Nested independent"],
+                utils: ["Object", "keys/values/entries", "freeze/seal", "hasOwn"],
+                projects: ["Entity", "Object model", "Array of objects", "Functions", "App logic"],
+                debug: ["console.log", "Object.keys", "console.table", "Find typo"],
+                interview: ["Definition", "Code", "Output", "Trap", "Best practice"]
+            }[type] || ["Object", "Property", "Value"];
+            return `<div class="diagram"><div class="flow inline">${nodes.map((node, i) => `<div class="node">${node}</div>${i < nodes.length - 1 ? '<div class="arrow">→</div>' : ''}`).join("")}</div></div>`;
+        }
+
+        function tryEditor(code, index) {
+            return `<div class="try">
+        <h4>Try It Yourself</h4>
+        <p>Code edit karo, Run dabao, output dekho. Yeh editor console.log capture karta hai aur result niche show karta hai.</p>
+        <textarea class="editor" data-editor="${index}">${esc(code)}</textarea>
+        <div class="run-row">
+          <button class="btn primary run" type="button" data-run="${index}">Run</button>
+          <button class="btn reset-editor" type="button" data-reset-editor="${index}">Reset Code</button>
+        </div>
+        <div class="output" id="out-${index}">Output yahan aayega...</div>
+      </div>`;
+        }
+
+        function interviewBlock() {
+            return `<div class="card"><h4>100+ JavaScript Object Interview Questions with Answers</h4><p>Inhe beginner, intermediate aur advanced mix ke form me rakha gaya hai. Har answer ko apne words me bolne ki practice karo.</p>${interviewQuestions.map((qa, i) => `<details ${i < 10 ? "open" : ""}><summary>Q${i + 1}. ${qa[0]}</summary><p><strong>Answer:</strong> ${qa[1]}</p></details>`).join("")}</div>`;
+        }
+
+        function comparisonTable(title) {
+            if (title === "Looping Through Objects") {
+                return `<div class="card"><h4>Comparison Table</h4><table><thead><tr><th>Technique</th><th>Return/Use</th><th>Best For</th></tr></thead><tbody><tr><td>for...in</td><td>Keys iterate</td><td>Simple dynamic object loop</td></tr><tr><td>Object.keys()</td><td>Keys array</td><td>Keys list, map/filter</td></tr><tr><td>Object.values()</td><td>Values array</td><td>Total, search in values</td></tr><tr><td>Object.entries()</td><td>[key, value] pairs</td><td>Dynamic UI rows/settings</td></tr></tbody></table></div>`;
+            }
+            if (title === "Final Revision") {
+                return `<div class="card"><h4>Small JSON Comparison</h4><p>JSON aur JavaScript Object same nahi hain. JavaScript Object memory me live data structure hai jisme methods, references, undefined, symbols jaise concepts ho sakte hain. JSON ek text data format hai jo mostly data transfer ke liye use hota hai. Is course ka focus JavaScript Objects hai; JSON ko bas object-like text format ke comparison ke liye yaad rakho.</p></div><div class="card"><h4>Summary Table</h4><table><thead><tr><th>Concept</th><th>One-line Meaning</th><th>Trap</th></tr></thead><tbody><tr><td>Object</td><td>Related data group</td><td>Syntax without modeling</td></tr><tr><td>this</td><td>Call context</td><td>Arrow method confusion</td></tr><tr><td>Reference</td><td>Shared object link</td><td>Assignment as clone</td></tr><tr><td>Spread</td><td>Shallow copy/update</td><td>Nested sharing</td></tr><tr><td>Destructuring</td><td>Extract fields</td><td>Missing nested crash</td></tr></tbody></table></div>`;
+            }
+            return "";
+        }
+
+        function chapterTemplate(chapter, index) {
+            const id = `chapter-${index + 1}`;
+            return `<article class="chapter ${index === 0 ? "open" : ""}" id="${id}" data-chapter="${index}">
+        <div class="chapter-head" role="button" tabindex="0" aria-expanded="${index === 0 ? "true" : "false"}">
+          <div>
+            <h3>Chapter ${index + 1}: ${chapter.title}</h3>
+            <p>${chapter.subtitle}</p>
+            <div class="chips">${chapter.tags.map(tag => `<span class="chip">${tag}</span>`).join("")}</div>
+          </div>
+          <div class="chev">⌄</div>
+        </div>
+        <div class="chapter-body">
+          <div class="lesson-grid">
+            <div>
+              <div class="card"><h4>Theory</h4><p>${chapter.theory}</p></div>
+              ${mentor(chapter)}
+              <div class="card"><h4>Real-World Analogy</h4><p>${chapter.analogy}</p></div>
+              <div class="card"><h4>Step-by-Step Explanation</h4>${list(chapter.steps)}</div>
+              <div class="card"><h4>Code Example</h4>${codeBlock(chapter.code)}</div>
+              <div class="card"><h4>Expected Output</h4><div class="output">${esc(chapter.output)}</div></div>
+              <div class="card"><h4>Visual Diagram</h4>${diagram(chapter.diagram)}</div>
+              ${tryEditor(chapter.tryCode, index)}
+              ${comparisonTable(chapter.title)}
+              <div class="card"><h4>Common Mistakes</h4>${list(chapter.mistakes)}</div>
+              <div class="card"><h4>Best Practices</h4>${list(chapter.best)}</div>
+              <div class="card"><h4>Exercises</h4>${list(chapter.exercise)}</div>
+              ${chapter.interview ? interviewBlock() : `<div class="card"><h4>Interview Check</h4>${list([
+                `${chapter.title} ko one practical example ke saath explain karo.`,
+                `Is chapter ka sabse common trap kya hai?`,
+                `Real project me ${chapter.title} kahan use hoga?`
+            ])}</div>`}
+            </div>
+            <aside class="side">
+              <label class="done"><input type="checkbox" class="done-check" data-done="${index}"> Mark chapter complete</label>
+              <div class="quiz" data-quiz="${index}">
+                <h4>Quick Quiz</h4>
+                <p>${chapter.quiz.q}</p>
+                ${chapter.quiz.options.map((option, optionIndex) => `<button class="quiz-option" type="button" data-answer="${optionIndex}">${option}</button>`).join("")}
+                <div class="quiz-result"></div>
+              </div>
+              <div class="card">
+                <h4>Mentor Note</h4>
+                <p>Chapter ko read karne ke baad Try It editor me code change karo. Objects tab clear hote hain jab tum shape, access, mutation aur output ko saath me dekhte ho.</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </article>`;
+        }
+
+        const nav = document.getElementById("nav");
+        const root = document.getElementById("chapters");
+        nav.innerHTML = chapters.map((chapter, i) => `<a class="nav-link" href="#chapter-${i + 1}"><span class="nav-num">${i + 1}</span><span>${chapter.title}</span></a>`).join("");
+        root.innerHTML = chapters.map(chapterTemplate).join("");
+
+        const storageKey = "js-objects-hinglish-course-progress";
+        const done = new Set(JSON.parse(localStorage.getItem(storageKey) || "[]"));
+        const progressBar = document.getElementById("progressBar");
+        const progressText = document.getElementById("progressText");
+
+        function saveProgress() {
+            localStorage.setItem(storageKey, JSON.stringify([...done]));
+            const percent = Math.round((done.size / chapters.length) * 100);
+            progressBar.style.width = percent + "%";
+            progressText.textContent = percent + "%";
+            document.querySelectorAll(".done-check").forEach(input => {
+                input.checked = done.has(Number(input.dataset.done));
+            });
+        }
+
+        function formatLog(value) {
+            if (typeof value === "string") return value;
+            if (typeof value === "undefined") return "undefined";
+            if (typeof value === "function") return value.toString();
+            try { return JSON.stringify(value, null, 2); } catch { return String(value); }
+        }
+
+        function runEditor(index) {
+            const editor = document.querySelector(`.editor[data-editor="${index}"]`);
+            const out = document.getElementById(`out-${index}`);
+            const logs = [];
+            const fakeConsole = {
+                log: (...args) => logs.push(args.map(formatLog).join(" ")),
+                table: value => logs.push("console.table:\n" + formatLog(value)),
+                warn: (...args) => logs.push("Warning: " + args.map(formatLog).join(" ")),
+                error: (...args) => logs.push("Error: " + args.map(formatLog).join(" "))
+            };
+            try {
+                const fn = new Function("console", `"use strict";\n${editor.value}`);
+                const result = fn(fakeConsole);
+                if (typeof result !== "undefined") logs.push("Return: " + formatLog(result));
+                out.textContent = logs.length ? logs.join("\n") : "Code run ho gaya, but console.log nahi tha.";
+                done.add(index);
+                saveProgress();
+            } catch (error) {
+                out.textContent = error.name + ": " + error.message;
+            }
+        }
+
+        saveProgress();
+
+        document.querySelectorAll(".chapter-head").forEach(head => {
+            head.addEventListener("click", () => {
+                const chapter = head.closest(".chapter");
+                chapter.classList.toggle("open");
+                head.setAttribute("aria-expanded", chapter.classList.contains("open"));
+            });
+            head.addEventListener("keydown", event => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    head.click();
+                }
+            });
+        });
+
+        document.querySelectorAll(".done-check").forEach(input => {
+            input.addEventListener("change", () => {
+                const index = Number(input.dataset.done);
+                input.checked ? done.add(index) : done.delete(index);
+                saveProgress();
+            });
+        });
+
+        document.querySelectorAll(".quiz").forEach(quiz => {
+            quiz.addEventListener("click", event => {
+                const button = event.target.closest(".quiz-option");
+                if (!button) return;
+                const index = Number(quiz.dataset.quiz);
+                const selected = Number(button.dataset.answer);
+                const correct = chapters[index].quiz.answer;
+                quiz.querySelectorAll(".quiz-option").forEach(option => option.classList.remove("correct", "wrong"));
+                button.classList.add(selected === correct ? "correct" : "wrong");
+                quiz.querySelector(`.quiz-option[data-answer="${correct}"]`).classList.add("correct");
+                quiz.querySelector(".quiz-result").textContent = selected === correct ? "Correct. Concept pakad liya!" : "Almost. Correct option highlight hai, explanation dobara dekho.";
+                if (selected === correct) {
+                    done.add(index);
+                    saveProgress();
+                }
+            });
+        });
+
+        document.querySelectorAll(".run").forEach(button => {
+            button.addEventListener("click", () => runEditor(Number(button.dataset.run)));
+        });
+
+        document.querySelectorAll(".reset-editor").forEach(button => {
+            button.addEventListener("click", () => {
+                const index = Number(button.dataset.resetEditor);
+                document.querySelector(`.editor[data-editor="${index}"]`).value = chapters[index].tryCode;
+                document.getElementById(`out-${index}`).textContent = "Code reset ho gaya. Run dabao.";
+            });
+        });
+
+        document.querySelectorAll(".copy").forEach(button => {
+            button.addEventListener("click", async () => {
+                const code = decodeURIComponent(button.dataset.copy);
+                try {
+                    await navigator.clipboard.writeText(code);
+                    button.textContent = "Copied";
+                    setTimeout(() => button.textContent = "Copy", 1200);
+                } catch {
+                    button.textContent = "Select";
+                }
+            });
+        });
+
+        document.getElementById("openAll").addEventListener("click", () => {
+            document.querySelectorAll(".chapter").forEach(chapter => chapter.classList.add("open"));
+        });
+
+        document.getElementById("reset").addEventListener("click", () => {
+            done.clear();
+            saveProgress();
+        });
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                document.querySelectorAll(".nav-link").forEach(link => link.classList.remove("active"));
+                const link = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+                if (link) link.classList.add("active");
+            });
+        }, { rootMargin: "-35% 0px -55% 0px", threshold: 0.01 });
+
+        document.querySelectorAll(".chapter").forEach(chapter => observer.observe(chapter));
+    </script>
+    <!-- Code injected by live-server -->
+  
+</body>
+
+</html>

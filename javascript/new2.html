@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ultimate JS Tutorial in Hinglish</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        .section {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        pre {
+            background-color: #e0f7fa;
+            padding: 10px;
+            overflow-x: auto;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin-top: 5px;
+        }
+
+        input {
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        #output {
+            background: #f1f8e9;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ultimate JavaScript Tutorial in Hinglish</h1>
+
+    <!-- Section 1: Variables -->
+    <div class="section">
+        <h2>1. Variables: var, let, const</h2>
+        <pre>
+/*
+var: purana, function scoped, redeclare allowed
+let: block scoped, re-assignable
+const: block scoped, constant, re-assign nahi kar sakte
+*/
+        </pre>
+        <button onclick="variablesDemo()">Run Variables Demo</button>
+        <div id="outputVariables"></div>
+    </div>
+
+    <!-- Section 2: Data Types -->
+    <div class="section">
+        <h2>2. Data Types</h2>
+        <pre>
+/* 
+Number, String, Boolean, Undefined, Null, Object, Array
+*/
+        </pre>
+        <button onclick="dataTypesDemo()">Run Data Types Demo</button>
+        <div id="outputDataTypes"></div>
+    </div>
+
+    <!-- Section 3: Operators -->
+    <div class="section">
+        <h2>3. Operators</h2>
+        <pre>
+/*
+Arithmetic: + - * / %
+Assignment: = += -=
+Comparison: == === != !== > < >= <=
+Logical: && || !
+*/
+        </pre>
+        <button onclick="operatorsDemo()">Run Operators Demo</button>
+        <div id="outputOperators"></div>
+    </div>
+
+    <!-- Section 4: If-Else -->
+    <div class="section">
+        <h2>4. If-Else Statements</h2>
+        <pre>
+/*
+Decision making ke liye
+*/
+        </pre>
+        <button onclick="ifElseDemo()">Run If-Else Demo</button>
+        <div id="outputIfElse"></div>
+    </div>
+
+    <!-- Section 5: Loops -->
+    <div class="section">
+        <h2>5. Loops: for, while, do-while</h2>
+        <pre>
+/*
+Loops ka use repetitive tasks ke liye hota hai
+*/
+        </pre>
+        <button onclick="loopsDemo()">Run Loops Demo</button>
+        <div id="outputLoops"></div>
+    </div>
+
+    <!-- Section 6: Functions -->
+    <div class="section">
+        <h2>6. Functions</h2>
+        <pre>
+/*
+Functions se code reusable hota hai
+*/
+        </pre>
+        <button onclick="functionsDemo()">Run Functions Demo</button>
+        <div id="outputFunctions"></div>
+    </div>
+
+    <!-- Section 7: Arrays -->
+    <div class="section">
+        <h2>7. Arrays</h2>
+        <pre>
+/*
+Array: multiple values ek variable me store karna
+*/
+        </pre>
+        <button onclick="arraysDemo()">Run Arrays Demo</button>
+        <div id="outputArrays"></div>
+    </div>
+
+    <!-- Section 8: Objects -->
+    <div class="section">
+        <h2>8. Objects</h2>
+        <pre>
+/*
+Objects: key-value pairs
+*/
+        </pre>
+        <button onclick="objectsDemo()">Run Objects Demo</button>
+        <div id="outputObjects"></div>
+    </div>
+
+    <!-- Section 9: DOM Manipulation -->
+    <div class="section">
+        <h2>9. DOM Manipulation</h2>
+        <pre>
+/*
+Document Object Model se HTML elements manipulate karte hain
+*/
+        </pre>
+        <button onclick="domDemo()">Run DOM Demo</button>
+        <div id="outputDOM"></div>
+    </div>
+
+    <script>
+        function variablesDemo() {
+            let output = "";
+            var oldVar = "Purana Var";
+            let modernLet = "Block Scoped Let";
+            const constantVar = "Constant Value";
+
+            output += "var: " + oldVar + "\n";
+            output += "let: " + modernLet + "\n";
+            output += "const: " + constantVar + "\n";
+
+            document.getElementById("outputVariables").innerText = output;
+        }
+
+        function dataTypesDemo() {
+            let output = "";
+            let num = 100;
+            let str = "Hello JS";
+            let bool = true;
+            let undef;
+            let n = null;
+            let obj = { name: "Amit", age: 25 };
+            let arr = [1, 2, 3, 4];
+
+            output += "Number: " + num + "\n";
+            output += "String: " + str + "\n";
+            output += "Boolean: " + bool + "\n";
+            output += "Undefined: " + undef + "\n";
+            output += "Null: " + n + "\n";
+            output += "Object: " + JSON.stringify(obj) + "\n";
+            output += "Array: " + arr.join(", ") + "\n";
+
+            document.getElementById("outputDataTypes").innerText = output;
+        }
+
+        function operatorsDemo() {
+            let output = "";
+            let a = 10, b = 3;
+            output += "a + b = " + (a + b) + "\n";
+            output += "a - b = " + (a - b) + "\n";
+            output += "a * b = " + (a * b) + "\n";
+            output += "a / b = " + (a / b) + "\n";
+            output += "a % b = " + (a % b) + "\n";
+            output += "a > b? " + (a > b) + "\n";
+            output += "a == b? " + (a == b) + "\n";
+            output += "a != b? " + (a != b) + "\n";
+
+            document.getElementById("outputOperators").innerText = output;
+        }
+
+        function ifElseDemo() {
+            let output = "";
+            let marks = 82;
+
+            if (marks >= 90) {
+                output = "Grade: A+";
+            } else if (marks >= 75) {
+                output = "Grade: A";
+            } else if (marks >= 60) {
+                output = "Grade: B";
+            } else {
+                output = "Grade: C";
+            }
+
+            document.getElementById("outputIfElse").innerText = output;
+        }
+
+        function loopsDemo() {
+            let output = "for loop: ";
+            for (let i = 1; i <= 5; i++) { output += i + " "; }
+            output += "\nwhile loop: ";
+            let j = 1; while (j <= 5) { output += j + " "; j++; }
+            output += "\ndo-while loop: ";
+            let k = 1; do { output += k + " "; k++; } while (k <= 5);
+
+            document.getElementById("outputLoops").innerText = output;
+        }
+
+        function functionsDemo() {
+            let output = "";
+            function greet(name) { return "Hello " + name; }
+            output += greet("Amit") + "\n";
+            output += greet("Sonia") + "\n";
+
+            function sum(a, b) { return a + b; }
+            output += "Sum 5+3 = " + sum(5, 3) + "\n";
+
+            document.getElementById("outputFunctions").innerText = output;
+        }
+
+        function arraysDemo() {
+            let output = "";
+            let fruits = ["Apple", "Banana", "Mango"];
+            output += "Fruits: " + fruits.join(", ") + "\n";
+            fruits.push("Orange");
+            output += "After push: " + fruits.join(", ") + "\n";
+            fruits.pop();
+            output += "After pop: " + fruits.join(", ") + "\n";
+            fruits.shift();
+            output += "After shift: " + fruits.join(", ") + "\n";
+            fruits.unshift("Pineapple");
+            output += "After unshift: " + fruits.join(", ") + "\n";
+
+            document.getElementById("outputArrays").innerText = output;
+        }
+
+        function objectsDemo() {
+            let output = "";
+            let person = { name: "Amit", age: 25, city: "Delhi" };
+            output += "Person Object: " + JSON.stringify(person) + "\n";
+            person.age = 26;
+            output += "After changing age: " + JSON.stringify(person) + "\n";
+            person.country = "India";
+            output += "After adding country: " + JSON.stringify(person) + "\n";
+
+            document.getElementById("outputObjects").innerText = output;
+        }
+
+        function domDemo() {
+            let outputDiv = document.getElementById("outputDOM");
+            outputDiv.innerHTML = "Creating a button dynamically:<br>";
+
+            let btn = document.createElement("button");
+            btn.innerText = "Click Me";
+            btn.onclick = function () { alert("Button clicked!"); };
+            outputDiv.appendChild(btn);
+        }
+    </script>
+</body>
+
+</html>

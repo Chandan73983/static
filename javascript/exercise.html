@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    div input {
+        display: flex;
+        margin-top: 20px;
+    }
+
+    button {
+        margin-top: 20px;
+    }
+</style>
+
+<body>
+    <div>
+        <p id="demo"></p>
+        <button onclick="chandan(125)">click</button>
+        <p id="demo1"></p>
+        <button onclick="prince(1258963)">click</button>
+        <p id="demo2"></p>
+        <button onclick="himanshu(1258963,2563477898)">click</button>
+    </div>
+</body>
+<script>
+
+
+    function chandan(h1) {
+        document.getElementById('demo').innerHTML = h1 + h1;
+        console.log(h1+h1)
+
+    }
+
+    function prince(h2) {
+        document.getElementById('demo1').innerHTML = h2 * h2;
+         console.log(h2*h2)
+    }
+
+    function himanshu(h3,h2){
+        document.getElementById('demo2').innerHTML = h3 * h2;
+         console.log(h3 * h2)
+    }
+    
+</script>
+
+</html>

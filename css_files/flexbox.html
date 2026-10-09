@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+            h1{text-align: center;
+            font-size: xx-large;
+        font-weight: bold;}
+      
+              #div1{background-color: lightgray;
+           display: flex;
+           height: 400px;
+           flex-direction: row;
+           justify-content: space-between;
+           align-items: center;
+    }
+
+#div1 div{background-color: dodgerblue;
+    margin: 10px;
+    width: 100px;
+    height: 50px;
+    padding: 30px;
+    text-align: center;
+    font-size: 25px;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Create a Flex Container</h1>
+
+<div id="div1">
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>  
+  <div>Item 4</div>
+  <div>Item 5</div>
+</div>
+
+<p>Flexbox must have a parent element with the display property set to flex or inline-flex.</p>
+<p>Direct child elements of the flex container automatically becomes flex items.</p>
+</body>
+</html>

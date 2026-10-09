@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1>Click Event</h1>
+    <h2 id="demo">Welcome to the</h2>
+    <button id="su">click</button>
+
+    <h1>Hover Event</h1>
+    <h3>Hover over this heading</h3>
+    <script>
+        $("#su").click(function() {
+            $("#demo").append(" Chandan Prajapati ");
+        });
+
+        $("h3").hover(
+            function() {
+                $(this).css("color", "red");
+                $(this).css("background", "pink")
+            },
+            function() {
+                $(this).css("color", "pink");
+                $(this).css("background", "black")
+            }
+        );
+    </script>
+</body>
+
+</html>

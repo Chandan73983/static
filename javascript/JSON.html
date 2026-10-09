@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* input {
+            padding: 50px 0;
+        } */
+    </style>
+</head>
+
+<body>
+    <form id="demo">
+        <label>Name:</label><br>
+        <input type="text" name="name" id="name" placeholder="name"><br><br>
+        <label>Last Name:</label><br>
+        <input type="text" name="last name" id="last" placeholder="Last Name"><br><br>
+        <label>Number</label><br>
+        <input type="number" id="number" placeholder="number"><br><br>
+        <button type="button" id="submit">Submit</button><br><br>
+
+    </form>
+    <script>
+        var student = {
+            name: "Ravi",
+            course: "JavaScript Pro",
+            batch: "Evening"
+        };
+        var jsonData = JSON.stringify(student);
+        document.writeln(jsonData + "<br><br>");
+        //var jsonString = '{"name":"Ravi","course":"JavaScript Pro","batch":"Evening"}';
+        var obj = JSON.parse(jsonData);
+        document.writeln("Course: " + obj.course);
+        //form
+        let submit = document.getElementById('submit');
+        submit.addEventListener("click", function() {
+            let name = document.getElementById('name').value;
+            let last = document.getElementById('last').value;
+            let number = document.getElementById('number').value;
+
+            let output = {
+                name: name,
+                last: last,
+                number: number
+            }
+
+            document.writeln("JSON mathod: " + JSON.stringify(output));
+
+        });
+    </script>
+</body>
+
+</html>

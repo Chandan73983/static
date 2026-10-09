@@ -1,0 +1,56 @@
+~
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #test {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2> Hover over the below text to customize the font. </h2>
+    <div id="test" onmouseenter="chandan(); ravi();"> Hello World! </div> <br>
+
+    <select id="demo">
+        <option value="">Select color</option>
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+    </select>
+    <h1 id="text">Hello</h1>
+    <button onclick="txt()">Click</button>
+    <br><br>
+    <input type="text" oninput="demo1()" id="numbers">
+    <h2 id="mango"></h2>
+    <script>
+        function chandan() {
+            document.getElementById("test").style.fontSize = "25px";
+            document.getElementById("test").style.color = "red";
+            document.getElementById("test").style.marginLeft = "50px";
+        }
+
+        //New Events
+
+        let color = document.getElementById("demo");
+        color.addEventListener("change", function() {
+            document.body.style.background = color.value;
+        });
+
+        function txt() {
+            document.getElementById("text").innerHTML = "Welcome Chandan: How are You today";
+        }
+
+        function demo1() {
+            let i = document.getElementById("numbers").value;
+            document.getElementById("mango").innerHTML = i;
+
+        }
+    </script>
+</body>
+
+</html>

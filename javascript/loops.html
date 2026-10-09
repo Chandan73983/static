@@ -1,0 +1,2160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Loops Explained in Hinglish</title>
+    <style>
+        :root {
+            --bg: #070910;
+            --bg-2: #101622;
+            --panel: rgba(255, 255, 255, 0.075);
+            --panel-2: rgba(255, 255, 255, 0.11);
+            --line: rgba(255, 255, 255, 0.15);
+            --text: #eef5ff;
+            --muted: #a9b8cf;
+            --soft: #d7e3f7;
+            --cyan: #38d5ff;
+            --green: #58f09d;
+            --yellow: #ffd166;
+            --pink: #ff5ea8;
+            --violet: #9a7cff;
+            --orange: #ff9f4a;
+            --danger: #ff5d73;
+            --shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+            --radius: 8px;
+            --mono: "Consolas", "Monaco", "Courier New", monospace;
+            --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--text);
+            font-family: var(--font);
+            background:
+                radial-gradient(circle at 18% 8%, rgba(56, 213, 255, 0.22), transparent 26%),
+                radial-gradient(circle at 84% 4%, rgba(255, 94, 168, 0.18), transparent 24%),
+                linear-gradient(145deg, #070910 0%, #0b111b 48%, #0c1320 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px);
+            background-size: 42px 42px;
+            mask-image: linear-gradient(to bottom, black, transparent 78%);
+            z-index: -1;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 14px clamp(16px, 4vw, 44px);
+            background: rgba(7, 9, 16, 0.72);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 850;
+            letter-spacing: 0;
+            white-space: nowrap;
+        }
+
+        .logo {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--yellow), var(--pink), var(--cyan));
+            color: #111;
+            box-shadow: 0 12px 28px rgba(56, 213, 255, .18);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .pill {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, .07);
+            color: var(--soft);
+            padding: 9px 12px;
+            border-radius: 999px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: transform .2s, background .2s, border .2s;
+        }
+
+        .pill:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, .13);
+            border-color: rgba(56, 213, 255, .45);
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 280px minmax(0, 1fr);
+            gap: 22px;
+            width: min(1540px, calc(100% - 28px));
+            margin: 0 auto;
+            padding: 24px 0 60px;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 78px;
+            height: calc(100vh - 98px);
+            overflow: auto;
+            padding: 14px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, .065);
+            backdrop-filter: blur(18px);
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar h3 {
+            margin: 8px 8px 12px;
+            font-size: 13px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px 11px;
+            margin: 4px 0;
+            border-radius: 8px;
+            color: var(--soft);
+            font-size: 14px;
+            border: 1px solid transparent;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: rgba(56, 213, 255, .12);
+            border-color: rgba(56, 213, 255, .32);
+            color: #fff;
+        }
+
+        main {
+            min-width: 0;
+        }
+
+        .hero {
+            min-height: 74vh;
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(340px, .95fr);
+            align-items: center;
+            gap: 28px;
+            padding: clamp(36px, 6vw, 74px);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background:
+                linear-gradient(135deg, rgba(56, 213, 255, .14), rgba(255, 94, 168, .09) 45%, rgba(88, 240, 157, .09)),
+                rgba(255, 255, 255, .055);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero::after {
+            content: "for while do for...of for...in map filter reduce";
+            position: absolute;
+            bottom: -16px;
+            left: 18px;
+            font: 900 62px/1 var(--mono);
+            color: rgba(255, 255, 255, .035);
+            white-space: nowrap;
+            animation: marquee 24s linear infinite;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-45%);
+            }
+        }
+
+        .eyebrow {
+            color: var(--green);
+            font-weight: 800;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            font-size: 13px;
+        }
+
+        h1 {
+            margin: 14px 0 18px;
+            font-size: clamp(42px, 7vw, 92px);
+            line-height: .95;
+            letter-spacing: 0;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #fff, var(--cyan), var(--green), var(--yellow));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 760px;
+            color: var(--soft);
+            font-size: clamp(17px, 2vw, 22px);
+            line-height: 1.65;
+        }
+
+        .cta-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-weight: 800;
+            color: #071017;
+            background: linear-gradient(135deg, var(--cyan), var(--green));
+            cursor: pointer;
+            transition: transform .2s, filter .2s, box-shadow .2s;
+            box-shadow: 0 14px 30px rgba(56, 213, 255, .18);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+
+        .btn.secondary {
+            color: var(--text);
+            background: rgba(255, 255, 255, .09);
+            border: 1px solid var(--line);
+            box-shadow: none;
+        }
+
+        .terminal-card {
+            border: 1px solid rgba(255, 255, 255, .17);
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: rgba(3, 7, 18, .78);
+            box-shadow: 0 28px 70px rgba(0, 0, 0, .38);
+            transform: rotate(.8deg);
+        }
+
+        .terminal-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, .08);
+            border-bottom: 1px solid var(--line);
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 12px;
+        }
+
+        .dots span {
+            display: inline-block;
+            width: 11px;
+            height: 11px;
+            border-radius: 99px;
+            margin-right: 6px;
+        }
+
+        .dots span:nth-child(1) {
+            background: #ff5f57;
+        }
+
+        .dots span:nth-child(2) {
+            background: #ffbd2e;
+        }
+
+        .dots span:nth-child(3) {
+            background: #28c840;
+        }
+
+        .terminal-body {
+            padding: 18px;
+            font-family: var(--mono);
+            min-height: 330px;
+            color: #e8fbff;
+            line-height: 1.65;
+            font-size: 14px;
+        }
+
+        .typing {
+            color: var(--green);
+            white-space: pre-wrap;
+        }
+
+        section {
+            margin-top: 22px;
+            padding: clamp(22px, 4vw, 42px);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, .058);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 16px 55px rgba(0, 0, 0, .22);
+            scroll-margin-top: 92px;
+        }
+
+        section.reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+
+        section.reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            margin: 0 0 14px;
+            font-size: clamp(28px, 4vw, 48px);
+            letter-spacing: 0;
+        }
+
+        h3 {
+            margin: 24px 0 10px;
+            font-size: clamp(20px, 2.4vw, 28px);
+        }
+
+        p,
+        li {
+            color: var(--soft);
+            line-height: 1.75;
+            font-size: 16px;
+        }
+
+        .lead {
+            font-size: 18px;
+            color: #edf6ff;
+        }
+
+        .grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .two {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .three {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .four {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .card {
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, .075);
+            padding: 18px;
+            transition: transform .2s, border-color .2s, background .2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56, 213, 255, .38);
+            background: rgba(255, 255, 255, .1);
+        }
+
+        .stat {
+            font-size: 34px;
+            font-weight: 900;
+            color: var(--yellow);
+            margin-bottom: 8px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 9px;
+            border-radius: 999px;
+            background: rgba(56, 213, 255, .12);
+            color: #dff8ff;
+            border: 1px solid rgba(56, 213, 255, .22);
+            font-size: 12px;
+            font-weight: 800;
+            margin: 4px 4px 4px 0;
+        }
+
+        .code-demo {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
+            gap: 16px;
+            align-items: stretch;
+            margin: 18px 0;
+        }
+
+        pre {
+            margin: 0;
+            padding: 16px;
+            overflow: auto;
+            border-radius: var(--radius);
+            background: #050914;
+            border: 1px solid rgba(255, 255, 255, .12);
+            color: #d9f7ff;
+            font: 14px/1.65 var(--mono);
+            white-space: pre;
+        }
+
+        code {
+            font-family: var(--mono);
+            color: #eaffff;
+        }
+
+        .output {
+            min-height: 92px;
+            padding: 14px;
+            border-radius: var(--radius);
+            background: rgba(0, 0, 0, .28);
+            border: 1px solid rgba(88, 240, 157, .22);
+            color: #d9ffe9;
+            font-family: var(--mono);
+            white-space: pre-wrap;
+            line-height: 1.55;
+        }
+
+        .demo-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .mini-label {
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, .08);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 12px 13px;
+            outline: none;
+            font: inherit;
+        }
+
+        textarea {
+            min-height: 120px;
+            font-family: var(--mono);
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: rgba(56, 213, 255, .6);
+            box-shadow: 0 0 0 3px rgba(56, 213, 255, .13);
+        }
+
+        .flow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 16px 0;
+        }
+
+        .flow-step {
+            min-width: 128px;
+            text-align: center;
+            padding: 13px;
+            border: 1px solid rgba(56, 213, 255, .28);
+            background: rgba(56, 213, 255, .09);
+            border-radius: 8px;
+            font-weight: 800;
+            color: #e8fbff;
+        }
+
+        .arrow {
+            color: var(--yellow);
+            font-size: 24px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: var(--radius);
+            border: 1px solid var(--line);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 640px;
+        }
+
+        th,
+        td {
+            padding: 13px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, .1);
+            text-align: left;
+            color: var(--soft);
+        }
+
+        th {
+            color: #fff;
+            background: rgba(255, 255, 255, .08);
+        }
+
+        .accordion {
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin: 12px 0;
+        }
+
+        .acc-btn {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 15px 16px;
+            border: 0;
+            background: rgba(255, 255, 255, .08);
+            color: #fff;
+            cursor: pointer;
+            text-align: left;
+            font-weight: 850;
+            font-size: 16px;
+        }
+
+        .acc-content {
+            display: none;
+            padding: 16px;
+            background: rgba(0, 0, 0, .16);
+        }
+
+        .accordion.open .acc-content {
+            display: block;
+        }
+
+        .challenge {
+            border-left: 4px solid var(--yellow);
+            background: rgba(255, 209, 102, .08);
+        }
+
+        .danger {
+            border-left: 4px solid var(--danger);
+            background: rgba(255, 93, 115, .08);
+        }
+
+        .success {
+            border-left: 4px solid var(--green);
+            background: rgba(88, 240, 157, .08);
+        }
+
+        .playground {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(280px, .7fr);
+            gap: 16px;
+        }
+
+        .visual-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .chip {
+            min-width: 38px;
+            min-height: 38px;
+            display: inline-grid;
+            place-items: center;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, .14);
+            background: rgba(255, 255, 255, .09);
+            font-weight: 850;
+            transition: transform .2s, background .2s, border-color .2s;
+        }
+
+        .chip.active {
+            transform: translateY(-4px) scale(1.04);
+            background: rgba(88, 240, 157, .22);
+            border-color: rgba(88, 240, 157, .55);
+        }
+
+        .progress-track {
+            height: 10px;
+            border-radius: 99px;
+            background: rgba(255, 255, 255, .1);
+            overflow: hidden;
+            margin: 12px 0;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--cyan), var(--green), var(--yellow));
+            transition: width .4s;
+        }
+
+        .quiz-option {
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, .07);
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .quiz-option.correct {
+            border-color: rgba(88, 240, 157, .7);
+            background: rgba(88, 240, 157, .14);
+        }
+
+        .quiz-option.wrong {
+            border-color: rgba(255, 93, 115, .7);
+            background: rgba(255, 93, 115, .14);
+        }
+
+        .footer {
+            padding: 30px 0 10px;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        .mobile-menu {
+            display: none;
+        }
+
+        @media (max-width: 1050px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: fixed;
+                inset: 66px 12px auto 12px;
+                height: min(72vh, 620px);
+                transform: translateY(-120%);
+                transition: transform .25s;
+                z-index: 45;
+            }
+
+            .sidebar.open {
+                transform: translateY(0);
+            }
+
+            .mobile-menu {
+                display: inline-flex;
+            }
+
+            .hero,
+            .code-demo,
+            .playground {
+                grid-template-columns: 1fr;
+            }
+
+            .terminal-card {
+                transform: none;
+            }
+
+            .two,
+            .three,
+            .four {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .topbar {
+                align-items: flex-start;
+            }
+
+            .brand span:last-child {
+                display: none;
+            }
+
+            section,
+            .hero {
+                padding: 20px;
+            }
+
+            .nav-actions .pill:not(.mobile-menu) {
+                display: none;
+            }
+
+            .flow-step {
+                min-width: 100%;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="topbar">
+        <a class="brand" href="#top" aria-label="Home">
+            <span class="logo">JS</span>
+            <span>Loops Hinglish Masterclass</span>
+        </a>
+        <div class="nav-actions">
+            <button class="pill mobile-menu" id="menuBtn">☰ Topics</button>
+            <a class="pill" href="#playground">Playground</a>
+            <a class="pill" href="#projects">Mini Projects</a>
+            <a class="pill" href="#quiz">Quiz</a>
+            <button class="pill" id="focusModeBtn">Focus Mode</button>
+        </div>
+    </nav>
+
+    <div class="layout" id="top">
+        <aside class="sidebar" id="sidebar">
+            <h3>Course Map</h3>
+            <a href="#intro">A. Introduction</a>
+            <a href="#for-loop">B. for loop</a>
+            <a href="#while-loop">C. while loop</a>
+            <a href="#do-while">D. do...while loop</a>
+            <a href="#for-of">E. for...of loop</a>
+            <a href="#for-in">F. for...in loop</a>
+            <a href="#nested">G. Nested loops</a>
+            <a href="#control">H. break, continue, return, labels</a>
+            <a href="#array-methods">I. forEach, map, filter, reduce</a>
+            <a href="#advanced">J. Advanced loop concepts</a>
+            <a href="#examples">50+ Examples Library</a>
+            <a href="#playground">Interactive Playground</a>
+            <a href="#projects">Mini Projects</a>
+            <a href="#quiz">Quiz & Practice</a>
+            <a href="#interview">Interview Prep</a>
+            <a href="#cheatsheet">Cheat Sheet</a>
+        </aside>
+
+        <main>
+            <header class="hero">
+                <div>
+                    <div class="eyebrow">Beginner Friendly Hinglish Course</div>
+                    <h1><span class="gradient-text">JavaScript Loops</span><br />Bilkul Simple</h1>
+                    <p>
+                        Loops ka matlab hai kaam repeat karna, but smart tareeke se. Is premium interactive tutorial
+                        mein tum
+                        `for`, `while`, `do...while`, `for...of`, `for...in`, nested loops, array methods, DOM loops,
+                        async basics
+                        aur interview tricks ko real-life examples ke saath master karoge. 🚀
+                    </p>
+                    <div class="cta-row">
+                        <a class="btn" href="#intro">Start Learning</a>
+                        <a class="btn secondary" href="#projects">Try Mini Projects</a>
+                    </div>
+                </div>
+                <div class="terminal-card" aria-label="Animated code preview">
+                    <div class="terminal-head">
+                        <span class="dots"><span></span><span></span><span></span></span>
+                        <span>loops.js</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="typing" id="typingBox"></div>
+                    </div>
+                </div>
+            </header>
+
+            <section id="intro" class="reveal">
+                <span class="tag">A. Foundation</span>
+                <h2>Introduction to Loops 🔁</h2>
+                <p class="lead">
+                    Loop ek programming shortcut hai jisse hum same kaam ko baar-baar manually likhne ke bajay automatic
+                    repeat kar sakte hain.
+                    Agar teacher ko 60 students ki attendance mark karni hai, woh 60 baar alag code nahi likhegi. Loop
+                    bolega:
+                    "Jab tak students bache hain, attendance check karte jao."
+                </p>
+                <div class="grid four">
+                    <div class="card">
+                        <div class="stat">1</div>
+                        <h3>Repeat</h3>
+                        <p>Same action baar-baar: Instagram likes count karna, comments print karna, OTP attempts check
+                            karna.</p>
+                    </div>
+                    <div class="card">
+                        <div class="stat">2</div>
+                        <h3>Less Code</h3>
+                        <p>100 line ka kaam 5 line mein ho sakta hai. Code clean, readable aur maintainable hota hai.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="stat">3</div>
+                        <h3>Dynamic Data</h3>
+                        <p>Array mein 5 items ho ya 5000, loop dono handle kar sakta hai.</p>
+                    </div>
+                    <div class="card">
+                        <div class="stat">4</div>
+                        <h3>Automation</h3>
+                        <p>Reports, tables, cards, menus, bills, timers sab loops se automate hote hain.</p>
+                    </div>
+                </div>
+
+                <h3>Real-life Examples</h3>
+                <div class="grid three">
+                    <div class="card">📚 <b>Attendance:</b> Har student ka naam check karo.</div>
+                    <div class="card">🛒 <b>Shopping Cart:</b> Har item ka price add karo.</div>
+                    <div class="card">🏧 <b>ATM:</b> Jab tak PIN wrong hai aur attempts bache hain, retry karvao.</div>
+                    <div class="card">▶️ <b>YouTube:</b> Comments list mein har comment screen par dikhao.</div>
+                    <div class="card">🎮 <b>Game:</b> Har enemy ko move karo, har coin ko check karo.</div>
+                    <div class="card">🍔 <b>Food App:</b> Menu items ko cards mein render karo.</div>
+                </div>
+
+                <div class="flow" aria-label="Loop flow diagram">
+                    <div class="flow-step">Start</div>
+                    <div class="arrow">→</div>
+                    <div class="flow-step">Condition Check</div>
+                    <div class="arrow">→</div>
+                    <div class="flow-step">Code Run</div>
+                    <div class="arrow">→</div>
+                    <div class="flow-step">Update</div>
+                    <div class="arrow">↺</div>
+                    <div class="flow-step">Stop</div>
+                </div>
+            </section>
+
+            <section id="for-loop" class="reveal">
+                <span class="tag">B. Classic Loop</span>
+                <h2>for loop: Jab repeat count pehle se pata ho 🔢</h2>
+                <p>
+                    `for loop` tab best hota hai jab hume pata ho ki loop kitni baar chalana hai. Jaise 1 se 10 tak
+                    numbers print karna,
+                    5 students ke marks total karna, ya multiplication table banana.
+                </p>
+
+                <div class="code-demo">
+                    <pre><code>for (let i = 1; i <= 5; i++) {
+  console.log("Round:", i);
+}</code></pre>
+                    <div class="demo-panel">
+                        <button class="btn run-example" data-example="forBasic">Run Example</button>
+                        <div class="output" id="out-forBasic">Output yahan aayega...</div>
+                    </div>
+                </div>
+
+                <div class="grid three">
+                    <div class="card">
+                        <h3>1. Initialization</h3>
+                        <p>`let i = 1` se counter start hota hai. Ye loop ka starting point hai.</p>
+                    </div>
+                    <div class="card">
+                        <h3>2. Condition</h3>
+                        <p>`i <= 5` check hota hai. True hai to loop body chalegi, false hai to loop stop.</p>
+                    </div>
+                    <div class="card">
+                        <h3>3. Update</h3>
+                        <p>`i++` har round ke baad counter ko 1 se badhata hai.</p>
+                    </div>
+                </div>
+
+                <h3>for loop Flow Diagram</h3>
+                <div class="flow">
+                    <div class="flow-step">i = 1</div>
+                    <div class="arrow">→</div>
+                    <div class="flow-step">i <= 5?</div>
+                            <div class="arrow">→</div>
+                            <div class="flow-step">console.log</div>
+                            <div class="arrow">→</div>
+                            <div class="flow-step">i++</div>
+                            <div class="arrow">↺</div>
+                    </div>
+
+                    <h3>Multiple Examples</h3>
+                    <div class="code-demo">
+                        <pre><code>// Reverse loop
+for (let i = 5; i >= 1; i--) {
+  console.log(i);
+}
+
+// Even numbers
+for (let num = 2; num <= 10; num += 2) {
+  console.log(num);
+}
+
+// Student marks total
+let marks = [80, 90, 75, 88];
+let total = 0;
+for (let i = 0; i < marks.length; i++) {
+  total += marks[i];
+}
+console.log(total);</code></pre>
+                        <div class="demo-panel">
+                            <button class="btn run-example" data-example="forMultiple">Run All</button>
+                            <div class="output" id="out-forMultiple"></div>
+                        </div>
+                    </div>
+
+                    <div class="accordion">
+                        <button class="acc-btn">Nested for loop kya hota hai? <span>+</span></button>
+                        <div class="acc-content">
+                            <p>
+                                Jab ek loop ke andar doosra loop hota hai, usse nested loop bolte hain. Real-life mein
+                                school timetable socho:
+                                outer loop days par chalega, inner loop periods par. Har day ke andar multiple periods.
+                            </p>
+                            <pre><code>for (let day = 1; day <= 3; day++) {
+  for (let period = 1; period <= 4; period++) {
+    console.log("Day", day, "Period", period);
+  }
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="card danger">
+                        <h3>Infinite Loop Warning ⚠️</h3>
+                        <p>
+                            Agar update miss ho jaye ya condition kabhi false na ho, loop rukega nahi. Browser hang ho
+                            sakta hai.
+                            Example: `for (let i = 1; i > 0; i++)` theoretically forever chalega.
+                        </p>
+                    </div>
+
+                    <div class="card challenge">
+                        <h3>Mini Exercises</h3>
+                        <p>1 se 20 tak odd numbers print karo. 10 se 1 tak countdown banao. Ek array ke names ko
+                            "Welcome, name" format mein print karo.</p>
+                    </div>
+            </section>
+
+            <section id="while-loop" class="reveal">
+                <span class="tag">C. Condition First</span>
+                <h2>while loop: Jab repeat condition par depend kare ⏳</h2>
+                <p>
+                    `while loop` tab use hota hai jab exact repeat count sure nahi hota. Jaise password attempts, game
+                    health,
+                    queue mein customers, ya jab tak battery 0 nahi hoti.
+                </p>
+                <div class="code-demo">
+                    <pre><code>let attempts = 1;
+
+while (attempts <= 3) {
+  console.log("Password try:", attempts);
+  attempts++;
+}</code></pre>
+                    <div class="demo-panel">
+                        <button class="btn run-example" data-example="whileBasic">Run while</button>
+                        <div class="output" id="out-whileBasic"></div>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Point</th>
+                                <th>for loop</th>
+                                <th>while loop</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Best use</td>
+                                <td>Count known ho</td>
+                                <td>Condition based repeat ho</td>
+                            </tr>
+                            <tr>
+                                <td>Syntax</td>
+                                <td>Initialization, condition, update ek line mein</td>
+                                <td>Condition main line mein, update body mein</td>
+                            </tr>
+                            <tr>
+                                <td>Example</td>
+                                <td>1 se 10 print</td>
+                                <td>PIN attempts jab tak valid nahi</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Interactive Password Attempts</h3>
+                <div class="playground">
+                    <div class="card">
+                        <label class="mini-label" for="pinInput">PIN daalo: correct PIN 4321 hai</label>
+                        <input id="pinInput" placeholder="Try 1234, 1111, 4321..." />
+                        <button class="btn" id="pinBtn">Check PIN</button>
+                    </div>
+                    <div class="output" id="pinOutput">ATM ready hai...</div>
+                </div>
+
+                <div class="card danger">
+                    <h3>Common Mistake</h3>
+                    <p>`while (count <= 5) { console.log(count); }` mein `count++` missing hai. Isliye condition forever
+                            true rahegi.</p>
+                </div>
+            </section>
+
+            <section id="do-while" class="reveal">
+                <span class="tag">D. Runs Once</span>
+                <h2>do...while loop: Pehle kaam, baad mein condition ✅</h2>
+                <p>
+                    `do...while` at least ek baar zaroor chalta hai, chahe condition false hi kyu na ho. Real-life:
+                    restaurant mein waiter
+                    menu ek baar zaroor dikhata hai, phir customer repeat order karna chahe to process continue hota
+                    hai.
+                </p>
+                <div class="code-demo">
+                    <pre><code>let balance = 0;
+
+do {
+  console.log("ATM screen ek baar show hogi");
+  balance--;
+} while (balance > 0);</code></pre>
+                    <div class="demo-panel">
+                        <button class="btn run-example" data-example="doWhileBasic">Run do...while</button>
+                        <div class="output" id="out-doWhileBasic"></div>
+                    </div>
+                </div>
+                <div class="grid two">
+                    <div class="card success">
+                        <h3>while</h3>
+                        <p>Pehle condition check, phir code run. Condition false hai to zero times run.</p>
+                    </div>
+                    <div class="card success">
+                        <h3>do...while</h3>
+                        <p>Pehle code run, phir condition check. Condition false ho tab bhi one time run.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="for-of" class="reveal">
+                <span class="tag">E. Values Loop</span>
+                <h2>for...of loop: Array aur String ke values par loop 🍕</h2>
+                <p>
+                    `for...of` iterable cheezon ke actual values deta hai: arrays, strings, sets, maps. Beginner ke liye
+                    arrays traverse
+                    karne ka clean tareeka hai.
+                </p>
+                <div class="code-demo">
+                    <pre><code>let foods = ["Pizza", "Dosa", "Momos"];
+
+for (let food of foods) {
+  console.log("Order item:", food);
+}
+
+for (let letter of "JS") {
+  console.log(letter);
+}</code></pre>
+                    <div class="demo-panel">
+                        <button class="btn run-example" data-example="forOfBasic">Run for...of</button>
+                        <div class="output" id="out-forOfBasic"></div>
+                    </div>
+                </div>
+                <h3>Array Visualizer</h3>
+                <div class="card">
+                    <div class="visual-row" id="arrayVisual"></div>
+                    <button class="btn" id="animateArrayBtn">Loop Through Cart</button>
+                    <div class="output" id="arrayVisualOut">Cart ready hai...</div>
+                </div>
+            </section>
+
+            <section id="for-in" class="reveal">
+                <span class="tag">F. Keys Loop</span>
+                <h2>for...in loop: Object properties par loop 🧾</h2>
+                <p>
+                    Object ek real-world entity jaisa hota hai: student, employee, product. `for...in` object ke
+                    keys/properties par loop karta hai.
+                </p>
+                <div class="code-demo">
+                    <pre><code>let student = {
+  name: "Aman",
+  class: "10th",
+  marks: 87
+};
+
+for (let key in student) {
+  console.log(key + ": " + student[key]);
+}</code></pre>
+                    <div class="demo-panel">
+                        <button class="btn run-example" data-example="forInBasic">Run for...in</button>
+                        <div class="output" id="out-forInBasic"></div>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Loop</th>
+                                <th>Kis par best?</th>
+                                <th>Kya deta hai?</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>for...of</td>
+                                <td>Array, string</td>
+                                <td>Value</td>
+                                <td>Pizza, Dosa</td>
+                            </tr>
+                            <tr>
+                                <td>for...in</td>
+                                <td>Object</td>
+                                <td>Key/property</td>
+                                <td>name, class, marks</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h3>Object Visualizer</h3>
+                <div class="playground">
+                    <div class="card">
+                        <button class="btn" id="objectBtn">Employee Object Loop Karo</button>
+                    </div>
+                    <div class="output" id="objectOut">Object data yahan dikhega...</div>
+                </div>
+            </section>
+
+            <section id="nested" class="reveal">
+                <span class="tag">G. Loop Inside Loop</span>
+                <h2>Nested Loops: Matrix, tables aur patterns ⭐</h2>
+                <p>
+                    Nested loop ka matlab ek loop ke andar doosra loop. Outer loop rows control karta hai, inner loop
+                    columns control karta hai.
+                    Star patterns, multiplication tables, seating charts, matrices aur calendars mein nested loops kaafi
+                    useful hain.
+                </p>
+
+                <div class="code-demo">
+                    <pre><code>for (let row = 1; row <= 3; row++) {
+  let line = "";
+  for (let col = 1; col <= 4; col++) {
+    line += "* ";
+  }
+  console.log(line);
+}</code></pre>
+                    <div class="demo-panel">
+                        <button class="btn run-example" data-example="nestedStars">Run Stars</button>
+                        <div class="output" id="out-nestedStars"></div>
+                    </div>
+                </div>
+
+                <div class="grid three">
+                    <div class="card">
+                        <h3>Matrix</h3>
+                        <p>Rows aur columns print karne ke liye nested loop.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Tables</h3>
+                        <p>1 to 10 tables generate karne ke liye outer number, inner multiplier.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Pyramid</h3>
+                        <p>Spaces aur stars ke combination se pyramid pattern.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="control" class="reveal">
+                <span class="tag">H. Control Flow</span>
+                <h2>Loop Control Statements 🛑</h2>
+                <p>
+                    Kabhi loop ko beech mein rokna hota hai, kabhi current round skip karna hota hai, kabhi function se
+                    value return karni hoti hai.
+                    Ye statements loop ko smart banate hain.
+                </p>
+                <div class="grid four">
+                    <div class="card">
+                        <h3>break</h3>
+                        <p>Loop ko turant stop. Jaise correct password milte hi attempts loop bandh.</p>
+                    </div>
+                    <div class="card">
+                        <h3>continue</h3>
+                        <p>Current iteration skip. Jaise absent student ko skip karke next student.</p>
+                    </div>
+                    <div class="card">
+                        <h3>return</h3>
+                        <p>Function ko stop karke value wapas. Loop ke andar match milte hi answer return.</p>
+                    </div>
+                    <div class="card">
+                        <h3>labels</h3>
+                        <p>Nested loops mein specific outer loop break/continue. Rare but interview mein useful.</p>
+                    </div>
+                </div>
+
+                <div class="code-demo">
+                    <pre><code>for (let i = 1; i <= 8; i++) {
+  if (i === 3) continue;
+  if (i === 6) break;
+  console.log(i);
+}</code></pre>
+                    <div class="demo-panel">
+                        <button class="btn run-example" data-example="breakContinue">Run Control</button>
+                        <div class="output" id="out-breakContinue"></div>
+                    </div>
+                </div>
+
+                <div class="code-demo">
+                    <pre><code>outerLoop:
+for (let row = 1; row <= 3; row++) {
+  for (let col = 1; col <= 3; col++) {
+    if (row === 2 && col === 2) {
+      break outerLoop;
+    }
+    console.log(row, col);
+  }
+}</code></pre>
+                    <div class="demo-panel">
+                        <button class="btn run-example" data-example="labelLoop">Run Label</button>
+                        <div class="output" id="out-labelLoop"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="array-methods" class="reveal">
+                <span class="tag">I. Modern Array Loops</span>
+                <h2>forEach, map, filter, reduce 🧠</h2>
+                <p>
+                    Ye methods arrays ke saath daily use hote hain. Inhe "loop-like methods" bol sakte hain kyunki ye
+                    array ke har item par kaam karte hain.
+                </p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Use</th>
+                                <th>Return</th>
+                                <th>Real-life</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>forEach</td>
+                                <td>Har item par action</td>
+                                <td>undefined</td>
+                                <td>Har comment display karo</td>
+                            </tr>
+                            <tr>
+                                <td>map</td>
+                                <td>New transformed array</td>
+                                <td>New array</td>
+                                <td>Prices mein GST add karo</td>
+                            </tr>
+                            <tr>
+                                <td>filter</td>
+                                <td>Condition matching items</td>
+                                <td>New array</td>
+                                <td>Passed students nikalo</td>
+                            </tr>
+                            <tr>
+                                <td>reduce</td>
+                                <td>Single result</td>
+                                <td>Any value</td>
+                                <td>Cart total calculate karo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="code-demo">
+                    <pre><code>let prices = [100, 250, 80, 500];
+
+prices.forEach(price => console.log(price));
+
+let withGst = prices.map(price => price * 1.18);
+let expensive = prices.filter(price => price > 100);
+let total = prices.reduce((sum, price) => sum + price, 0);</code></pre>
+                    <div class="demo-panel">
+                        <button class="btn run-example" data-example="arrayMethods">Run Methods</button>
+                        <div class="output" id="out-arrayMethods"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="advanced" class="reveal">
+                <span class="tag">J. Advanced Basics</span>
+                <h2>Advanced Loop Concepts ⚙️</h2>
+                <div class="grid two">
+                    <div class="card danger">
+                        <h3>Infinite Loops</h3>
+                        <p>Condition kabhi false na ho to loop forever. Always update counter and test condition
+                            carefully.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Performance</h3>
+                        <p>Huge arrays mein unnecessary nested loops avoid karo. DOM updates ko batch karo.</p>
+                    </div>
+                    <div class="card">
+                        <h3>DOM Loops</h3>
+                        <p>Buttons, cards, rows render karne ke liye array loop + DOM creation common pattern hai.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Event Loop Intro</h3>
+                        <p>JavaScript async tasks ko event loop se manage karta hai. Ye `for loop` wala loop nahi,
+                            runtime system ka loop hai.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Async Loops</h3>
+                        <p>`for...of` ke andar `await` use kar sakte ho jab tasks sequence mein chalane ho.</p>
+                    </div>
+                    <div class="card">
+                        <h3>DOM Performance Tip</h3>
+                        <p>Loop ke andar baar-baar `innerHTML +=` slow ho sakta hai. Pehle string/fragment banao, phir
+                            ek baar render karo.</p>
+                    </div>
+                </div>
+                <div class="code-demo">
+                    <pre><code>// DOM loop example
+let users = ["Aman", "Sara", "Neha"];
+let html = "";
+
+for (let user of users) {
+  html += `&lt;li&gt;${user}&lt;/li&gt;`;
+}
+
+list.innerHTML = html;</code></pre>
+                    <div class="demo-panel">
+                        <button class="btn" id="domLoopBtn">Render DOM List</button>
+                        <ul class="output" id="domLoopOut"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="examples" class="reveal">
+                <span class="tag">Example Library</span>
+                <h2>50+ JavaScript Loop Examples 📚</h2>
+                <p>
+                    Neeche beginner, real project, intermediate aur interview-style examples ka bada collection hai. Har
+                    card ek use-case batata hai.
+                    In examples ko padhkar tum loops ko actual projects mein connect kar paoge.
+                </p>
+                <div class="grid two" id="exampleLibrary"></div>
+            </section>
+
+            <section id="playground" class="reveal">
+                <span class="tag">Interactive</span>
+                <h2>Loop Playground 🧪</h2>
+                <p>Values change karo aur dekho loop ka output kaise change hota hai. Ye beginner brain ko "dry run"
+                    karna sikhata hai.</p>
+
+                <div class="grid two">
+                    <div class="card">
+                        <h3>Counter Generator</h3>
+                        <label class="mini-label">Start</label><input id="counterStart" type="number" value="1" />
+                        <label class="mini-label">End</label><input id="counterEnd" type="number" value="10" />
+                        <label class="mini-label">Step</label><input id="counterStep" type="number" value="1" />
+                        <button class="btn" id="counterBtn">Generate Numbers</button>
+                        <div class="output" id="counterOut"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Array Visualizer</h3>
+                        <label class="mini-label">Comma separated items</label>
+                        <input id="arrayInput" value="Pizza,Dosa,Momos,Biryani" />
+                        <button class="btn" id="arrayBtn">Visualize for...of</button>
+                        <div class="visual-row" id="customArrayVisual"></div>
+                        <div class="output" id="customArrayOut"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects" class="reveal">
+                <span class="tag">Mini Projects</span>
+                <h2>Practice Mini Projects 🛠️</h2>
+                <div class="grid two">
+                    <div class="card">
+                        <h3>1. Number Guessing Game</h3>
+                        <p>Loop logic: Attempts count karo, correct guess par break jaisa behavior.</p>
+                        <input id="guessInput" type="number" placeholder="1 se 10 guess karo" />
+                        <button class="btn" id="guessBtn">Guess</button>
+                        <div class="output" id="guessOut">Game start! 3 attempts milenge.</div>
+                    </div>
+
+                    <div class="card">
+                        <h3>2. Multiplication Table Generator</h3>
+                        <input id="tableNum" type="number" value="7" />
+                        <button class="btn" id="tableBtn">Generate Table</button>
+                        <div class="output" id="tableOut"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3>3. Star Pattern Maker</h3>
+                        <input id="starRows" type="number" value="5" />
+                        <select id="starType">
+                            <option value="triangle">Triangle</option>
+                            <option value="square">Square</option>
+                            <option value="pyramid">Pyramid</option>
+                        </select>
+                        <button class="btn" id="starBtn">Make Pattern</button>
+                        <div class="output" id="starOut"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3>4. Countdown Timer</h3>
+                        <input id="countdownNum" type="number" value="10" />
+                        <button class="btn" id="countdownBtn">Start Countdown</button>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="countdownFill"></div>
+                        </div>
+                        <div class="output" id="countdownOut"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3>5. Todo List Loop Example</h3>
+                        <input id="todoInput" placeholder="Task likho..." />
+                        <button class="btn" id="todoBtn">Add Task</button>
+                        <div class="output" id="todoOut"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3>6. Student Report Generator</h3>
+                        <button class="btn" id="reportBtn">Generate Report</button>
+                        <div class="output" id="reportOut"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3>7. Dynamic Table Generator</h3>
+                        <button class="btn" id="dataTableBtn">Render Employee Table</button>
+                        <div class="table-wrap" id="dataTableOut"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3>8. Quiz App Using Loops</h3>
+                        <button class="btn" id="miniQuizBtn">Run Mini Quiz Check</button>
+                        <div class="output" id="miniQuizOut"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="quiz" class="reveal">
+                <span class="tag">Test Yourself</span>
+                <h2>Quiz, MCQ & Output Prediction 🎯</h2>
+                <div class="grid two">
+                    <div class="card">
+                        <h3>MCQ Quiz</h3>
+                        <div id="quizBox"></div>
+                        <div class="output" id="quizScore">Score: 0</div>
+                    </div>
+                    <div class="card">
+                        <h3>Output Prediction</h3>
+                        <pre><code>let x = 0;
+for (let i = 1; i <= 3; i++) {
+  x += i;
+}
+console.log(x);</code></pre>
+                        <button class="quiz-option predict" data-answer="3">3</button>
+                        <button class="quiz-option predict" data-answer="6">6</button>
+                        <button class="quiz-option predict" data-answer="123">123</button>
+                        <div class="output" id="predictOut">Answer choose karo...</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="interview" class="reveal">
+                <span class="tag">Interview Prep</span>
+                <h2>Interview Questions, Tricky Points & Best Practices 💼</h2>
+                <div class="accordion open">
+                    <button class="acc-btn">Q1. for...in aur for...of mein difference? <span>+</span></button>
+                    <div class="acc-content">
+                        <p>`for...in` keys deta hai, mostly objects ke liye. `for...of` values deta hai, mostly
+                            arrays/strings ke liye.</p>
+                    </div>
+                </div>
+                <div class="accordion">
+                    <button class="acc-btn">Q2. map aur forEach mein difference? <span>+</span></button>
+                    <div class="acc-content">
+                        <p>`map` new array return karta hai. `forEach` sirf action perform karta hai aur `undefined`
+                            return karta hai.</p>
+                    </div>
+                </div>
+                <div class="accordion">
+                    <button class="acc-btn">Q3. Infinite loop kaise avoid karein? <span>+</span></button>
+                    <div class="acc-content">
+                        <p>Condition clearly false hone layak rakho, counter update karo, aur huge loops mein exit
+                            condition/break plan karo.</p>
+                    </div>
+                </div>
+                <div class="accordion">
+                    <button class="acc-btn">Q4. Nested loop performance issue kab hota hai? <span>+</span></button>
+                    <div class="acc-content">
+                        <p>Jab outer 10,000 aur inner 10,000 ho, total 100 million operations ho sakte hain. Better data
+                            structures use karo.</p>
+                    </div>
+                </div>
+                <div class="card challenge">
+                    <h3>Tricky Questions</h3>
+                    <p>`var` inside loop closure issue, `break` vs `return`, array length change during loop, async
+                        `forEach` with `await` confusion.</p>
+                </div>
+            </section>
+
+            <section id="cheatsheet" class="reveal">
+                <span class="tag">Quick Revision</span>
+                <h2>Loops Cheat Sheet 📝</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Need</th>
+                                <th>Use This</th>
+                                <th>Example Thought</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Fixed repeat</td>
+                                <td>for</td>
+                                <td>1 se 100 print</td>
+                            </tr>
+                            <tr>
+                                <td>Condition based</td>
+                                <td>while</td>
+                                <td>Jab tak PIN wrong</td>
+                            </tr>
+                            <tr>
+                                <td>At least once</td>
+                                <td>do...while</td>
+                                <td>Menu ek baar show</td>
+                            </tr>
+                            <tr>
+                                <td>Array values</td>
+                                <td>for...of</td>
+                                <td>Cart items</td>
+                            </tr>
+                            <tr>
+                                <td>Object keys</td>
+                                <td>for...in</td>
+                                <td>Student properties</td>
+                            </tr>
+                            <tr>
+                                <td>Transform array</td>
+                                <td>map</td>
+                                <td>Prices + GST</td>
+                            </tr>
+                            <tr>
+                                <td>Select items</td>
+                                <td>filter</td>
+                                <td>Passed students</td>
+                            </tr>
+                            <tr>
+                                <td>Total/summary</td>
+                                <td>reduce</td>
+                                <td>Cart total</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <p>Made with pure HTML, CSS and JavaScript. Hinglish loops learning platform ready. ✨</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // Hinglish JS note: Is file ka JS intentionally clean rakha gaya hai, taki beginners DOM manipulation aur loops ko easily follow kar saken.
+
+        const $ = (selector) => document.querySelector(selector);
+        const $$ = (selector) => document.querySelectorAll(selector);
+
+        // Sticky sidebar active link + reveal animations.
+        const sections = $$("main section, .hero");
+        const sideLinks = $$(".sidebar a");
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) entry.target.classList.add("visible");
+            });
+        }, { threshold: 0.12 });
+        $$(".reveal").forEach((section) => revealObserver.observe(section));
+
+        const activeObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const id = entry.target.id;
+                sideLinks.forEach((link) => {
+                    link.classList.toggle("active", link.getAttribute("href") === "#" + id);
+                });
+            });
+        }, { rootMargin: "-35% 0px -55% 0px" });
+        sections.forEach((section) => activeObserver.observe(section));
+
+        $("#menuBtn").addEventListener("click", () => $("#sidebar").classList.toggle("open"));
+        sideLinks.forEach((link) => link.addEventListener("click", () => $("#sidebar").classList.remove("open")));
+
+        $("#focusModeBtn").addEventListener("click", () => {
+            document.body.classList.toggle("focus-mode");
+            $("#sidebar").style.display = document.body.classList.contains("focus-mode") ? "none" : "";
+            document.querySelector(".layout").style.gridTemplateColumns = document.body.classList.contains("focus-mode") ? "1fr" : "";
+        });
+
+        // Hero typing effect.
+        const typingLines = [
+            "for (let day = 1; day <= 7; day++) {",
+            "  console.log('Practice JS loops 🚀');",
+            "}",
+            "",
+            "// Output:",
+            "Practice JS loops 🚀 x 7 days",
+            "",
+            "Loop mantra: Start → Check → Run → Update → Repeat"
+        ];
+        let typingIndex = 0;
+        let charIndex = 0;
+        function typeHero() {
+            const text = typingLines.join("\n");
+            $("#typingBox").textContent = text.slice(0, charIndex);
+            charIndex++;
+            if (charIndex <= text.length) {
+                setTimeout(typeHero, 28);
+            } else {
+                setTimeout(() => { charIndex = 0; typeHero(); }, 2500);
+            }
+        }
+        typeHero();
+
+        // Accordion logic: button click par answer expand/collapse.
+        $$(".acc-btn").forEach((btn) => {
+            btn.addEventListener("click", () => btn.parentElement.classList.toggle("open"));
+        });
+
+        // Runnable examples. Har example output array mein collect hota hai, phir screen par print hota hai.
+        const examples = {
+            forBasic() {
+                let output = [];
+                for (let i = 1; i <= 5; i++) output.push("Round: " + i);
+                return output.join("\n");
+            },
+            forMultiple() {
+                let output = ["Reverse:"];
+                for (let i = 5; i >= 1; i--) output.push(String(i));
+                output.push("\nEven numbers:");
+                for (let num = 2; num <= 10; num += 2) output.push(String(num));
+                const marks = [80, 90, 75, 88];
+                let total = 0;
+                for (let i = 0; i < marks.length; i++) total += marks[i];
+                output.push("\nStudent marks total: " + total);
+                return output.join("\n");
+            },
+            whileBasic() {
+                let attempts = 1;
+                let output = [];
+                while (attempts <= 3) {
+                    output.push("Password try: " + attempts);
+                    attempts++;
+                }
+                return output.join("\n");
+            },
+            doWhileBasic() {
+                let balance = 0;
+                let output = [];
+                do {
+                    output.push("ATM screen ek baar show hogi, balance: " + balance);
+                    balance--;
+                } while (balance > 0);
+                return output.join("\n") + "\nCondition false thi, phir bhi ek baar run hua.";
+            },
+            forOfBasic() {
+                let foods = ["Pizza", "Dosa", "Momos"];
+                let output = [];
+                for (let food of foods) output.push("Order item: " + food);
+                for (let letter of "JS") output.push("Letter: " + letter);
+                return output.join("\n");
+            },
+            forInBasic() {
+                let student = { name: "Aman", class: "10th", marks: 87 };
+                let output = [];
+                for (let key in student) output.push(key + ": " + student[key]);
+                return output.join("\n");
+            },
+            nestedStars() {
+                let output = [];
+                for (let row = 1; row <= 3; row++) {
+                    let line = "";
+                    for (let col = 1; col <= 4; col++) line += "* ";
+                    output.push(line);
+                }
+                return output.join("\n");
+            },
+            breakContinue() {
+                let output = [];
+                for (let i = 1; i <= 8; i++) {
+                    if (i === 3) continue;
+                    if (i === 6) break;
+                    output.push(String(i));
+                }
+                return output.join("\n") + "\n3 skip hua, 6 par loop stop.";
+            },
+            labelLoop() {
+                let output = [];
+                outerLoop:
+                for (let row = 1; row <= 3; row++) {
+                    for (let col = 1; col <= 3; col++) {
+                        if (row === 2 && col === 2) break outerLoop;
+                        output.push("row " + row + ", col " + col);
+                    }
+                }
+                return output.join("\n") + "\nLabel ne outer loop stop kar diya.";
+            },
+            arrayMethods() {
+                let prices = [100, 250, 80, 500];
+                let each = [];
+                prices.forEach((price) => each.push("Price: " + price));
+                let withGst = prices.map((price) => Math.round(price * 1.18));
+                let expensive = prices.filter((price) => price > 100);
+                let total = prices.reduce((sum, price) => sum + price, 0);
+                return [
+                    "forEach:\n" + each.join("\n"),
+                    "map GST: " + withGst.join(", "),
+                    "filter expensive: " + expensive.join(", "),
+                    "reduce total: " + total
+                ].join("\n\n");
+            }
+        };
+
+        $$(".run-example").forEach((button) => {
+            button.addEventListener("click", () => {
+                const name = button.dataset.example;
+                $("#out-" + name).textContent = examples[name]();
+            });
+        });
+
+        // while loop mini ATM.
+        let pinAttempts = 0;
+        $("#pinBtn").addEventListener("click", () => {
+            const correctPin = "4321";
+            const entered = $("#pinInput").value.trim();
+            let message = "";
+            if (pinAttempts >= 3) {
+                message = "Card blocked! Attempts khatam.";
+            } else if (entered === correctPin) {
+                message = "PIN correct ✅ Access granted. Loop stop.";
+                pinAttempts = 0;
+            } else {
+                pinAttempts++;
+                message = "Wrong PIN ❌ Attempt " + pinAttempts + "/3";
+                if (pinAttempts === 3) message += "\nAb card block ho gaya.";
+            }
+            $("#pinOutput").textContent = message;
+        });
+
+        // Array visualizer animation.
+        const cartItems = ["Shoes", "Watch", "Book", "Headphones"];
+        function renderChips(container, items) {
+            container.innerHTML = "";
+            for (let item of items) {
+                const chip = document.createElement("span");
+                chip.className = "chip";
+                chip.textContent = item;
+                container.appendChild(chip);
+            }
+        }
+        renderChips($("#arrayVisual"), cartItems);
+        $("#animateArrayBtn").addEventListener("click", () => animateChips($("#arrayVisual"), cartItems, $("#arrayVisualOut")));
+
+        function animateChips(container, items, outputBox) {
+            const chips = Array.from(container.children);
+            let index = 0;
+            outputBox.textContent = "";
+            chips.forEach((chip) => chip.classList.remove("active"));
+            const timer = setInterval(() => {
+                chips.forEach((chip) => chip.classList.remove("active"));
+                if (index >= chips.length) {
+                    clearInterval(timer);
+                    outputBox.textContent += "\nLoop complete ✅";
+                    return;
+                }
+                chips[index].classList.add("active");
+                outputBox.textContent += "Checking item: " + items[index] + "\n";
+                index++;
+            }, 650);
+        }
+
+        $("#objectBtn").addEventListener("click", () => {
+            const employee = { id: 101, name: "Sara", role: "Frontend Developer", salary: 55000 };
+            let output = "";
+            for (let key in employee) output += key + " → " + employee[key] + "\n";
+            $("#objectOut").textContent = output;
+        });
+
+        $("#domLoopBtn").addEventListener("click", () => {
+            const users = ["Aman", "Sara", "Neha", "Kabir"];
+            $("#domLoopOut").innerHTML = "";
+            for (let user of users) {
+                const li = document.createElement("li");
+                li.textContent = "Welcome, " + user;
+                $("#domLoopOut").appendChild(li);
+            }
+        });
+
+        // Example library with 54 concise examples.
+        const library = [
+            ["Print 1 to 10", "for loop se numbers print karo.", "for (let i = 1; i <= 10; i++) console.log(i);"],
+            ["Print 10 to 1", "Reverse countdown.", "for (let i = 10; i >= 1; i--) console.log(i);"],
+            ["Even numbers", "Step ko 2 karo.", "for (let i = 2; i <= 20; i += 2) console.log(i);"],
+            ["Odd numbers", "i += 2 with start 1.", "for (let i = 1; i <= 19; i += 2) console.log(i);"],
+            ["Sum 1 to n", "Total variable update karo.", "let sum = 0; for (let i = 1; i <= n; i++) sum += i;"],
+            ["Factorial", "Product repeat hota hai.", "let fact = 1; for (let i = 1; i <= n; i++) fact *= i;"],
+            ["Table of 5", "Multiplier loop.", "for (let i = 1; i <= 10; i++) console.log(5 * i);"],
+            ["Array print", "Index se array traverse.", "for (let i = 0; i < arr.length; i++) console.log(arr[i]);"],
+            ["Array sum", "Cart total jaisa.", "let total = 0; for (let price of prices) total += price;"],
+            ["Find max", "Largest marks find.", "let max = arr[0]; for (let n of arr) if (n > max) max = n;"],
+            ["Find min", "Lowest price find.", "let min = arr[0]; for (let n of arr) if (n < min) min = n;"],
+            ["Count passed", "Marks >= 33 count.", "let count = 0; for (let m of marks) if (m >= 33) count++;"],
+            ["Filter adults", "Age condition.", "let adults = ages.filter(age => age >= 18);"],
+            ["Uppercase names", "map transformation.", "let upper = names.map(name => name.toUpperCase());"],
+            ["Display comments", "forEach action.", "comments.forEach(c => render(c));"],
+            ["Cart total reduce", "Single summary.", "let total = prices.reduce((s, p) => s + p, 0);"],
+            ["Object keys", "for...in.", "for (let key in user) console.log(key);"],
+            ["Object values", "key se value access.", "for (let key in user) console.log(user[key]);"],
+            ["String letters", "for...of string.", "for (let ch of 'Hello') console.log(ch);"],
+            ["Vowel count", "String traversal.", "for (let ch of text) if ('aeiou'.includes(ch)) count++;"],
+            ["Password attempts", "while loop.", "while (!ok && attempts < 3) attempts++;"],
+            ["Menu repeat", "do...while.", "do { showMenu(); } while (again);"],
+            ["Break on found", "Search item.", "for (let item of arr) if (item === target) break;"],
+            ["Continue absent", "Skip absent student.", "if (student.absent) continue;"],
+            ["Return from search", "Function early exit.", "if (user.id === id) return user;"],
+            ["Label break", "Nested loop stop.", "break outerLoop;"],
+            ["Matrix rows", "2D array.", "for (let row of matrix) console.log(row);"],
+            ["Matrix cells", "Nested for...of.", "for (let row of matrix) for (let cell of row) console.log(cell);"],
+            ["Star square", "Rows x columns.", "for row, inner col stars."],
+            ["Star triangle", "row count = stars.", "for row 1..n, inner 1..row."],
+            ["Pyramid", "Spaces + stars.", "space loop then star loop."],
+            ["Traffic lights", "Cycle signals.", "for (let light of lights) show(light);"],
+            ["Instagram likes", "Count users liked.", "likes.forEach(user => console.log(user));"],
+            ["YouTube comments", "Render list.", "for (let comment of comments) createCard(comment);"],
+            ["Attendance", "Mark present/absent.", "for (let student of students) mark(student);"],
+            ["Food menu", "Render dish cards.", "menu.map(dish => card(dish));"],
+            ["Game enemies", "Move each enemy.", "for (let enemy of enemies) enemy.x += enemy.speed;"],
+            ["Coin collection", "Check collision.", "for (let coin of coins) if (touch(coin)) collect();"],
+            ["Employee payroll", "Calculate salary.", "for (let emp of employees) pay(emp);"],
+            ["Student report", "Average marks.", "for (let m of marks) total += m;"],
+            ["Dynamic table", "Rows from array.", "for (let row of data) html += tr(row);"],
+            ["DOM buttons", "Attach listeners.", "buttons.forEach(btn => btn.addEventListener('click', fn));"],
+            ["NodeList loop", "querySelectorAll.", "document.querySelectorAll('.card').forEach(card => animate(card));"],
+            ["Async sequence", "for...of await.", "for (let url of urls) await fetch(url);"],
+            ["Avoid async forEach", "await wait nahi karta.", "Use for...of for sequential async."],
+            ["Performance cache length", "Old style optimization.", "for (let i = 0, len = arr.length; i < len; i++) {}"],
+            ["Duplicate check", "Set with loop.", "for (let item of arr) seen.add(item);"],
+            ["Frequency map", "Count words.", "freq[word] = (freq[word] || 0) + 1;"],
+            ["Group by category", "Object buckets.", "groups[item.cat].push(item);"],
+            ["Flatten array", "Nested loop.", "for (let sub of arr) for (let x of sub) flat.push(x);"],
+            ["Prime check", "Loop divisors.", "for (let i = 2; i < n; i++) if (n % i === 0) prime = false;"],
+            ["FizzBuzz", "Interview classic.", "for (let i = 1; i <= 100; i++) ..."],
+            ["Palindrome", "Two-side loop.", "for (let i = 0; i < str.length / 2; i++) compare;"],
+            ["Reverse string", "Loop backwards.", "for (let i = s.length - 1; i >= 0; i--) rev += s[i];"]
+        ];
+
+        const exampleLibrary = $("#exampleLibrary");
+        for (let index = 0; index < library.length; index++) {
+            const [title, desc, code] = library[index];
+            const card = document.createElement("article");
+            card.className = "card";
+            card.innerHTML = `<span class="tag">Example ${index + 1}</span><h3>${title}</h3><p>${desc}</p><pre><code>${escapeHtml(code)}</code></pre>`;
+            exampleLibrary.appendChild(card);
+        }
+
+        function escapeHtml(text) {
+            return text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+        }
+
+        // Playground.
+        $("#counterBtn").addEventListener("click", () => {
+            const start = Number($("#counterStart").value);
+            const end = Number($("#counterEnd").value);
+            const step = Math.abs(Number($("#counterStep").value)) || 1;
+            let output = [];
+            if (start <= end) {
+                for (let i = start; i <= end; i += step) output.push(i);
+            } else {
+                for (let i = start; i >= end; i -= step) output.push(i);
+            }
+            $("#counterOut").textContent = output.join(" → ");
+        });
+
+        $("#arrayBtn").addEventListener("click", () => {
+            const items = $("#arrayInput").value.split(",").map((item) => item.trim()).filter(Boolean);
+            renderChips($("#customArrayVisual"), items);
+            animateChips($("#customArrayVisual"), items, $("#customArrayOut"));
+        });
+
+        // Mini projects.
+        let secret = Math.floor(Math.random() * 10) + 1;
+        let guessAttempts = 0;
+        $("#guessBtn").addEventListener("click", () => {
+            const guess = Number($("#guessInput").value);
+            guessAttempts++;
+            if (guess === secret) {
+                $("#guessOut").textContent = "Correct! 🎉 Number " + secret + " tha. Attempts: " + guessAttempts + "\nNew game started.";
+                secret = Math.floor(Math.random() * 10) + 1;
+                guessAttempts = 0;
+            } else if (guessAttempts >= 3) {
+                $("#guessOut").textContent = "Attempts over! Secret number " + secret + " tha. New game started.";
+                secret = Math.floor(Math.random() * 10) + 1;
+                guessAttempts = 0;
+            } else {
+                $("#guessOut").textContent = guess < secret ? "Too low. Attempts left: " + (3 - guessAttempts) : "Too high. Attempts left: " + (3 - guessAttempts);
+            }
+        });
+
+        $("#tableBtn").addEventListener("click", () => {
+            const n = Number($("#tableNum").value);
+            let output = "";
+            for (let i = 1; i <= 10; i++) output += `${n} x ${i} = ${n * i}\n`;
+            $("#tableOut").textContent = output;
+        });
+
+        $("#starBtn").addEventListener("click", () => {
+            const rows = Math.max(1, Number($("#starRows").value));
+            const type = $("#starType").value;
+            let output = "";
+            for (let row = 1; row <= rows; row++) {
+                if (type === "square") {
+                    for (let col = 1; col <= rows; col++) output += "* ";
+                } else if (type === "pyramid") {
+                    for (let space = 1; space <= rows - row; space++) output += "  ";
+                    for (let star = 1; star <= row * 2 - 1; star++) output += "* ";
+                } else {
+                    for (let star = 1; star <= row; star++) output += "* ";
+                }
+                output += "\n";
+            }
+            $("#starOut").textContent = output;
+        });
+
+        let countdownTimer = null;
+        $("#countdownBtn").addEventListener("click", () => {
+            clearInterval(countdownTimer);
+            const start = Math.max(1, Number($("#countdownNum").value));
+            let current = start;
+            $("#countdownOut").textContent = "";
+            countdownTimer = setInterval(() => {
+                $("#countdownOut").textContent += current + "\n";
+                $("#countdownFill").style.width = ((start - current + 1) / start * 100) + "%";
+                current--;
+                if (current < 0) {
+                    clearInterval(countdownTimer);
+                    $("#countdownOut").textContent += "Go! 🚀";
+                }
+            }, 500);
+        });
+
+        const todos = [];
+        $("#todoBtn").addEventListener("click", () => {
+            const task = $("#todoInput").value.trim();
+            if (task) todos.push(task);
+            $("#todoInput").value = "";
+            let output = "";
+            for (let i = 0; i < todos.length; i++) output += `${i + 1}. ${todos[i]}\n`;
+            $("#todoOut").textContent = output || "No tasks yet.";
+        });
+
+        $("#reportBtn").addEventListener("click", () => {
+            const students = [
+                { name: "Aman", marks: [80, 76, 90] },
+                { name: "Neha", marks: [92, 88, 95] },
+                { name: "Kabir", marks: [45, 58, 63] }
+            ];
+            let report = "";
+            for (let student of students) {
+                let total = 0;
+                for (let mark of student.marks) total += mark;
+                const avg = Math.round(total / student.marks.length);
+                report += `${student.name}: Total ${total}, Average ${avg}, ${avg >= 60 ? "Pass" : "Needs Practice"}\n`;
+            }
+            $("#reportOut").textContent = report;
+        });
+
+        $("#dataTableBtn").addEventListener("click", () => {
+            const employees = [
+                { id: 1, name: "Sara", role: "Frontend", city: "Delhi" },
+                { id: 2, name: "Aman", role: "Backend", city: "Mumbai" },
+                { id: 3, name: "Neha", role: "UI Designer", city: "Pune" }
+            ];
+            let html = "<table><thead><tr><th>ID</th><th>Name</th><th>Role</th><th>City</th></tr></thead><tbody>";
+            for (let employee of employees) {
+                html += `<tr><td>${employee.id}</td><td>${employee.name}</td><td>${employee.role}</td><td>${employee.city}</td></tr>`;
+            }
+            html += "</tbody></table>";
+            $("#dataTableOut").innerHTML = html;
+        });
+
+        $("#miniQuizBtn").addEventListener("click", () => {
+            const answers = ["for", "while", "for...of", "reduce"];
+            let output = "Quiz topics loop se render hue:\n";
+            for (let i = 0; i < answers.length; i++) output += `${i + 1}. ${answers[i]}\n`;
+            $("#miniQuizOut").textContent = output;
+        });
+
+        // Quiz section.
+        const quiz = [
+            { q: "Array ke values ke liye best loop?", options: ["for...of", "for...in", "label"], answer: "for...of" },
+            { q: "Kaunsa loop at least once run hota hai?", options: ["while", "do...while", "map"], answer: "do...while" },
+            { q: "Array transform karke new array chahiye?", options: ["forEach", "map", "break"], answer: "map" },
+            { q: "Loop turant stop karna ho?", options: ["continue", "break", "filter"], answer: "break" }
+        ];
+        let score = 0;
+        const quizBox = $("#quizBox");
+        for (let i = 0; i < quiz.length; i++) {
+            const item = quiz[i];
+            const wrapper = document.createElement("div");
+            wrapper.className = "card";
+            wrapper.innerHTML = `<h3>${i + 1}. ${item.q}</h3>`;
+            for (let option of item.options) {
+                const btn = document.createElement("button");
+                btn.className = "quiz-option";
+                btn.textContent = option;
+                btn.addEventListener("click", () => {
+                    if (btn.dataset.done) return;
+                    const buttons = wrapper.querySelectorAll("button");
+                    buttons.forEach((b) => b.dataset.done = "true");
+                    if (option === item.answer) {
+                        btn.classList.add("correct");
+                        score++;
+                    } else {
+                        btn.classList.add("wrong");
+                        buttons.forEach((b) => {
+                            if (b.textContent === item.answer) b.classList.add("correct");
+                        });
+                    }
+                    $("#quizScore").textContent = `Score: ${score}/${quiz.length}`;
+                });
+                wrapper.appendChild(btn);
+            }
+            quizBox.appendChild(wrapper);
+        }
+
+        $$(".predict").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const ok = btn.dataset.answer === "6";
+                btn.classList.add(ok ? "correct" : "wrong");
+                $("#predictOut").textContent = ok
+                    ? "Correct ✅ x = 1 + 2 + 3 = 6"
+                    : "Almost! Dry run karo: x starts 0, then +1, +2, +3. Final 6.";
+            });
+        });
+    </script>
+    <!-- Code injected by live-server -->
+    <script>
+        // <![CDATA[  <-- For SVG support
+        if ('WebSocket' in window) {
+            (function () {
+                function refreshCSS() {
+                    var sheets = [].slice.call(document.getElementsByTagName("link"));
+                    var head = document.getElementsByTagName("head")[0];
+                    for (var i = 0; i < sheets.length; ++i) {
+                        var elem = sheets[i];
+                        var parent = elem.parentElement || head;
+                        parent.removeChild(elem);
+                        var rel = elem.rel;
+                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                            var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                        }
+                        parent.appendChild(elem);
+                    }
+                }
+                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+                var address = protocol + window.location.host + window.location.pathname + '/ws';
+                var socket = new WebSocket(address);
+                socket.onmessage = function (msg) {
+                    if (msg.data == 'reload') window.location.reload();
+                    else if (msg.data == 'refreshcss') refreshCSS();
+                };
+                if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                    console.log('Live reload enabled.');
+                    sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+                }
+            })();
+        }
+        else {
+            console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+        }
+        // ]]>
+    </script>
+    <!-- Code injected by live-server -->
+    <script>
+        // <![CDATA[  <-- For SVG support
+        if ('WebSocket' in window) {
+            (function () {
+                function refreshCSS() {
+                    var sheets = [].slice.call(document.getElementsByTagName("link"));
+                    var head = document.getElementsByTagName("head")[0];
+                    for (var i = 0; i < sheets.length; ++i) {
+                        var elem = sheets[i];
+                        var parent = elem.parentElement || head;
+                        parent.removeChild(elem);
+                        var rel = elem.rel;
+                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                            var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                        }
+                        parent.appendChild(elem);
+                    }
+                }
+                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+                var address = protocol + window.location.host + window.location.pathname + '/ws';
+                var socket = new WebSocket(address);
+                socket.onmessage = function (msg) {
+                    if (msg.data == 'reload') window.location.reload();
+                    else if (msg.data == 'refreshcss') refreshCSS();
+                };
+                if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                    console.log('Live reload enabled.');
+                    sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+                }
+            })();
+        }
+        else {
+            console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+        }
+        // ]]>
+    </script>
+</body>
+
+</html>

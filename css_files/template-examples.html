@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        align-items: center;
+        justify-content: center;
+    }
+
+    header {
+
+        margin-left: 50px;
+        margin-right: 50px;
+        display: flex;
+        align-content: center;
+        justify-content: space-between;
+    }
+
+    /* header div {
+        height: 80px;
+    } */
+
+    nav a {
+        margin: 30px;
+        text-decoration: none;
+        text-decoration-line: none;
+        color: black;
+        font-size: 20px;
+        color: rgb(4, 12, 74);
+    }
+
+    a:hover {
+        color: white;
+    }
+
+    .points {
+        margin-left: 120px;
+        display: grid;
+
+        grid-template-areas:
+            'a b'
+            'c d';
+        /* background-color: dodgerblue; */
+        /* gap: 20px; */
+        padding: 5px;
+        gap: 25px;
+    }
+
+    .item1 {
+        grid-area: a;
+    }
+
+    .item2 {
+        grid-area: b;
+    }
+
+    .item3 {
+        grid-area: c;
+    }
+
+    .item4 {
+        grid-area: d;
+    }
+
+    .animateCard:hover {
+        animation: bounce2 2s ease infinite;
+    }
+
+    @keyframes bounce2 {
+
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+            transform: translateY(0);
+        }
+
+        40% {
+            transform: translateY(-30px);
+        }
+
+        60% {
+            transform: translateY(-15px);
+        }
+    }
+</style>
+</head>
+<body>
+    <!-- navbar -->
+    <section style="background-color: rgba(216, 19, 36, 0.9); margin-bottom: 100px;">
+        <header>
+            <div>
+                <h4
+                    style="font-size: 40px; font-family: Arial, Helvetica, sans-serif; text-size-adjust: inherit; letter-spacing: -2px; margin:30px; color: rgb(4, 12, 74);">
+                    SEOcom </h4>
+            </div>
+            <div>
+                <nav id="div1" style="display: flex; margin: 15px; ">
+                    <a style="color: white;" href="#">Home</a>
+                    <a href="#">About</a>
+                    <a href="#">Service</a>
+                    <a href="#">Project</a>
+                    <a href="#">Pages</a>
+                    <a href="#">Contact</a>
+                </nav>
+            </div>
+            <div style="margin-right:  80px; margin-top: 30px;"><button
+                    style="padding: 15px 20px;cursor: pointer; background-color: rgb(15, 0, 77); color: white; border-radius: 5px; border: none;">Get
+                    a
+                    Quote</button></div>
+
+        </header>
+        <div>
+            <div
+                style="font-family: Arial, Helvetica, sans-serif; color: blue; display: flex; justify-content: space-evenly; margin: 0px; align-items: center;">
+                <div>
+                    <h1
+                        style="color: rgb(4, 12, 74); font-size: 55px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; word-spacing: 5px; margin-top: 100px;">
+                        ALL in One <span style="color: white;">SEO</span><br><span style="color: white;">TOOL</span>
+                        Need to<br> Grow
+                        your<br> Business
+                        Rapidly
+                    </h1>
+                    <p
+                        style="background-color: rgb(219, 6, 6); padding: 20px; width: 300px; text-align: center; color: white; font-family: Arial, Helvetica, sans-serif; margin-bottom: 100px;">
+                        An Award Winning Agency Since 1990</p>
+                </div>
+                <div>
+                    <img src="/images/hero-header.png" alt="" width="500px" height="350px">
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <div style="display: flex; justify-content: center;">
+        <div>
+            <img src="/images/about.png" width="500px" height="500px">
+
+        </div>
+        <div>
+            <h2
+                style="font-family: Arial, Helvetica, sans-serif; font-size: 50px; word-spacing: 1px; color: rgb(4, 12, 74); margin-top:  10px; margin-left: 120px;">
+                <span style="background-color: red; color: white; padding: 3px; border-radius: 5px;">ABOUT</span> The
+                Best SEO<br> Solution with 10 Years
+                of<br> Experience
+            </h2>
+            <p style="margin-left: 120px; font-family: Arial, Helvetica, sans-serif; font-size: 18px;">Tempor erat elitr
+                rebum at clita. Diam dolor diam ipsum et tempor sit. <BR>Aliqu diam amet diam et eos
+                labore. Clita erat ipsum et lorem et sit, sed<br> stet no labore lorem sit. Sanctus clita duo justo et
+                tempor eirmod magna<br> dolore erat amet.<br><br>
+                Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed <br>stet no labore lorem sit.
+                Sanctus clita duo justo et tempor.</p>
+            <div class="points">
+                <div class="item1">
+                    ✔ Award Wining </div>
+
+                <div class=" item2">
+                    ✔ Professional Staff </div>
+                <div class="item3">
+                    ✔ Award Wining </div>
+
+                <div class="item4">
+                    ✔ Professional Staff </div>
+            </div>
+            <div style="margin-left: 120px; margin-top: 30px;">
+                <a style="background-color: red; color: white; text-decoration: none; padding: 20px 20px; border-radius: 10px; font-family: Arial, Helvetica, sans-serif; font-size: 15px;"
+                    href="#">Read More</a>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div
+        style="display: flex; background-color: rgb(199, 0, 0); height: 200px;color: white; font-size: 20px; font-family: Arial, Helvetica, sans-serif; margin-top:50px;">
+        <div style="margin: 90px;">✔Award Wining </div>
+        <div style="margin: 90px;">✔ Professional Staff </div>
+        <div style="margin: 90px;">✔ Award Wining </div>
+        <div style="margin: 90px;"> ✔ Professional Staff </div>
+    </div>
+    <div style="margin: 100px;">
+        <h1 style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><span
+                style="background-color: red; color: white; padding: 3px; border-radius: 5px;">FEATURES</span> Why
+            People Choose Us!</h1>
+
+        <div style="display: flex; justify-content: space-between;">
+            <div style="font-family: Arial, Helvetica, sans-serif; ">
+                <div style="display: flex; justify-content: center;">
+                    <svg width="124px" height="124px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        stroke="#fb0404">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#fc0303"
+                            stroke-width="1.8240000000000003">
+                            <path d="M4 4V16C4 18.2091 5.79086 20 8 20H20" stroke="#f50000" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                            <path
+                                d="M6.59869 14.5841C6.43397 14.8057 6.48012 15.1189 6.70176 15.2837C6.9234 15.4484 7.2366 15.4022 7.40131 15.1806L6.59869 14.5841ZM19.4779 4.85296C19.3967 4.58903 19.1169 4.4409 18.853 4.52211L14.552 5.8455C14.288 5.92671 14.1399 6.2065 14.2211 6.47043C14.3023 6.73436 14.5821 6.88249 14.846 6.80128L18.6692 5.62493L19.8455 9.44805C19.9267 9.71198 20.2065 9.8601 20.4704 9.7789C20.7344 9.69769 20.8825 9.41789 20.8013 9.15396L19.4779 4.85296ZM13.5434 12.4067L13.1671 12.7359L13.5434 12.4067ZM15.1797 12.2161L15.6216 12.45L15.1797 12.2161ZM7.40131 15.1806L10.6621 10.7929L9.85952 10.1964L6.59869 14.5841L7.40131 15.1806ZM11.4397 10.7619L13.1671 12.7359L13.9196 12.0774L12.1923 10.1034L11.4397 10.7619ZM15.6216 12.45L19.4419 5.23394L18.5581 4.76606L14.7378 11.9821L15.6216 12.45ZM13.1671 12.7359C13.8594 13.5272 15.1297 13.3792 15.6216 12.45L14.7378 11.9821C14.5739 12.2919 14.1504 12.3412 13.9196 12.0774L13.1671 12.7359ZM10.6621 10.7929C10.8522 10.5371 11.2299 10.522 11.4397 10.7619L12.1923 10.1034C11.5628 9.38385 10.4298 9.42903 9.85952 10.1964L10.6621 10.7929Z"
+                                fill="#f50000"></path>
+                        </g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M4 4V16C4 18.2091 5.79086 20 8 20H20" stroke="#f50000" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                            <path
+                                d="M6.59869 14.5841C6.43397 14.8057 6.48012 15.1189 6.70176 15.2837C6.9234 15.4484 7.2366 15.4022 7.40131 15.1806L6.59869 14.5841ZM19.4779 4.85296C19.3967 4.58903 19.1169 4.4409 18.853 4.52211L14.552 5.8455C14.288 5.92671 14.1399 6.2065 14.2211 6.47043C14.3023 6.73436 14.5821 6.88249 14.846 6.80128L18.6692 5.62493L19.8455 9.44805C19.9267 9.71198 20.2065 9.8601 20.4704 9.7789C20.7344 9.69769 20.8825 9.41789 20.8013 9.15396L19.4779 4.85296ZM13.5434 12.4067L13.1671 12.7359L13.5434 12.4067ZM15.1797 12.2161L15.6216 12.45L15.1797 12.2161ZM7.40131 15.1806L10.6621 10.7929L9.85952 10.1964L6.59869 14.5841L7.40131 15.1806ZM11.4397 10.7619L13.1671 12.7359L13.9196 12.0774L12.1923 10.1034L11.4397 10.7619ZM15.6216 12.45L19.4419 5.23394L18.5581 4.76606L14.7378 11.9821L15.6216 12.45ZM13.1671 12.7359C13.8594 13.5272 15.1297 13.3792 15.6216 12.45L14.7378 11.9821C14.5739 12.2919 14.1504 12.3412 13.9196 12.0774L13.1671 12.7359ZM10.6621 10.7929C10.8522 10.5371 11.2299 10.522 11.4397 10.7619L12.1923 10.1034C11.5628 9.38385 10.4298 9.42903 9.85952 10.1964L10.6621 10.7929Z"
+                                fill="#f50000"></path>
+                        </g>
+                    </svg>
+                </div>
+                <h3 style="margin-left: 70px;">Proven Results</h3>
+                <p>Clita erat ipsum et lForem et sit, sed stet no <br>labore lorem sit. Sanctus clita duo justo et<br>
+                    tempor
+                    eirmod magna dolore erat amet</p>
+            </div>
+            <div style="font-family: Arial, Helvetica, sans-serif;  ">
+                <div style="display: flex; justify-content: center;">
+                    <svg height="124px" width="124px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"
+                        fill="#000000">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+                            stroke-width="1.024"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <style type="text/css">
+                                .st0 {
+                                    fill: #ff0000;
+                                }
+                            </style>
+                            <g>
+                                <path class="st0"
+                                    d="M162.592,147.193c0,0,56.607,11.331,130.198-62.272c33.969,45.3,56.63,67.938,56.63,67.938v67.96 c22.727-23.44,36.795-55.36,36.795-90.598C386.215,58.298,327.917,0,255.994,0c-71.9,0-130.198,58.298-130.198,130.221 c0,35.238,14.046,67.157,36.795,90.598V147.193z">
+                                </path>
+                                <path class="st0"
+                                    d="M343.32,297.426c-9.137,4.996-87.325,176.655-87.325,176.655s-78.176-171.658-87.326-176.655 C80.654,329.18,76.724,400.311,76.724,512h358.552C435.276,400.311,431.347,329.18,343.32,297.426z">
+                                </path>
+                                <polygon class="st0"
+                                    points="217.017,289.757 217.017,341.733 255.994,328.478 294.982,341.733 294.982,289.757 255.994,303.013 ">
+                                </polygon>
+                            </g>
+                        </g>
+                    </svg>
+
+                </div>
+                <h3 style="margin-left: 70px;">Proven Results</h3>
+                <p>Clita erat ipsum et lorem et sit, sed stet no <br>labore lorem sit. Sanctus clita duo justo et<br>
+                    tempor
+                    eirmod magna dolore erat amet</p>
+            </div>
+            <div style="font-family: Arial, Helvetica, sans-serif; ">
+                <div style="display: flex; justify-content: center;">
+                    <svg width="124px" height="124px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        stroke="#fb0404">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#fc0303"
+                            stroke-width="1.8240000000000003">
+                            <path d="M4 4V16C4 18.2091 5.79086 20 8 20H20" stroke="#f50000" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                            <path
+                                d="M6.59869 14.5841C6.43397 14.8057 6.48012 15.1189 6.70176 15.2837C6.9234 15.4484 7.2366 15.4022 7.40131 15.1806L6.59869 14.5841ZM19.4779 4.85296C19.3967 4.58903 19.1169 4.4409 18.853 4.52211L14.552 5.8455C14.288 5.92671 14.1399 6.2065 14.2211 6.47043C14.3023 6.73436 14.5821 6.88249 14.846 6.80128L18.6692 5.62493L19.8455 9.44805C19.9267 9.71198 20.2065 9.8601 20.4704 9.7789C20.7344 9.69769 20.8825 9.41789 20.8013 9.15396L19.4779 4.85296ZM13.5434 12.4067L13.1671 12.7359L13.5434 12.4067ZM15.1797 12.2161L15.6216 12.45L15.1797 12.2161ZM7.40131 15.1806L10.6621 10.7929L9.85952 10.1964L6.59869 14.5841L7.40131 15.1806ZM11.4397 10.7619L13.1671 12.7359L13.9196 12.0774L12.1923 10.1034L11.4397 10.7619ZM15.6216 12.45L19.4419 5.23394L18.5581 4.76606L14.7378 11.9821L15.6216 12.45ZM13.1671 12.7359C13.8594 13.5272 15.1297 13.3792 15.6216 12.45L14.7378 11.9821C14.5739 12.2919 14.1504 12.3412 13.9196 12.0774L13.1671 12.7359ZM10.6621 10.7929C10.8522 10.5371 11.2299 10.522 11.4397 10.7619L12.1923 10.1034C11.5628 9.38385 10.4298 9.42903 9.85952 10.1964L10.6621 10.7929Z"
+                                fill="#f50000"></path>
+                        </g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M4 4V16C4 18.2091 5.79086 20 8 20H20" stroke="#f50000" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                            <path
+                                d="M6.59869 14.5841C6.43397 14.8057 6.48012 15.1189 6.70176 15.2837C6.9234 15.4484 7.2366 15.4022 7.40131 15.1806L6.59869 14.5841ZM19.4779 4.85296C19.3967 4.58903 19.1169 4.4409 18.853 4.52211L14.552 5.8455C14.288 5.92671 14.1399 6.2065 14.2211 6.47043C14.3023 6.73436 14.5821 6.88249 14.846 6.80128L18.6692 5.62493L19.8455 9.44805C19.9267 9.71198 20.2065 9.8601 20.4704 9.7789C20.7344 9.69769 20.8825 9.41789 20.8013 9.15396L19.4779 4.85296ZM13.5434 12.4067L13.1671 12.7359L13.5434 12.4067ZM15.1797 12.2161L15.6216 12.45L15.1797 12.2161ZM7.40131 15.1806L10.6621 10.7929L9.85952 10.1964L6.59869 14.5841L7.40131 15.1806ZM11.4397 10.7619L13.1671 12.7359L13.9196 12.0774L12.1923 10.1034L11.4397 10.7619ZM15.6216 12.45L19.4419 5.23394L18.5581 4.76606L14.7378 11.9821L15.6216 12.45ZM13.1671 12.7359C13.8594 13.5272 15.1297 13.3792 15.6216 12.45L14.7378 11.9821C14.5739 12.2919 14.1504 12.3412 13.9196 12.0774L13.1671 12.7359ZM10.6621 10.7929C10.8522 10.5371 11.2299 10.522 11.4397 10.7619L12.1923 10.1034C11.5628 9.38385 10.4298 9.42903 9.85952 10.1964L10.6621 10.7929Z"
+                                fill="#f50000"></path>
+                        </g>
+                    </svg>
+                </div>
+                <h3 style="margin-left: 70px;">Proven Results</h3>
+                <p>Clita erat ipsum et lorem et sit, sed stet no <br>labore lorem sit. Sanctus clita duo justo et<br>
+                    tempor
+                    eirmod magna dolore erat amet</p>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div style="display: flex; justify-content: space-between; margin-top: 100px;">
+            <div style="font-family: Arial, Helvetica, sans-serif; ">
+                <div style="display: flex; justify-content: center;">
+                    <svg width="124px" height="124px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        stroke="#fb0404">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#fc0303"
+                            stroke-width="1.8240000000000003">
+                            <path d="M4 4V16C4 18.2091 5.79086 20 8 20H20" stroke="#f50000" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                            <path
+                                d="M6.59869 14.5841C6.43397 14.8057 6.48012 15.1189 6.70176 15.2837C6.9234 15.4484 7.2366 15.4022 7.40131 15.1806L6.59869 14.5841ZM19.4779 4.85296C19.3967 4.58903 19.1169 4.4409 18.853 4.52211L14.552 5.8455C14.288 5.92671 14.1399 6.2065 14.2211 6.47043C14.3023 6.73436 14.5821 6.88249 14.846 6.80128L18.6692 5.62493L19.8455 9.44805C19.9267 9.71198 20.2065 9.8601 20.4704 9.7789C20.7344 9.69769 20.8825 9.41789 20.8013 9.15396L19.4779 4.85296ZM13.5434 12.4067L13.1671 12.7359L13.5434 12.4067ZM15.1797 12.2161L15.6216 12.45L15.1797 12.2161ZM7.40131 15.1806L10.6621 10.7929L9.85952 10.1964L6.59869 14.5841L7.40131 15.1806ZM11.4397 10.7619L13.1671 12.7359L13.9196 12.0774L12.1923 10.1034L11.4397 10.7619ZM15.6216 12.45L19.4419 5.23394L18.5581 4.76606L14.7378 11.9821L15.6216 12.45ZM13.1671 12.7359C13.8594 13.5272 15.1297 13.3792 15.6216 12.45L14.7378 11.9821C14.5739 12.2919 14.1504 12.3412 13.9196 12.0774L13.1671 12.7359ZM10.6621 10.7929C10.8522 10.5371 11.2299 10.522 11.4397 10.7619L12.1923 10.1034C11.5628 9.38385 10.4298 9.42903 9.85952 10.1964L10.6621 10.7929Z"
+                                fill="#f50000"></path>
+                        </g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M4 4V16C4 18.2091 5.79086 20 8 20H20" stroke="#f50000" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                            <path
+                                d="M6.59869 14.5841C6.43397 14.8057 6.48012 15.1189 6.70176 15.2837C6.9234 15.4484 7.2366 15.4022 7.40131 15.1806L6.59869 14.5841ZM19.4779 4.85296C19.3967 4.58903 19.1169 4.4409 18.853 4.52211L14.552 5.8455C14.288 5.92671 14.1399 6.2065 14.2211 6.47043C14.3023 6.73436 14.5821 6.88249 14.846 6.80128L18.6692 5.62493L19.8455 9.44805C19.9267 9.71198 20.2065 9.8601 20.4704 9.7789C20.7344 9.69769 20.8825 9.41789 20.8013 9.15396L19.4779 4.85296ZM13.5434 12.4067L13.1671 12.7359L13.5434 12.4067ZM15.1797 12.2161L15.6216 12.45L15.1797 12.2161ZM7.40131 15.1806L10.6621 10.7929L9.85952 10.1964L6.59869 14.5841L7.40131 15.1806ZM11.4397 10.7619L13.1671 12.7359L13.9196 12.0774L12.1923 10.1034L11.4397 10.7619ZM15.6216 12.45L19.4419 5.23394L18.5581 4.76606L14.7378 11.9821L15.6216 12.45ZM13.1671 12.7359C13.8594 13.5272 15.1297 13.3792 15.6216 12.45L14.7378 11.9821C14.5739 12.2919 14.1504 12.3412 13.9196 12.0774L13.1671 12.7359ZM10.6621 10.7929C10.8522 10.5371 11.2299 10.522 11.4397 10.7619L12.1923 10.1034C11.5628 9.38385 10.4298 9.42903 9.85952 10.1964L10.6621 10.7929Z"
+                                fill="#f50000"></path>
+                        </g>
+                    </svg>
+                </div>
+                <h3 style="margin-left: 70px;">Proven Results</h3>
+                <p>Clita erat ipsum et lForem et sit, sed stet no <br>labore lorem sit. Sanctus clita duo justo et<br>
+                    tempor
+                    eirmod magna dolore erat amet</p>
+            </div>
+            <div style="font-family: Arial, Helvetica, sans-serif;  ">
+                <div style="display: flex; justify-content: center;">
+                    <svg height="124px" width="124px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"
+                        fill="#000000">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+                            stroke-width="1.024"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <style type="text/css">
+                                .st0 {
+                                    fill: #ff0000;
+                                }
+                            </style>
+                            <g>
+                                <path class="st0"
+                                    d="M162.592,147.193c0,0,56.607,11.331,130.198-62.272c33.969,45.3,56.63,67.938,56.63,67.938v67.96 c22.727-23.44,36.795-55.36,36.795-90.598C386.215,58.298,327.917,0,255.994,0c-71.9,0-130.198,58.298-130.198,130.221 c0,35.238,14.046,67.157,36.795,90.598V147.193z">
+                                </path>
+                                <path class="st0"
+                                    d="M343.32,297.426c-9.137,4.996-87.325,176.655-87.325,176.655s-78.176-171.658-87.326-176.655 C80.654,329.18,76.724,400.311,76.724,512h358.552C435.276,400.311,431.347,329.18,343.32,297.426z">
+                                </path>
+                                <polygon class="st0"
+                                    points="217.017,289.757 217.017,341.733 255.994,328.478 294.982,341.733 294.982,289.757 255.994,303.013 ">
+                                </polygon>
+                            </g>
+                        </g>
+                    </svg>
+
+                </div>
+                <h3 style="margin-left: 70px;">Proven Results</h3>
+                <p>Clita erat ipsum et lorem et sit, sed stet no <br>labore lorem sit. Sanctus clita duo justo et<br>
+                    tempor
+                    eirmod magna dolore erat amet</p>
+            </div>
+            <div style="font-family: Arial, Helvetica, sans-serif; ">
+                <div style=" display: flex; justify-content: center;">
+                    <svg width="124px" height="124px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        stroke="#fb0404">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#fc0303"
+                            stroke-width="1.8240000000000003">
+                            <path d="M4 4V16C4 18.2091 5.79086 20 8 20H20" stroke="#f50000" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                            <path
+                                d="M6.59869 14.5841C6.43397 14.8057 6.48012 15.1189 6.70176 15.2837C6.9234 15.4484 7.2366 15.4022 7.40131 15.1806L6.59869 14.5841ZM19.4779 4.85296C19.3967 4.58903 19.1169 4.4409 18.853 4.52211L14.552 5.8455C14.288 5.92671 14.1399 6.2065 14.2211 6.47043C14.3023 6.73436 14.5821 6.88249 14.846 6.80128L18.6692 5.62493L19.8455 9.44805C19.9267 9.71198 20.2065 9.8601 20.4704 9.7789C20.7344 9.69769 20.8825 9.41789 20.8013 9.15396L19.4779 4.85296ZM13.5434 12.4067L13.1671 12.7359L13.5434 12.4067ZM15.1797 12.2161L15.6216 12.45L15.1797 12.2161ZM7.40131 15.1806L10.6621 10.7929L9.85952 10.1964L6.59869 14.5841L7.40131 15.1806ZM11.4397 10.7619L13.1671 12.7359L13.9196 12.0774L12.1923 10.1034L11.4397 10.7619ZM15.6216 12.45L19.4419 5.23394L18.5581 4.76606L14.7378 11.9821L15.6216 12.45ZM13.1671 12.7359C13.8594 13.5272 15.1297 13.3792 15.6216 12.45L14.7378 11.9821C14.5739 12.2919 14.1504 12.3412 13.9196 12.0774L13.1671 12.7359ZM10.6621 10.7929C10.8522 10.5371 11.2299 10.522 11.4397 10.7619L12.1923 10.1034C11.5628 9.38385 10.4298 9.42903 9.85952 10.1964L10.6621 10.7929Z"
+                                fill="#f50000"></path>
+                        </g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M4 4V16C4 18.2091 5.79086 20 8 20H20" stroke="#f50000" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                            <path
+                                d="M6.59869 14.5841C6.43397 14.8057 6.48012 15.1189 6.70176 15.2837C6.9234 15.4484 7.2366 15.4022 7.40131 15.1806L6.59869 14.5841ZM19.4779 4.85296C19.3967 4.58903 19.1169 4.4409 18.853 4.52211L14.552 5.8455C14.288 5.92671 14.1399 6.2065 14.2211 6.47043C14.3023 6.73436 14.5821 6.88249 14.846 6.80128L18.6692 5.62493L19.8455 9.44805C19.9267 9.71198 20.2065 9.8601 20.4704 9.7789C20.7344 9.69769 20.8825 9.41789 20.8013 9.15396L19.4779 4.85296ZM13.5434 12.4067L13.1671 12.7359L13.5434 12.4067ZM15.1797 12.2161L15.6216 12.45L15.1797 12.2161ZM7.40131 15.1806L10.6621 10.7929L9.85952 10.1964L6.59869 14.5841L7.40131 15.1806ZM11.4397 10.7619L13.1671 12.7359L13.9196 12.0774L12.1923 10.1034L11.4397 10.7619ZM15.6216 12.45L19.4419 5.23394L18.5581 4.76606L14.7378 11.9821L15.6216 12.45ZM13.1671 12.7359C13.8594 13.5272 15.1297 13.3792 15.6216 12.45L14.7378 11.9821C14.5739 12.2919 14.1504 12.3412 13.9196 12.0774L13.1671 12.7359ZM10.6621 10.7929C10.8522 10.5371 11.2299 10.522 11.4397 10.7619L12.1923 10.1034C11.5628 9.38385 10.4298 9.42903 9.85952 10.1964L10.6621 10.7929Z"
+                                fill="#f50000"></path>
+                        </g>
+                    </svg>
+                </div>
+                <h3 style="margin-left: 70px;">Proven Results</h3>
+                <p>Clita erat ipsum et lorem et sit, sed stet no <br>labore lorem sit. Sanctus clita duo justo et<br>
+                    tempor
+                    eirmod magna dolore erat amet</p>
+            </div>
+        </div>
+
+    </div>
+
+
+    </div>
+
+
+    </div>
+    <div
+        style="display: flex; background-color: rgb(199, 0, 0); height: 200px;color: white; font-size: 25px; font-family: Arial, Helvetica, sans-serif; margin-top:50px; ">
+        <div style="margin: 100px;">✔Years<br> <span style="font-weight: bold;">1234</span> </div>
+        <div style="margin: 100px;">✔ clints<br> <span style="font-weight: bold;">1234</span> </div>
+        <div style="margin: 100px;">✔ Awards<br> <span style="font-weight: bold;">1234</span> </div>
+        <div style="margin: 100px;"> ✔ Event<br> <span style="font-weight: bold;">1234</span></div>
+    </div>
+    <div style="margin: 100px;">
+        <h1 style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><span
+                style="background-color: red; color: white; padding: 3px; border-radius: 5px;">SERVICES</span> What
+            Solution We Provide
+        </h1>
+
+
+        <div class="animateCard" style="background-color:white;
+            width: 300px;
+           padding-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(194, 189, 189, 0.872);
+            border-top-left-radius: 25%;">
+            <div style="background-color: #ff0000;
+            width: 70px;
+            height: 70px;           
+            background: #e11d2e;
+            border-radius: 25px 0 35px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M3 17V7M3 17H21M3 17L8 12L13 16L21 8" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+
+            <h2>SEO Optimization</h2>
+
+            <p>
+                Clita erat ipsum et lorem et sit, sed stet no labore lorem sit.
+                Sanctus clita duo justo et tempor eirmod magna
+            </p>
+
+            <a href="#" style="display: inline-block;
+            padding: 10px 20px;
+            background: #0a1f44;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: 0.3s;">Read More</a>
+
+        </div>
+        <i class="fa-brands fa-500px" style="color: rgb(105, 104, 110);"></i>
+</body>
+
+</html>

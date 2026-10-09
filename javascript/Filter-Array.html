@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var marks = [45, 67, 32, 89, 76];
+
+        var passed = marks.filter(function(chandan) {
+            return chandan > 50;
+        });
+
+        document.writeln("Passed: " + passed.join(", "));
+        Find
+        var num;
+        var marks = [45, 67, 32, 89, 76];
+        num = window.prompt("ENTER A NUMBER TO SEARCH: ")
+        num = parseInt(num)
+        var passed = marks.find(function(chandan) {
+            return chandan < 50;
+        });
+
+        document.writeln(passed);
+        if (passed >= 0) {
+            document.writeln("Value find " + passed);
+        } else {
+            document.writeln("Value not found " + num)
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+</head>
+
+<body style="background: lightgray;">
+    <br>
+    <h1>Parents</h1>
+    <div>
+        <p id="child1">Click me to highlight parent and siblings</p>
+        <p>I am another child</p>
+    </div>
+    <h1>Siblings</h1>
+    <div>
+        <p>I am the first paragraph</p>
+        <p id="mid">Click me (middle)</p>
+        <p>I am the third paragraph</p>
+    </div>
+    <h1>Find and Closest</h1>
+    <div id="container">
+        <p>Text with <span>a nested span</span> inside</p>
+    </div>
+    <div class="card" style="padding: 10px; margin-top:10px;">
+        <p class="item">Click me to highlight my closest ancestor</p>
+        <p class="card">Welcome to the JS</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium harum fugit debitis vitae illo quisquam consequuntur dolorum cum sit recusandae, dolor dolore culpa suscipit. Quidem expedita reiciendis cum quas et!</p>
+    </div>
+    <script>
+        $("#child1").click(function() {
+            $(this).parent().css("border", "2px dashed lime", );
+            $("p").css("color", "red");
+        });
+        //Sibling
+
+
+        $("#mid").click(function() {
+            $(this).siblings().css("color", "orange");
+            $(this).prev().css("font-weight", "bold");
+            $(this).next().css("font-style", "italic");
+        });
+
+        //Find and closest
+
+
+        $("#container").find("span").css("color", "orange");
+        $(".item").click(function() {
+            $(this).closest(".card").css("border", "2px solid lime");
+        });
+    </script>
+</body>
+
+</html>

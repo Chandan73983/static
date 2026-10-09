@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       #div1{display: flex;
+    flex-wrap: wrap;}
+       
+    .button{background-color: rgb(55, 255, 10);
+        color: black;
+        padding: 8px 16px;
+        text-align: center;
+        cursor: pointer;
+        text-decoration: none;
+        border: none;
+        border: 1px solid black;
+        font-size: large;
+    }
+
+    .button:hover{background-color: skyblue;}
+    .button:not(:last-child){border-right: none;}
+
+    </style>
+</head>
+<body>
+    <h2>Create a Button Group</h2>
+
+<p>Wrap the buttons in a div element, and add display:flex to the div element:</p>
+
+<div id="div1">
+  <button class="button">Button</button>
+  <button class="button">Button</button>
+  <button class="button">Button</button>
+  <button class="button">Button</button>
+</div>
+
+<p>Resize the screen to see what happens on small screens.</p>
+
+</body>
+</html>

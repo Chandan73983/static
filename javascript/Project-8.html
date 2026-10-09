@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Color change</h1>
+
+    <!-- //<button onclick="chandan()">Change</button> -->
+    <script>
+        function chandan() {
+            let i = [
+
+                "red", "blue", "yellow", "skyblue", "green", "wheat", "gold", "lightpink", "pink", "hotpink", "darkblue", "gray", "silver", "purple", "megenda"
+            ];
+            let y = Math.floor(Math.random() * i.length);
+            document.body.style.backgroundColor = i[y];
+        }
+        setInterval(chandan, 1000);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .highlight {
+            color: white;
+            background: green;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <br>
+    <p id="demo">Click buttons to apply or remove styles.</p>
+    <button id="add">Add Class</button>
+    <button id="remove">Remove Class</button>
+    <button id="toggle">Toggle Class</button>
+
+    <script>
+        $("#add").click(function() {
+            $("#demo").addClass("highlight");
+        });
+        $("#remove").click(function() {
+            $("#demo").removeClass("highlight");
+        });
+        $("#toggle").click(function() {
+            $("#demo").toggleClass("highlight");
+        });
+    </script>
+</body>
+
+</html>

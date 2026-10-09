@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var found = 0;
+        var index;
+        var students = ["Ravi", "Anjali", "Manish", "Priya", "Rahul"];
+        var marks = [200, 400, 700, 900, 350];
+        var nm = window.prompt("enter any name");
+        var l = students.length;
+
+        for (var i = 0; i < l; i++) {
+            if (nm == students[i]) {
+                found = 1;
+                index = i;
+            }
+        }
+        document.write("Name found: " + nm + "<br>");
+        document.write("Marks: " + marks[index]);
+    </script>
+</body>
+
+</html>

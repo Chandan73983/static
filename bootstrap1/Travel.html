@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hotel Search Bar</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f7fa;
+        }
+        
+        .search-box {
+            background: f;
+            border-radius: 18px;
+            padding: 12px 20px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .search-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-height: 55px;
+            padding: 0 20px;
+            border-right: 1px solid #e5e5e5;
+        }
+        
+        .search-item i {
+            font-size: 21px;
+            color: #163b7a;
+        }
+        
+        .search-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #202020;
+            margin-bottom: 3px;
+        }
+        
+        .search-value {
+            font-size: 12px;
+            color: #777;
+        }
+        
+        .search-btn {
+            background: #123b7a;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 25px;
+            font-weight: 600;
+            min-width: 125px;
+        }
+        
+        .search-btn:hover {
+            background: #0d2e61;
+            color: white;
+        }
+        
+        .traveler {
+            border-right: none;
+        }
+        
+        @media (max-width: 768px) {
+            .search-box {
+                padding: 15px;
+            }
+            .search-item {
+                border-right: none;
+                border-bottom: 1px solid #eee;
+                padding: 15px 5px;
+            }
+            .traveler {
+                border-bottom: none;
+            }
+            .search-btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+
+        <div class="search-box">
+
+            <div class="row align-items-center g-0">
+
+                <!-- Where -->
+                <div class="col">
+                    <div class="search-item">
+                        <i class="bi bi-geo-alt"></i>
+
+                        <div>
+                            <div class="search-label">Where to?</div>
+                            <div class="search-value">Search destinations</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Check In -->
+                <div class="col">
+                    <div class="search-item">
+                        <i class="bi bi-calendar3"></i>
+
+                        <div>
+                            <div class="search-label">Check In</div>
+                            <div class="search-value">Select date</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Check Out -->
+                <div class="col">
+                    <div class="search-item">
+                        <i class="bi bi-calendar3"></i>
+
+                        <div>
+                            <div class="search-label">Check Out</div>
+                            <div class="search-value">Select date</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Travelers -->
+                <div class="col">
+                    <div class="search-item traveler">
+
+                        <i class="bi bi-person"></i>
+
+                        <div class="flex-grow-1">
+                            <div class="search-label">Travelers</div>
+                            <div class="search-value">2 Adults, 1 Child</div>
+                        </div>
+
+                        <i class="bi bi-chevron-down" style="font-size: 14px;"></i>
+
+                    </div>
+                </div>
+
+                <!-- Search Button -->
+                <div class="col">
+                    <div class="text-lg-end">
+                        <button class="search-btn">
+                            <i class="bi bi-search me-2"></i>
+                            Search
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

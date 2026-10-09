@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Travel Search</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f7fb;
+        }
+        
+        .travel-box {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        /* Top navigation */
+        
+        .travel-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+        }
+        
+        .travel-nav .nav-item {
+            border-radius: 7px;
+            padding: 12px 20px;
+            color: #111;
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .travel-nav .nav-item i {
+            font-size: 18px;
+        }
+        
+        .travel-nav .nav-item.active {
+            background: #0755ad;
+            color: white;
+        }
+        /* Search area */
+        
+        .search-area {
+            display: flex;
+            align-items: stretch;
+            padding: 0 16px 16px;
+            gap: 6px;
+        }
+        
+        .search-field {
+            border: 1px solid #e1e5ea;
+            background: #fff;
+            min-height: 68px;
+            padding: 10px 12px;
+            position: relative;
+        }
+        
+        .search-field:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .field-title {
+            color: #777;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .field-value {
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .field-icon {
+            position: absolute;
+            right: 12px;
+            bottom: 17px;
+            color: #777;
+        }
+        
+        .swap-btn {
+            position: absolute;
+            right: -18px;
+            top: 22px;
+            z-index: 5;
+            width: 36px;
+            height: 36px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 50%;
+            color: #0755ad;
+        }
+        
+        .search-button {
+            min-width: 130px;
+            border-radius: 7px;
+            background: #0755ad;
+            border: none;
+            font-weight: 600;
+        }
+        
+        .search-button:hover {
+            background: #06458e;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid mt-4">
+
+        <div class="travel-box">
+
+            <!-- Navigation -->
+            <div class="travel-nav">
+
+                <div class="nav-item active">
+                    <i class="bi bi-airplane-fill"></i> Flights
+                </div>
+
+                <div class="nav-item">
+                    <i class="bi bi-bed-fill"></i> Hotels
+                </div>
+
+                <div class="nav-item">
+                    <i class="bi bi-suitcase-fill"></i> Tour Packages
+                </div>
+
+                <div class="nav-item">
+                    <i class="bi bi-ship"></i> Cruises
+                </div>
+
+                <div class="nav-item">
+                    <i class="bi bi-car-front-fill"></i> Car Rentals
+                </div>
+
+            </div>
+
+
+            <!-- Search Form -->
+            <div class="search-area">
+
+                <!-- From -->
+                <div class="search-field flex-grow-1">
+                    <div class="field-title">From</div>
+
+                    <div class="field-value">
+                        City or Airport
+                    </div>
+
+                    <i class="bi bi-geo-alt field-icon"></i>
+
+                    <button class="swap-btn">
+                        <i class="bi bi-arrow-left-right"></i>
+                    </button>
+                </div>
+
+
+                <!-- To -->
+                <div class="search-field flex-grow-1">
+                    <div class="field-title">To</div>
+
+                    <div class="field-value">
+                        City or Airport
+                    </div>
+
+                    <i class="bi bi-geo-alt field-icon"></i>
+                </div>
+
+
+                <!-- Departure -->
+                <div class="search-field flex-grow-1">
+                    <div class="field-title">Departure</div>
+
+                    <div class="field-value">
+                        Select Date
+                    </div>
+
+                    <i class="bi bi-calendar3 field-icon"></i>
+                </div>
+
+
+                <!-- Return -->
+                <div class="search-field flex-grow-1">
+                    <div class="field-title">Return</div>
+
+                    <div class="field-value">
+                        Select Date
+                    </div>
+
+                    <i class="bi bi-calendar3 field-icon"></i>
+                </div>
+
+
+                <!-- Travelers -->
+                <div class="search-field flex-grow-1">
+                    <div class="field-title">Travelers</div>
+
+                    <div class="field-value">
+                        2 Adults, 1 Child
+                    </div>
+
+                    <i class="bi bi-person field-icon"></i>
+                </div>
+
+
+                <!-- Search -->
+                <button class="btn btn-primary search-button">
+                    Search Now
+                    <i class="bi bi-search ms-1"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

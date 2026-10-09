@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var students = ["Ravi", "Anjali", "Manish", "Priya", "Rahul"];
+        var marks = [200, 400, 700, 900, 1350];
+        var i, j, temp = 0;
+        var temp1;
+        l = marks.length;
+        for (i = 0; i < l - 1; i++) {
+            for (j = i + 1; j < l; j++) {
+                if (marks[i] < marks[j]) {
+                    temp = marks[i];
+                    marks[i] = marks[j];
+                    marks[j] = temp;
+
+                    temp1 = students[i];
+                    students[i] = students[j];
+                    students[j] = temp1;
+
+                }
+            }
+        }
+        for (i = 0; i < l; i++) {
+            document.write(marks[i] + "  " + students[i] + "<br>");
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let i = new Set([1, 2, 3, 4, 4, 5, 5]);
+        console.log(i);
+
+        let x = new Set();
+        x.add("chandan");
+        x.add(50);
+        x.add(40);
+        x.add(55);
+        x.add(85);
+
+        console.log(x);
+
+        let y=new Set([45,52,55,60,80]);
+        y.delete(45);
+        y.delete(52);
+
+        console.log(y);
+
+        let j=new Set([10,20,30,40,50]);
+        console.log(j.has(30));
+        console.log(j.has(40));
+    </script>
+</body>
+
+</html>

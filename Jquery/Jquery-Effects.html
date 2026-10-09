@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1>Hide and Show</h1>
+    <h1 id="text">Welcome to the Jquery Effects </h1>
+    <button id="hide">Hide</button>
+    <button id="show">Show</button>
+    <br><br>
+
+    <div id="demo">
+        <p id="para">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt repudiandae,<br> adipisci nulla exercitationem totam qui in vitae consequatur aperiam, optio dolore dolorum rem amet natus iusto similique facilis asperiores nisi.</p>
+    </div>
+    <br><br>
+    <h1>Toggle</h1>
+    <p id="toggleText">Click the button to toggle me!</p>
+    <button id="toggleBtn">Toggle</button>
+    <script>
+        $("#hide").click(function() {
+            $("#text").hide(400);
+        });
+        $("#show").click(function() {
+            $("#text").show(400);
+        });
+
+        $("#demo").click(function() {
+            $("#para").hide(500)
+        });
+        $("#demo").click(function() {
+            $("#para").show(500)
+        });
+
+        //toggle
+
+        $("#toggleBtn").click(function() {
+            $("#toggleText").toggle(400);
+        });
+    </script>
+</body>
+
+</html>

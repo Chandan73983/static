@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+</head>
+
+<body>
+
+</body>
+<h1 id="demo">Welcome to javascript</h1>
+<button id="demo1">Click</button>
+<br><br>
+<h1 id="hide">Welcome to Jquery</h1>
+<button id="hide1">Click</button>
+
+<script>
+    $("#demo1").click(function() {
+        $(alert("welcome"));
+        $("#demo").css('color', 'red');
+    });
+
+
+
+    $("#hide1").click(function() {
+        $("#hide").hide();
+    });
+</script>
+
+</html>

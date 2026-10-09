@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       #main{position: relative; display: inline-block;
+    cursor: pointer;
+border-bottom: 1px solid black;}
+
+         .first{position: absolute;
+        width: 90px;
+        padding: 8px 8px;
+        text-align: center;
+        z-index: 1;
+        display: none;
+        background-color: black ;
+        color: white;
+    bottom: 100%;
+    border-radius: 6px;
+}
+
+      .first::after{content:"";
+    position: absolute;
+     top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+
+} 
+
+#main:hover .first{display: block;}
+
+    </style>
+</head>
+<body>
+    <body style="text-align:center;">
+<h2>Top-aligned Tooltip with Bottom Arrow</h2>
+<div id="main">Hover over me
+   <span class="first">Tooltip text</span>
+
+</div>
+</body>
+</html>

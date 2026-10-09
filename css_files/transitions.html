@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=>, initial-scale=1.0">
+    <title>Document</title>
+<style>
+#div1{width: 200px;
+height: 200px;
+display: inline-block;
+background-color:aqua;
+transition: width 2s, height 4s, background-color 3s;}
+#div1:hover{width: 300px;
+height: 300px;
+background-color: rgb(64, 88, 224);}
+
+.div2{width: 150px;
+height: 150px;
+background-image: url(/images/nature.jpg);
+display: inline-block;
+transition:width 2s, height 2s, background-image 2s,transform 2s ; margin-left: 50px;
+}
+ 
+.div2:hover{width: 200px;
+height: 200px;
+background-image: url(/images/nature1.jpg);
+transform: rotate(180deg);}
+
+button{background-color: lightgrey;
+padding: 10px 20px;
+margin-left: 50px;
+display: inline-block;
+border-radius: 10px;
+transition: background-color 2s, transform 3s;}
+
+button:hover{background-color: lightgreen;
+transform: scale(2,2);}
+
+#div3{width: 100px;
+height: 100px;
+display: inline-block;
+background-color: red;
+border: 1px solid orange;
+position: fixed;
+margin-left: 50px;
+transition: width 3s, background-color 2s;}
+
+#div3:hover{width: 400px; background-color: orange; 
+}
+
+</style>
+
+</head>
+<body>
+    <h1> transitions </h1>
+    <div id="div1"></div>
+    <div class="div2"></div>
+    <button>click</button>
+    <div id="div3"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti expedita accusamus aliquam, magnam vero optio quisquam dolores, impedit reiciendis error obcaecati laborum quas voluptas ullam id dolore quibusdam voluptatum harum?</div>
+</body>
+</html>

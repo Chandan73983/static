@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var scores = [70, 20, 80, 90, 50];
+        var m = parseInt(prompt("enter minimum marks "));
+        var result = scores
+            .filter(function(score) {
+                return score == m;
+            })
+            .map(function(passed) {
+                return "Passed: " + passed;
+            })
+            .join("<br>");
+
+        document.writeln(result + "<br><br>");
+
+
+        // var student = "  ravi kumar ";
+
+        // var cleaned = student.trim().toUpperCase().replace  ("KUMAR", "SINGH");
+
+        // document.writeln("Formatted Name: " + cleaned);
+    </script>
+</body>
+
+</html>

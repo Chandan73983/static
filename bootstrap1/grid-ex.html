@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bootstrap Grid System Explained</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .box {
+            background: #0d6efd;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid white;
+        }
+
+        .section-title {
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 class="text-center mt-4">Bootstrap Grid System - Complete Guide</h1>
+        <p class="text-center">This page demonstrates how Bootstrap grids work using live examples.</p>
+
+        <!-- SECTION 1 -->
+        <h2 class="section-title">1. Basic Grid (3 Equal Columns)</h2>
+        <p>
+            Bootstrap uses a 12-column system. Below example shows 3 equal columns using <code>.col</code>.
+        </p>
+
+        <div class="row">
+            <div class="col box">Column 1</div>
+            <div class="col box">Column 2</div>
+
+        </div>
+
+        <!-- SECTION 2 -->
+        <h2 class="section-title">2. Fixed Column Sizes</h2>
+        <p>
+            You can define column width using numbers (out of 12).
+        </p>
+
+        <div class="row">
+            <div class="col box">col-4</div>
+            <div class="col-2 box">col-4</div>
+            <div class="col-1 box">col-4</div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12 box">col-8</div>
+            <div class="col-4 box">col-4</div>
+        </div>
+
+        <!-- SECTION 3 -->
+        <h2 class="section-title">3. Auto Layout Columns</h2>
+        <p>
+            When you use <code>.col</code> without numbers, Bootstrap automatically divides space equally.
+        </p>
+
+        <div class="row">
+            <div class="col box">Auto</div>
+            <div class="col box">Auto</div>
+            <div class="col box">Auto</div>
+            <div class="col box">Auto</div>
+        </div>
+
+        <!-- SECTION 4 -->
+        <h2 class="section-title">4. One Column Wider</h2>
+        <p>
+            You can set one column width and others adjust automatically.
+        </p>
+
+        <div class="row">
+            <div class="col box">1</div>
+            <div class="col-6 box">Wider (col-6)</div>
+            <div class="col box">3</div>
+        </div>
+
+        <!-- SECTION 5 -->
+        <h2 class="section-title">5. Responsive Grid</h2>
+        <p>
+            Bootstrap supports different screen sizes:
+            <br> <strong>sm, md, lg, xl, xxl</strong>
+        </p>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-4 box">Responsive Column</div>
+            <div class="col-sm-12 col-md-6 col-lg-4 box">Responsive Column</div>
+            <div class="col-sm-12 col-md-12 col-lg-4 box">Responsive Column</div>
+        </div>
+
+        <!-- SECTION 6 -->
+        <h2 class="section-title">6. Stacked to Horizontal</h2>
+        <p>
+            Columns stack on small screens and align horizontally on larger screens.
+        </p>
+
+        <div class="row">
+            <div class="col-sm-8 box">col-sm-8</div>
+            <div class="col-sm-4 box">col-sm-4</div>
+        </div>
+
+        <!-- SECTION 7 -->
+        <h2 class="section-title">7. Row Columns Shortcut</h2>
+        <p>
+            Use <code>.row-cols-*</code> to quickly define number of columns.
+        </p>
+
+        <div class="row row-cols-2">
+            <div class="col box">1</div>
+            <div class="col box">2</div>
+            <div class="col box">3</div>
+            <div class="col box">4</div>
+        </div>
+
+        <div class="row cols-4 mt-3">
+            <div class="col box">1</div>
+            <div class="col box">2</div>
+            <div class="col box">3</div>
+            <div class="col box">4</div>
+        </div>
+
+        <!-- SECTION 8 -->
+        <h2 class="section-title">8. Gutters (Spacing)</h2>
+        <p>
+            Gutters control spacing between columns using classes like <code>g-3</code>, <code>gx-5</code>, etc.
+        </p>
+
+        <div class="row g-4">
+            <div class="col-6 box">Column</div>
+            <div class="col-6 box">Column</div>
+            <div class="col-6 box">Column</div>
+            <div class="col-6 box">Column</div>
+        </div>
+
+        <!-- SECTION 9 -->
+        <h2 class="section-title">9. Nested Grid</h2>
+        <p>
+            You can create grids inside columns.
+        </p>
+
+        <div class="row">
+            <div class="col-6 box">
+                Parent Column
+                <div class="row mt-2">
+                    <div class="col-6 box">Nested 1</div>
+                    <div class="col-6 box">Nested 2</div>
+                </div>
+            </div>
+            <div class="col-6 box">Parent Column</div>
+        </div>
+
+        <!-- SECTION 10 -->
+        <h2 class="section-title">10. Alignment</h2>
+        <p>
+            Use flex utilities to align columns vertically and horizontally.
+        </p>
+
+        <div class="row align-items-center" style="height:150px;">
+            <div class="col box">Top/Center</div>
+            <div class="col box">Top/Center</div>
+            <div class="col box">Top/Center</div>
+        </div>
+
+        <div class="row justify-content-center mt-3">
+            <div class="col-4 box">Centered</div>
+        </div>
+
+        <!-- SECTION 11 -->
+        <h2 class="section-title">11. Order Change</h2>
+        <p>
+            You can change column order using <code>order-*</code>.
+        </p>
+
+        <div class="row">
+            <div class="col order-3 box">First (order-3)</div>
+            <div class="col order-1 box">Second (order-1)</div>
+            <div class="col order-2 box">Third (order-2)</div>
+        </div>
+
+        <!-- SUMMARY -->
+        <h2 class="section-title">Summary</h2>
+        <ul>
+            <li>Grid is based on 12 columns</li>
+            <li>Use <code>.container → .row → .col</code> structure</li>
+            <li>Responsive classes control layout at different screen sizes</li>
+            <li>Gutters manage spacing</li>
+            <li>Grids can be nested</li>
+            <li>Flex utilities help align and reorder content</li>
+        </ul>
+
+    </div>
+
+</body>
+
+</html>

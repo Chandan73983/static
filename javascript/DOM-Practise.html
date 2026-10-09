@@ -1,0 +1,2550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Mastery Course - Hinglish</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f6f8fb;
+            --surface: #ffffff;
+            --surface-2: #eef3f8;
+            --text: #172033;
+            --muted: #64748b;
+            --border: #d9e2ec;
+            --brand: #0f766e;
+            --brand-2: #2563eb;
+            --accent: #eab308;
+            --danger: #dc2626;
+            --success: #16a34a;
+            --code-bg: #101828;
+            --code-text: #e5edf7;
+            --shadow: 0 18px 45px rgba(15, 23, 42, 0.1);
+            --radius: 8px;
+            --sidebar-width: 292px;
+            --header-height: 70px;
+        }
+
+        [data-theme="dark"] {
+            color-scheme: dark;
+            --bg: #101318;
+            --surface: #171c23;
+            --surface-2: #202732;
+            --text: #edf3fb;
+            --muted: #9aa8bb;
+            --border: #303a48;
+            --brand: #2dd4bf;
+            --brand-2: #60a5fa;
+            --accent: #facc15;
+            --danger: #f87171;
+            --success: #4ade80;
+            --code-bg: #080b10;
+            --code-text: #edf3fb;
+            --shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        body.sidebar-open {
+            overflow: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        .layout {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: var(--sidebar-width) 1fr;
+        }
+
+        .sidebar {
+            position: fixed;
+            inset: 0 auto 0 0;
+            width: var(--sidebar-width);
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 20px 16px;
+            overflow-y: auto;
+            z-index: 30;
+        }
+
+        .brand {
+            display: grid;
+            gap: 4px;
+            padding: 10px 10px 18px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+
+        .brand strong {
+            font-size: 1.08rem;
+            letter-spacing: 0;
+        }
+
+        .brand span {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .search {
+            position: relative;
+            margin-bottom: 14px;
+        }
+
+        .search input {
+            width: 100%;
+            border: 1px solid var(--border);
+            background: var(--surface-2);
+            color: var(--text);
+            padding: 11px 12px;
+            border-radius: var(--radius);
+            outline: none;
+        }
+
+        .nav-list {
+            display: grid;
+            gap: 6px;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .nav-list a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            min-height: 42px;
+            padding: 9px 10px;
+            border-radius: var(--radius);
+            color: var(--muted);
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+        }
+
+        .nav-list a:hover,
+        .nav-list a.active {
+            background: color-mix(in srgb, var(--brand) 14%, transparent);
+            color: var(--text);
+            transform: translateX(2px);
+        }
+
+        .nav-list .done {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+            flex: 0 0 auto;
+        }
+
+        .nav-list a.completed .done {
+            background: var(--success);
+            box-shadow: 0 0 0 4px color-mix(in srgb, var(--success) 16%, transparent);
+        }
+
+        .main {
+            grid-column: 2;
+            min-width: 0;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            min-height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            background: color-mix(in srgb, var(--surface) 88%, transparent);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(16px);
+            z-index: 20;
+            padding: 12px clamp(18px, 3vw, 34px);
+        }
+
+        .topbar h1 {
+            margin: 0;
+            font-size: clamp(1rem, 2vw, 1.35rem);
+            line-height: 1.2;
+        }
+
+        .topbar p {
+            margin: 2px 0 0;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .icon-btn,
+        .btn {
+            min-height: 40px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s, border-color 0.2s;
+        }
+
+        .icon-btn {
+            width: 42px;
+            display: inline-grid;
+            place-items: center;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 13px;
+            font-weight: 700;
+        }
+
+        .btn.primary {
+            background: var(--brand);
+            border-color: var(--brand);
+            color: #ffffff;
+        }
+
+        .btn.secondary {
+            background: var(--surface-2);
+        }
+
+        .btn:hover,
+        .icon-btn:hover {
+            transform: translateY(-1px);
+            border-color: var(--brand);
+        }
+
+        .progress-wrap {
+            width: min(260px, 32vw);
+            display: grid;
+            gap: 5px;
+            color: var(--muted);
+            font-size: 0.78rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            border-radius: 99px;
+            background: var(--surface-2);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--brand), var(--brand-2));
+            transition: width 0.35s;
+        }
+
+        .content {
+            padding: clamp(18px, 3vw, 34px);
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            min-height: calc(100vh - var(--header-height) - 72px);
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+            align-items: center;
+            gap: clamp(22px, 4vw, 48px);
+            padding: clamp(24px, 5vw, 60px) 0 38px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-copy {
+            display: grid;
+            gap: 16px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+            padding: 7px 10px;
+            background: color-mix(in srgb, var(--accent) 18%, transparent);
+            border: 1px solid color-mix(in srgb, var(--accent) 38%, var(--border));
+            border-radius: var(--radius);
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .hero h2 {
+            margin: 0;
+            font-size: clamp(2.1rem, 6vw, 5.4rem);
+            line-height: 0.98;
+            letter-spacing: 0;
+        }
+
+        .hero p {
+            margin: 0;
+            max-width: 68ch;
+            color: var(--muted);
+            font-size: clamp(1rem, 1.7vw, 1.18rem);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(110px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .stat {
+            padding: 14px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 1.35rem;
+            color: var(--brand);
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 0.86rem;
+        }
+
+        .hero-visual {
+            min-height: 420px;
+            display: grid;
+            align-content: center;
+            gap: 14px;
+            padding: 18px;
+            background:
+                radial-gradient(circle at 20% 15%, color-mix(in srgb, var(--brand) 18%, transparent), transparent 32%),
+                radial-gradient(circle at 90% 80%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 30%),
+                var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .browser-shell {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .browser-bar {
+            height: 38px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--muted);
+        }
+
+        .dot:nth-child(1) {
+            background: #ef4444;
+        }
+
+        .dot:nth-child(2) {
+            background: #eab308;
+        }
+
+        .dot:nth-child(3) {
+            background: #22c55e;
+        }
+
+        .browser-body {
+            padding: 18px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .mini-code {
+            background: var(--code-bg);
+            color: var(--code-text);
+            border-radius: var(--radius);
+            padding: 14px;
+            overflow: auto;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            font-size: 0.88rem;
+            white-space: pre;
+        }
+
+        .course-section {
+            scroll-margin-top: calc(var(--header-height) + 18px);
+            padding: clamp(28px, 5vw, 54px) 0;
+            border-bottom: 1px solid var(--border);
+            animation: fadeUp 0.55s ease both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-head {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: end;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .section-head h2 {
+            margin: 0;
+            font-size: clamp(1.5rem, 3vw, 2.4rem);
+            line-height: 1.1;
+        }
+
+        .section-head p {
+            margin: 8px 0 0;
+            color: var(--muted);
+            max-width: 78ch;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 14px;
+        }
+
+        .card {
+            grid-column: span 6;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: clamp(16px, 2vw, 22px);
+            box-shadow: var(--shadow);
+            min-width: 0;
+        }
+
+        .card.full {
+            grid-column: 1 / -1;
+        }
+
+        .card.third {
+            grid-column: span 4;
+        }
+
+        .card.two-third {
+            grid-column: span 8;
+        }
+
+        .card h3 {
+            margin: 0 0 10px;
+            font-size: 1.12rem;
+        }
+
+        .card p,
+        .card li {
+            color: var(--muted);
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            min-height: 30px;
+            padding: 5px 9px;
+            border-radius: var(--radius);
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .diagram {
+            background: var(--surface-2);
+            border: 1px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+            overflow-x: auto;
+        }
+
+        .tree {
+            display: grid;
+            justify-items: center;
+            gap: 12px;
+            min-width: 390px;
+            text-align: center;
+        }
+
+        .node {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 92px;
+            min-height: 38px;
+            padding: 8px 12px;
+            background: var(--surface);
+            border: 1px solid var(--brand);
+            border-radius: var(--radius);
+            color: var(--text);
+            font-weight: 800;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+        }
+
+        .tree-row {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .tree-row::before {
+            content: "";
+            position: absolute;
+            top: -7px;
+            left: 12%;
+            right: 12%;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .example-box,
+        .output-box,
+        .playground {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface-2);
+            padding: 14px;
+            min-height: 88px;
+        }
+
+        .output-box {
+            display: grid;
+            place-items: center;
+            color: var(--text);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .code {
+            background: var(--code-bg);
+            color: var(--code-text);
+            border-radius: var(--radius);
+            padding: 14px;
+            overflow: auto;
+            font-size: 0.88rem;
+            line-height: 1.55;
+            white-space: pre-wrap;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 12px 0;
+        }
+
+        .form-row {
+            display: grid;
+            gap: 7px;
+            margin-bottom: 10px;
+        }
+
+        .form-row label {
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .input,
+        textarea,
+        select {
+            width: 100%;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            border-radius: var(--radius);
+            padding: 10px 11px;
+            outline: none;
+        }
+
+        .input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--brand);
+            box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 16%, transparent);
+        }
+
+        .task,
+        .quiz {
+            border-left: 4px solid var(--brand);
+            background: color-mix(in srgb, var(--brand) 8%, var(--surface));
+            padding: 13px;
+            border-radius: var(--radius);
+            margin-top: 12px;
+        }
+
+        .quiz-result {
+            min-height: 24px;
+            font-weight: 800;
+            margin-top: 8px;
+        }
+
+        .selector-target,
+        .event-pad,
+        .family-target,
+        .bubble-box {
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+        }
+
+        .highlight {
+            outline: 3px solid var(--accent);
+            background: color-mix(in srgb, var(--accent) 20%, var(--surface)) !important;
+        }
+
+        .style-card {
+            width: min(100%, 260px);
+            min-height: 130px;
+            display: grid;
+            place-items: center;
+            border-radius: var(--radius);
+            background: #14b8a6;
+            color: white;
+            font-weight: 900;
+            transition: 0.25s;
+        }
+
+        .style-card.big {
+            transform: scale(1.05);
+            background: #2563eb;
+        }
+
+        .style-card.round {
+            border-radius: 42px;
+        }
+
+        .todo-list,
+        .project-list {
+            display: grid;
+            gap: 8px;
+            padding: 0;
+            margin: 12px 0 0;
+            list-style: none;
+        }
+
+        .todo-list li,
+        .project-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--text);
+        }
+
+        .todo-list li.done span {
+            text-decoration: line-through;
+            color: var(--muted);
+        }
+
+        .clock {
+            font-size: clamp(1.8rem, 5vw, 3.4rem);
+            font-weight: 900;
+            color: var(--brand);
+            text-align: center;
+        }
+
+        .project-card {
+            grid-column: span 6;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .slider-frame {
+            aspect-ratio: 16 / 9;
+            display: grid;
+            place-items: center;
+            border-radius: var(--radius);
+            background: linear-gradient(135deg, #0f766e, #2563eb);
+            color: #fff;
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-weight: 900;
+        }
+
+        .calc {
+            display: grid;
+            gap: 8px;
+            max-width: 280px;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .calc-grid button {
+            min-height: 42px;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .faq-item button {
+            width: 100%;
+            text-align: left;
+            border: 0;
+            background: var(--surface-2);
+            color: var(--text);
+            padding: 12px;
+            cursor: pointer;
+            font-weight: 800;
+        }
+
+        .faq-item div {
+            display: none;
+            padding: 12px;
+            color: var(--muted);
+        }
+
+        .faq-item.open div {
+            display: block;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 680px;
+            background: var(--surface);
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        th {
+            background: var(--surface-2);
+            color: var(--text);
+        }
+
+        td {
+            color: var(--muted);
+        }
+
+        .two-col-list {
+            columns: 2 320px;
+            column-gap: 28px;
+            padding-left: 20px;
+        }
+
+        .two-col-list li {
+            break-inside: avoid;
+            margin-bottom: 9px;
+        }
+
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 25;
+        }
+
+        .hidden-by-search {
+            display: none;
+        }
+
+        @media (max-width: 1040px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .main {
+                grid-column: 1;
+            }
+
+            .sidebar {
+                transform: translateX(-105%);
+                transition: transform 0.25s;
+            }
+
+            body.sidebar-open .sidebar {
+                transform: translateX(0);
+            }
+
+            body.sidebar-open .mobile-overlay {
+                display: block;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                min-height: 320px;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .topbar {
+                align-items: flex-start;
+            }
+
+            .header-actions {
+                width: 100%;
+            }
+
+            .progress-wrap {
+                width: 100%;
+                order: 3;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section-head {
+                grid-template-columns: 1fr;
+            }
+
+            .card,
+            .card.third,
+            .card.two-third,
+            .project-card {
+                grid-column: 1 / -1;
+            }
+
+            .topbar {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 460px) {
+            .content {
+                padding: 14px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .header-actions .btn {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <aside class="sidebar" aria-label="Course navigation">
+        <div class="brand">
+            <strong>DOM Mastery Course</strong>
+            <span>Zero se Advanced tak, pure Hinglish mein.</span>
+        </div>
+        <div class="search">
+            <input id="searchInput" type="search" placeholder="Search topics..." aria-label="Search course topics" />
+        </div>
+        <nav>
+            <ul class="nav-list" id="navList">
+                <li><a href="#intro"><span>1. Introduction</span><i class="done"></i></a></li>
+                <li><a href="#selecting"><span>2. Selecting Elements</span><i class="done"></i></a></li>
+                <li><a href="#content"><span>3. Changing Content</span><i class="done"></i></a></li>
+                <li><a href="#styles"><span>4. Changing Styles</span><i class="done"></i></a></li>
+                <li><a href="#attributes"><span>5. Attributes</span><i class="done"></i></a></li>
+                <li><a href="#events"><span>6. Events</span><i class="done"></i></a></li>
+                <li><a href="#listeners"><span>7. Event Listeners</span><i class="done"></i></a></li>
+                <li><a href="#traversing"><span>8. Traversing DOM</span><i class="done"></i></a></li>
+                <li><a href="#creating"><span>9. Creating Elements</span><i class="done"></i></a></li>
+                <li><a href="#forms"><span>10. Forms and DOM</span><i class="done"></i></a></li>
+                <li><a href="#timers"><span>11. Timers</span><i class="done"></i></a></li>
+                <li><a href="#projects"><span>12. DOM Projects</span><i class="done"></i></a></li>
+                <li><a href="#advanced"><span>13. Advanced DOM</span><i class="done"></i></a></li>
+                <li><a href="#interview"><span>14. Interview Q&amp;A</span><i class="done"></i></a></li>
+                <li><a href="#cheatsheet"><span>15. Cheat Sheet</span><i class="done"></i></a></li>
+                <li><a href="#challenges"><span>16. Challenge Zone</span><i class="done"></i></a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="layout">
+        <main class="main">
+            <header class="topbar">
+                <button class="icon-btn" id="menuBtn" aria-label="Open navigation">Menu</button>
+                <div>
+                    <h1>DOM Mastery Course Website</h1>
+                    <p>Learn, click, experiment, quiz, repeat.</p>
+                </div>
+                <div class="header-actions">
+                    <div class="progress-wrap" aria-label="Course progress">
+                        <span id="progressText">0% complete</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                    <button class="btn secondary" id="themeToggle">Light/Dark</button>
+                    <button class="btn primary" id="resetProgress">Reset</button>
+                </div>
+            </header>
+
+            <div class="content">
+                <section class="hero" id="top">
+                    <div class="hero-copy">
+                        <span class="eyebrow">Interactive DOM Bootcamp</span>
+                        <h2>DOM ko master karo, browser ko control karo.</h2>
+                        <p>DOM matlab HTML page ka live object model. Is file mein theory, diagrams, live examples,
+                            playgrounds, code previews, practice tasks, quizzes, projects, interview questions aur cheat
+                            sheet sab kuch ek hi jagah hai.</p>
+                        <div class="demo-controls">
+                            <a class="btn primary" href="#intro">Start Learning</a>
+                            <a class="btn secondary" href="#projects">Open Projects</a>
+                        </div>
+                        <div class="stats">
+                            <div class="stat"><strong>16</strong><span>Sections</span></div>
+                            <div class="stat"><strong>50</strong><span>Interview Q&amp;A</span></div>
+                            <div class="stat"><strong>10</strong><span>Mini Projects</span></div>
+                            <div class="stat"><strong>100%</strong><span>Single File</span></div>
+                        </div>
+                    </div>
+                    <div class="hero-visual" aria-label="DOM visual preview">
+                        <div class="browser-shell">
+                            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span
+                                    class="dot"></span></div>
+                            <div class="browser-body">
+                                <div class="tree">
+                                    <span class="node">document</span>
+                                    <div class="tree-row">
+                                        <span class="node">&lt;html&gt;</span>
+                                    </div>
+                                    <div class="tree-row">
+                                        <span class="node">&lt;head&gt;</span>
+                                        <span class="node">&lt;body&gt;</span>
+                                    </div>
+                                    <div class="tree-row">
+                                        <span class="node">&lt;h1&gt;</span>
+                                        <span class="node">&lt;button&gt;</span>
+                                        <span class="node">&lt;section&gt;</span>
+                                    </div>
+                                </div>
+                                <pre class="mini-code">document.querySelector("button")
+  .addEventListener("click", () =&gt; {
+    page.textContent = "DOM changed!";
+  });</pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="course-section" id="intro"
+                    data-title="Introduction to DOM What is DOM Browser DOM Tree HTML vs DOM Why DOM is important JavaScript interacts">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 1: Introduction to DOM</h2>
+                            <p>DOM browser ka live map hai. HTML file static recipe hoti hai, DOM browser ke andar bani
+                                hui live dish hoti hai jise JavaScript change kar sakti hai.</p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="intro">Mark Complete</button>
+                    </div>
+                    <div class="grid">
+                        <article class="card two-third">
+                            <h3>Theory</h3>
+                            <p><strong>DOM</strong> ka full form Document Object Model hai. Browser HTML ko read karke
+                                objects ki tree structure banata hai. Har tag ek node ban jata hai, jaise
+                                <code>h1</code>, <code>p</code>, <code>button</code>. JavaScript in nodes ko select,
+                                update, create aur delete kar sakti hai.
+                            </p>
+                            <p><strong>HTML vs DOM:</strong> HTML source code hai. DOM browser memory mein live
+                                structure hai. Agar JS se text badal diya, source file same reh sakti hai, lekin DOM aur
+                                screen update ho jaate hain.</p>
+                            <p><strong>Importance:</strong> Dynamic websites, validation, animations, buttons, modals,
+                                sliders, forms, dashboards sab DOM ke bina incomplete hain.</p>
+                        </article>
+                        <article class="card third">
+                            <h3>Quick Visual Diagram</h3>
+                            <div class="diagram">
+                                <div class="tree">
+                                    <span class="node">document</span>
+                                    <div class="tree-row"><span class="node">html</span></div>
+                                    <div class="tree-row"><span class="node">head</span><span class="node">body</span>
+                                    </div>
+                                    <div class="tree-row"><span class="node">title</span><span
+                                            class="node">h1</span><span class="node">p</span><span
+                                            class="node">button</span></div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="card">
+                            <h3>Live Example</h3>
+                            <div class="output-box" id="introOutput">Main HTML se DOM node bana hoon.</div>
+                            <div class="demo-controls">
+                                <button class="btn primary"
+                                    onclick="document.getElementById('introOutput').textContent='JavaScript ne DOM ko update kar diya!'">DOM
+                                    Change Karo</button>
+                                <button class="btn secondary"
+                                    onclick="document.getElementById('introOutput').textContent='Main HTML se DOM node bana hoon.'">Reset</button>
+                            </div>
+                        </article>
+                        <article class="card">
+                            <h3>Code Example + Output Preview</h3>
+                            <pre class="code">&lt;p id="demo"&gt;Old text&lt;/p&gt;
+&lt;script&gt;
+  document.getElementById("demo").textContent = "New text";
+&lt;/script&gt;</pre>
+                            <div class="task"><strong>Practice:</strong> Ek heading banao aur button click par uska text
+                                change karo.</div>
+                            <div class="quiz" data-answer="b">
+                                <strong>Mini Quiz:</strong> DOM kya represent karta hai?
+                                <div class="demo-controls">
+                                    <button class="btn secondary quiz-option" data-option="a">CSS colors</button>
+                                    <button class="btn secondary quiz-option" data-option="b">Page ka object
+                                        tree</button>
+                                    <button class="btn secondary quiz-option" data-option="c">Server database</button>
+                                </div>
+                                <div class="quiz-result"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="course-section" id="selecting"
+                    data-title="Selecting Elements getElementById getElementsByClassName getElementsByTagName querySelector querySelectorAll">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 2: Selecting Elements</h2>
+                            <p>DOM manipulation ka first step hai element select karna. Jaise remote se TV channel
+                                choose karte ho, JS selectors se page element choose karta hai.</p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="selecting">Mark Complete</button>
+                    </div>
+                    <div class="grid">
+                        <article class="card full">
+                            <h3>Selector Playground</h3>
+                            <div class="example-box" id="selectorPlayground">
+                                <h4 id="main-title">Main Title ID</h4>
+                                <p class="note">Class note one</p>
+                                <p class="note">Class note two</p>
+                                <button class="sample-btn">Sample Button</button>
+                            </div>
+                            <div class="demo-controls">
+                                <button class="btn secondary selector-demo" data-type="id">getElementById()</button>
+                                <button class="btn secondary selector-demo"
+                                    data-type="class">getElementsByClassName()</button>
+                                <button class="btn secondary selector-demo"
+                                    data-type="tag">getElementsByTagName()</button>
+                                <button class="btn secondary selector-demo" data-type="qs">querySelector()</button>
+                                <button class="btn secondary selector-demo" data-type="qsa">querySelectorAll()</button>
+                            </div>
+                            <div class="output-box" id="selectorOutput">Button click karo aur selected elements
+                                highlight dekho.</div>
+                        </article>
+                        <article class="card third">
+                            <h3>getElementById()</h3>
+                            <p>Unique ID wale element ko select karta hai. Fast aur direct hota hai.</p>
+                            <pre class="code">const title = document.getElementById("main-title");</pre>
+                        </article>
+                        <article class="card third">
+                            <h3>getElementsByClassName()</h3>
+                            <p>Same class ke multiple elements ka live HTMLCollection deta hai.</p>
+                            <pre class="code">const notes = document.getElementsByClassName("note");</pre>
+                        </article>
+                        <article class="card third">
+                            <h3>getElementsByTagName()</h3>
+                            <p>Tag name se elements pick karta hai, jaise saare <code>p</code> tags.</p>
+                            <pre class="code">const paras = document.getElementsByTagName("p");</pre>
+                        </article>
+                        <article class="card">
+                            <h3>querySelector()</h3>
+                            <p>CSS selector use karke first matching element deta hai. Modern projects mein bahut
+                                common.</p>
+                            <pre class="code">const firstNote = document.querySelector(".note");</pre>
+                            <div class="task"><strong>Practice:</strong> Ek card select karke uska border color change
+                                karo.</div>
+                        </article>
+                        <article class="card">
+                            <h3>querySelectorAll()</h3>
+                            <p>CSS selector ke saare matching elements ka static NodeList deta hai. Is par
+                                <code>forEach</code> easy hota hai.
+                            </p>
+                            <pre class="code">document.querySelectorAll(".note").forEach(el =&gt; {
+  el.style.fontWeight = "bold";
+});</pre>
+                            <div class="quiz" data-answer="c">
+                                <strong>Mini Quiz:</strong> CSS selector syntax kis method mein use hota hai?
+                                <div class="demo-controls">
+                                    <button class="btn secondary quiz-option" data-option="a">getElementById</button>
+                                    <button class="btn secondary quiz-option"
+                                        data-option="b">getElementsByTagName</button>
+                                    <button class="btn secondary quiz-option" data-option="c">querySelector</button>
+                                </div>
+                                <div class="quiz-result"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="course-section" id="content"
+                    data-title="Changing Content innerHTML innerText textContent content change">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 3: Changing Content</h2>
+                            <p>Text aur HTML update karna DOM ka daily kaam hai. Bas difference samajhna important hai:
+                                HTML parse karna hai ya plain text dikhana hai?</p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="content">Mark Complete</button>
+                    </div>
+                    <div class="grid">
+                        <article class="card">
+                            <h3>Theory</h3>
+                            <p><code>innerHTML</code> HTML tags ko parse karta hai. <code>innerText</code> visible text
+                                deta hai aur CSS visibility ka effect consider karta hai. <code>textContent</code> raw
+                                text content deta hai, hidden text bhi include ho sakta hai.</p>
+                            <pre class="code">box.innerHTML = "&lt;strong&gt;Bold&lt;/strong&gt;";
+box.innerText = "Visible text";
+box.textContent = "Fast plain text";</pre>
+                        </article>
+                        <article class="card">
+                            <h3>Interactive Demo</h3>
+                            <div class="output-box" id="contentBox">Original content</div>
+                            <div class="demo-controls">
+                                <button class="btn primary" data-content-mode="html">innerHTML</button>
+                                <button class="btn secondary" data-content-mode="innerText">innerText</button>
+                                <button class="btn secondary" data-content-mode="textContent">textContent</button>
+                            </div>
+                            <div class="task"><strong>Practice:</strong> User input lo aur preview area mein textContent
+                                se safe output dikhao.</div>
+                            <div class="quiz" data-answer="a">
+                                <strong>Mini Quiz:</strong> HTML tags render karne ke liye kaunsa property use hota hai?
+                                <div class="demo-controls">
+                                    <button class="btn secondary quiz-option" data-option="a">innerHTML</button>
+                                    <button class="btn secondary quiz-option" data-option="b">textContent</button>
+                                    <button class="btn secondary quiz-option" data-option="c">classList</button>
+                                </div>
+                                <div class="quiz-result"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="course-section" id="styles"
+                    data-title="Changing Styles element.style classList add remove toggle color changer">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 4: Changing Styles</h2>
+                            <p>Inline style direct hota hai, classList maintainable hota hai. Real projects mein mostly
+                                CSS classes toggle karna best practice hota hai.</p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="styles">Mark Complete</button>
+                    </div>
+                    <div class="grid">
+                        <article class="card">
+                            <h3>Color Changer Project</h3>
+                            <div class="style-card" id="styleCard">Style Me</div>
+                            <div class="demo-controls">
+                                <button class="btn secondary"
+                                    onclick="document.getElementById('styleCard').style.background='#dc2626'">element.style</button>
+                                <button class="btn secondary"
+                                    onclick="document.getElementById('styleCard').classList.add('big')">classList.add()</button>
+                                <button class="btn secondary"
+                                    onclick="document.getElementById('styleCard').classList.remove('big')">classList.remove()</button>
+                                <button class="btn secondary"
+                                    onclick="document.getElementById('styleCard').classList.toggle('round')">classList.toggle()</button>
+                            </div>
+                        </article>
+                        <article class="card">
+                            <h3>Code Example + Preview</h3>
+                            <pre class="code">const card = document.querySelector(".card");
+card.style.color = "teal";
+card.classList.add("active");
+card.classList.remove("hidden");
+card.classList.toggle("dark");</pre>
+                            <div class="task"><strong>Practice:</strong> Button click par ek box ko active/inactive
+                                class se design change karao.</div>
+                            <div class="quiz" data-answer="b">
+                                <strong>Mini Quiz:</strong> Class ko on/off karne ke liye best method?
+                                <div class="demo-controls">
+                                    <button class="btn secondary quiz-option" data-option="a">setAttribute</button>
+                                    <button class="btn secondary quiz-option" data-option="b">classList.toggle</button>
+                                    <button class="btn secondary quiz-option" data-option="c">innerHTML</button>
+                                </div>
+                                <div class="quiz-result"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="course-section" id="attributes"
+                    data-title="Attributes getAttribute setAttribute removeAttribute image source changer">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 5: Attributes</h2>
+                            <p>Attributes element ke extra information hote hain, jaise <code>src</code>,
+                                <code>href</code>, <code>alt</code>, <code>disabled</code>, <code>data-id</code>.
+                            </p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="attributes">Mark Complete</button>
+                    </div>
+                    <div class="grid">
+                        <article class="card">
+                            <h3>Image Source Changer</h3>
+                            <div class="output-box" style="padding:0; overflow:hidden;">
+                                <img id="attrImage" alt="Gradient preview"
+                                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='420'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop stop-color='%230f766e'/%3E%3Cstop offset='1' stop-color='%232563eb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='420' fill='url(%23g)'/%3E%3Ctext x='50%25' y='52%25' text-anchor='middle' font-size='48' fill='white' font-family='Arial'%3EImage A%3C/text%3E%3C/svg%3E"
+                                    style="width:100%; display:block; aspect-ratio:16/8; object-fit:cover;">
+                            </div>
+                            <div class="demo-controls">
+                                <button class="btn secondary" id="getAttrBtn">getAttribute()</button>
+                                <button class="btn secondary" id="setAttrBtn">setAttribute()</button>
+                                <button class="btn secondary" id="removeAttrBtn">removeAttribute()</button>
+                            </div>
+                            <div class="output-box" id="attrOutput">Attribute output yahan dikhega.</div>
+                        </article>
+                        <article class="card">
+                            <h3>Code Example</h3>
+                            <pre class="code">const img = document.querySelector("img");
+img.getAttribute("src");
+img.setAttribute("alt", "New image");
+img.removeAttribute("title");</pre>
+                            <div class="task"><strong>Practice:</strong> Link ka <code>href</code> button click par
+                                update karo.</div>
+                            <div class="quiz" data-answer="c">
+                                <strong>Mini Quiz:</strong> Attribute delete karne ke liye?
+                                <div class="demo-controls">
+                                    <button class="btn secondary quiz-option" data-option="a">deleteAttribute</button>
+                                    <button class="btn secondary quiz-option" data-option="b">clearAttribute</button>
+                                    <button class="btn secondary quiz-option" data-option="c">removeAttribute</button>
+                                </div>
+                                <div class="quiz-result"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="course-section" id="events"
+                    data-title="Events click dblclick mouseover mouseout mousemove keydown keyup keypress submit change input focus blur">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 6: Events</h2>
+                            <p>Event matlab user ya browser action. Click, typing, focus, form submit, mouse move: sab
+                                DOM events hain. JavaScript listener laga kar response deti hai.</p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="events">Mark Complete</button>
+                    </div>
+                    <div class="grid">
+                        <article class="card full">
+                            <h3>All Major Events Live Lab</h3>
+                            <div class="grid">
+                                <div class="card third">
+                                    <h3>Mouse Events</h3>
+                                    <div class="event-pad" id="mousePad">Is box par click, double click, hover, move try
+                                        karo.</div>
+                                </div>
+                                <div class="card third">
+                                    <h3>Keyboard Events</h3>
+                                    <input class="input" id="keyInput" placeholder="Type here..." />
+                                </div>
+                                <div class="card third">
+                                    <h3>Form/Input Events</h3>
+                                    <form id="eventForm">
+                                        <input class="input" id="eventName" placeholder="Focus, input, blur" />
+                                        <select class="input" id="eventSelect">
+                                            <option>change event test</option>
+                                            <option>Option 2</option>
+                                        </select>
+                                        <button class="btn primary" style="margin-top:8px;">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="output-box" id="eventLog">Event log yahan update hoga.</div>
+                        </article>
+                        <article class="card full">
+                            <h3>Event Reference</h3>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Event</th>
+                                            <th>Hinglish Meaning</th>
+                                            <th>Use Case</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>click</td>
+                                            <td>Single click hone par</td>
+                                            <td>Button action</td>
+                                        </tr>
+                                        <tr>
+                                            <td>dblclick</td>
+                                            <td>Double click hone par</td>
+                                            <td>Quick edit/open</td>
+                                        </tr>
+                                        <tr>
+                                            <td>mouseover</td>
+                                            <td>Mouse element par aaya</td>
+                                            <td>Hover preview</td>
+                                        </tr>
+                                        <tr>
+                                            <td>mouseout</td>
+                                            <td>Mouse element se bahar gaya</td>
+                                            <td>Preview hide</td>
+                                        </tr>
+                                        <tr>
+                                            <td>mousemove</td>
+                                            <td>Mouse move ho raha hai</td>
+                                            <td>Coordinates, drawing</td>
+                                        </tr>
+                                        <tr>
+                                            <td>keydown</td>
+                                            <td>Key press start</td>
+                                            <td>Shortcuts</td>
+                                        </tr>
+                                        <tr>
+                                            <td>keyup</td>
+                                            <td>Key release</td>
+                                            <td>Search after typing</td>
+                                        </tr>
+                                        <tr>
+                                            <td>keypress</td>
+                                            <td>Character key press, legacy</td>
+                                            <td>Old character input</td>
+                                        </tr>
+                                        <tr>
+                                            <td>submit</td>
+                                            <td>Form submit</td>
+                                            <td>Validation</td>
+                                        </tr>
+                                        <tr>
+                                            <td>change</td>
+                                            <td>Value commit/change</td>
+                                            <td>Select, checkbox</td>
+                                        </tr>
+                                        <tr>
+                                            <td>input</td>
+                                            <td>Value live change</td>
+                                            <td>Live counter</td>
+                                        </tr>
+                                        <tr>
+                                            <td>focus</td>
+                                            <td>Input active</td>
+                                            <td>Hint show</td>
+                                        </tr>
+                                        <tr>
+                                            <td>blur</td>
+                                            <td>Input inactive</td>
+                                            <td>Error check</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <pre class="code">button.addEventListener("click", function(event) {
+  console.log("Button clicked", event.target);
+});</pre>
+                            <div class="task"><strong>Practice:</strong> Ek input par live character count banao using
+                                input event.</div>
+                            <div class="quiz" data-answer="b">
+                                <strong>Mini Quiz:</strong> Form submit rokne ke liye event object par kya call karte
+                                hain?
+                                <div class="demo-controls">
+                                    <button class="btn secondary quiz-option" data-option="a">stopNow()</button>
+                                    <button class="btn secondary quiz-option" data-option="b">preventDefault()</button>
+                                    <button class="btn secondary quiz-option" data-option="c">remove()</button>
+                                </div>
+                                <div class="quiz-result"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="course-section" id="listeners"
+                    data-title="Event Listeners addEventListener removeEventListener interactive examples">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 7: Event Listeners</h2>
+                            <p><code>addEventListener()</code> clean tareeke se event attach karta hai.
+                                <code>removeEventListener()</code> tabhi kaam karega jab same named function reference
+                                pass karo.
+                            </p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="listeners">Mark Complete</button>
+                    </div>
+                    <div class="grid">
+                        <article class="card">
+                            <h3>Interactive Example</h3>
+                            <div class="output-box" id="listenerOutput">Listener abhi inactive hai.</div>
+                            <div class="demo-controls">
+                                <button class="btn primary" id="attachListener">Attach Listener</button>
+                                <button class="btn secondary" id="fireListener">Click Target</button>
+                                <button class="btn secondary" id="removeListener">Remove Listener</button>
+                            </div>
+                        </article>
+                        <article class="card">
+                            <h3>Code Example</h3>
+                            <pre class="code">function sayHi() {
+  console.log("Hi");
+}
+btn.addEventListener("click", sayHi);
+btn.removeEventListener("click", sayHi);</pre>
+                            <div class="task"><strong>Practice:</strong> Start button se listener add karo aur Stop
+                                button se remove karo.</div>
+                            <div class="quiz" data-answer="a">
+                                <strong>Mini Quiz:</strong> removeEventListener ke liye kya same hona chahiye?
+                                <div class="demo-controls">
+                                    <button class="btn secondary quiz-option" data-option="a">Same function
+                                        reference</button>
+                                    <button class="btn secondary quiz-option" data-option="b">Same text content</button>
+                                    <button class="btn secondary quiz-option" data-option="c">Same CSS color</button>
+                                </div>
+                                <div class="quiz-result"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="course-section" id="traversing"
+                    data-title="Traversing DOM parentElement children firstElementChild lastElementChild nextElementSibling previousElementSibling family tree">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 8: Traversing DOM</h2>
+                            <p>Traversing matlab selected element se relatives tak jana: parent, children, first child,
+                                last child, next sibling, previous sibling.</p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="traversing">Mark Complete</button>
+                    </div>
+                    <div class="grid">
+                        <article class="card">
+                            <h3>Visual Family Tree Demo</h3>
+                            <div class="example-box" id="family">
+                                <div class="family-target" id="parentBox">
+                                    Parent
+                                    <div class="tree-row" style="margin-top:12px;">
+                                        <span class="node child-node">Child 1</span>
+                                        <span class="node child-node" id="middleChild">Child 2</span>
+                                        <span class="node child-node">Child 3</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="demo-controls">
+                                <button class="btn secondary traverse-btn" data-traverse="parent">parentElement</button>
+                                <button class="btn secondary traverse-btn" data-traverse="children">children</button>
+                                <button class="btn secondary traverse-btn"
+                                    data-traverse="first">firstElementChild</button>
+                                <button class="btn secondary traverse-btn"
+                                    data-traverse="last">lastElementChild</button>
+                                <button class="btn secondary traverse-btn"
+                                    data-traverse="next">nextElementSibling</button>
+                                <button class="btn secondary traverse-btn"
+                                    data-traverse="prev">previousElementSibling</button>
+                            </div>
+                            <div class="output-box" id="traverseOutput">Middle child se relation choose karo.</div>
+                        </article>
+                        <article class="card">
+                            <h3>Code Example</h3>
+                            <pre class="code">const item = document.querySelector(".active");
+item.parentElement;
+item.children;
+item.firstElementChild;
+item.lastElementChild;
+item.nextElementSibling;
+item.previousElementSibling;</pre>
+                            <div class="task"><strong>Practice:</strong> List ke active item se next sibling ko
+                                highlight karo.</div>
+                            <div class="quiz" data-answer="c">
+                                <strong>Mini Quiz:</strong> Same level ke next element ko kya bolte hain?
+                                <div class="demo-controls">
+                                    <button class="btn secondary quiz-option" data-option="a">parentElement</button>
+                                    <button class="btn secondary quiz-option" data-option="b">children</button>
+                                    <button class="btn secondary quiz-option"
+                                        data-option="c">nextElementSibling</button>
+                                </div>
+                                <div class="quiz-result"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="course-section" id="creating"
+                    data-title="Creating Elements createElement appendChild prepend append remove replaceWith dynamic To-Do app">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 9: Creating Elements</h2>
+                            <p>DOM sirf existing elements change nahi karta. Aap naye elements create, add, remove aur
+                                replace bhi kar sakte ho. Ye dynamic apps ki backbone hai.</p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="creating">Mark Complete</button>
+                    </div>
+                    <div class="grid">
+                        <article class="card">
+                            <h3>Dynamic To-Do App</h3>
+                            <div class="form-row">
+                                <label for="todoInput">Task</label>
+                                <input class="input" id="todoInput" placeholder="Example: DOM notes revise karo" />
+                            </div>
+                            <div class="demo-controls">
+                                <button class="btn primary" id="addTodo">appendChild()</button>
+                                <button class="btn secondary" id="prependTodo">prepend()</button>
+                                <button class="btn secondary" id="replaceTodo">replaceWith()</button>
+                            </div>
+                            <ul class="todo-list" id="todoList">
+                                <li><span>Sample task</span><button class="btn secondary remove-todo">remove()</button>
+                                </li>
+                            </ul>
+                        </article>
+                        <article class="card">
+                            <h3>Code Example</h3>
+                            <pre class="code">const li = document.createElement("li");
+li.textContent = "New task";
+list.appendChild(li);
+list.prepend(li);
+li.remove();
+oldNode.replaceWith(newNode);</pre>
+                            <div class="task"><strong>Practice:</strong> Ek notes app banao jisme new note cards append
+                                hon.</div>
+                            <div class="quiz" data-answer="b">
+                                <strong>Mini Quiz:</strong> Naya element banane ka method?
+                                <div class="demo-controls">
+                                    <button class="btn secondary quiz-option" data-option="a">newElement()</button>
+                                    <button class="btn secondary quiz-option" data-option="b">createElement()</button>
+                                    <button class="btn secondary quiz-option" data-option="c">makeNode()</button>
+                                </div>
+                                <div class="quiz-result"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="course-section" id="forms"
+                    data-title="Forms and DOM Form Validation Reading Input Values Error Messages registration form">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 10: Forms and DOM</h2>
+                            <p>Forms mein DOM se input values read karte hain, validation lagate hain, errors show karte
+                                hain, aur submit behavior control karte hain.</p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="forms">Mark Complete</button>
+                    </div>
+                    <div class="grid">
+                        <article class="card">
+                            <h3>Complete Registration Form</h3>
+                            <form id="registerForm" novalidate>
+                                <div class="form-row">
+                                    <label>Name</label>
+                                    <input class="input" id="regName" />
+                                    <small id="nameErr" style="color:var(--danger)"></small>
+                                </div>
+                                <div class="form-row">
+                                    <label>Email</label>
+                                    <input class="input" id="regEmail" />
+                                    <small id="emailErr" style="color:var(--danger)"></small>
+                                </div>
+                                <div class="form-row">
+                                    <label>Password</label>
+                                    <input class="input" id="regPass" type="password" />
+                                    <small id="passErr" style="color:var(--danger)"></small>
+                                </div>
+                                <button class="btn primary">Register</button>
+                            </form>
+                            <div class="output-box" id="formOutput">Valid data submit karo.</div>
+                        </article>
+                        <article class="card">
+                            <h3>Code Example</h3>
+                            <pre class="code">form.addEventListener("submit", (e) =&gt; {
+  e.preventDefault();
+  const email = emailInput.value.trim();
+  if (!email.includes("@")) {
+    error.textContent = "Valid email enter karo";
+  }
+});</pre>
+                            <div class="task"><strong>Practice:</strong> Confirm password field add karo aur dono
+                                passwords match karao.</div>
+                            <div class="quiz" data-answer="a">
+                                <strong>Mini Quiz:</strong> Input value read karne ke liye?
+                                <div class="demo-controls">
+                                    <button class="btn secondary quiz-option" data-option="a">input.value</button>
+                                    <button class="btn secondary quiz-option" data-option="b">input.textContent</button>
+                                    <button class="btn secondary quiz-option" data-option="c">input.src</button>
+                                </div>
+                                <div class="quiz-result"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="course-section" id="timers"
+                    data-title="Timers setTimeout setInterval clearTimeout clearInterval Digital Clock Countdown Timer">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 11: Timers</h2>
+                            <p>Timers browser ko bolte hain: kuch kaam delay ke baad karo ya repeat karte raho. Clear
+                                methods se timers stop hote hain.</p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="timers">Mark Complete</button>
+                    </div>
+                    <div class="grid">
+                        <article class="card">
+                            <h3>Digital Clock</h3>
+                            <div class="clock" id="clock">--:--:--</div>
+                            <pre class="code">setInterval(() =&gt; {
+  clock.textContent = new Date().toLocaleTimeString();
+}, 1000);</pre>
+                        </article>
+                        <article class="card">
+                            <h3>Countdown Timer</h3>
+                            <div class="clock" id="countdown">10</div>
+                            <div class="demo-controls">
+                                <button class="btn primary" id="startCountdown">Start</button>
+                                <button class="btn secondary" id="stopCountdown">clearInterval()</button>
+                                <button class="btn secondary" id="timeoutDemo">setTimeout()</button>
+                            </div>
+                            <div class="output-box" id="timerOutput">Timer output</div>
+                            <div class="task"><strong>Practice:</strong> Pomodoro timer banao jisme start, pause, reset
+                                ho.</div>
+                            <div class="quiz" data-answer="c">
+                                <strong>Mini Quiz:</strong> Repeating timer stop karne ke liye?
+                                <div class="demo-controls">
+                                    <button class="btn secondary quiz-option" data-option="a">stopInterval</button>
+                                    <button class="btn secondary quiz-option" data-option="b">deleteTimer</button>
+                                    <button class="btn secondary quiz-option" data-option="c">clearInterval</button>
+                                </div>
+                                <div class="quiz-result"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="course-section" id="projects"
+                    data-title="DOM Projects Counter App Color Generator Random Quote Generator Image Slider Calculator To-Do List Accordion FAQ Password Generator Character Counter Dark Mode Toggle">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 12: DOM Projects</h2>
+                            <p>Ab concepts ko real mini projects mein use karte hain. Ye projects beginner portfolio ke
+                                liye bhi strong practice hain.</p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="projects">Mark Complete</button>
+                    </div>
+                    <div class="grid">
+                        <article class="project-card">
+                            <h3>1. Counter App</h3>
+                            <div class="clock" id="counterValue">0</div>
+                            <div class="demo-controls">
+                                <button class="btn secondary" onclick="changeCounter(-1)">-</button>
+                                <button class="btn primary" onclick="changeCounter(1)">+</button>
+                                <button class="btn secondary" onclick="resetCounter()">Reset</button>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <h3>2. Color Generator</h3>
+                            <div class="output-box" id="colorBox">#0f766e</div>
+                            <button class="btn primary" onclick="generateColor()">Generate Color</button>
+                        </article>
+                        <article class="project-card">
+                            <h3>3. Random Quote Generator</h3>
+                            <div class="output-box" id="quoteBox">DOM seekhna hai to buttons click karo.</div>
+                            <button class="btn primary" onclick="randomQuote()">New Quote</button>
+                        </article>
+                        <article class="project-card">
+                            <h3>4. Image Slider</h3>
+                            <div class="slider-frame" id="sliderFrame">Slide 1</div>
+                            <div class="demo-controls">
+                                <button class="btn secondary" onclick="moveSlide(-1)">Prev</button>
+                                <button class="btn primary" onclick="moveSlide(1)">Next</button>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <h3>5. Calculator</h3>
+                            <div class="calc">
+                                <input class="input" id="calcDisplay" readonly />
+                                <div class="calc-grid" id="calcGrid"></div>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <h3>6. To-Do List</h3>
+                            <input class="input" id="projectTodoInput" placeholder="Add task" />
+                            <button class="btn primary" style="margin-top:8px;" onclick="addProjectTodo()">Add</button>
+                            <ul class="project-list" id="projectTodoList"></ul>
+                        </article>
+                        <article class="project-card">
+                            <h3>7. Accordion FAQ</h3>
+                            <div class="faq-item"><button>DOM kya hai?</button>
+                                <div>Browser ka live object tree.</div>
+                            </div>
+                            <div class="faq-item"><button>Event kya hai?</button>
+                                <div>User/browser action jise JS listen kar sakta hai.</div>
+                            </div>
+                            <div class="faq-item"><button>Selector kya hai?</button>
+                                <div>Element choose karne ka tareeka.</div>
+                            </div>
+                        </article>
+                        <article class="project-card">
+                            <h3>8. Password Generator</h3>
+                            <input class="input" id="passwordOut" readonly placeholder="Password" />
+                            <button class="btn primary" style="margin-top:8px;"
+                                onclick="generatePassword()">Generate</button>
+                        </article>
+                        <article class="project-card">
+                            <h3>9. Character Counter</h3>
+                            <textarea id="charText" rows="4" placeholder="Type something..."></textarea>
+                            <div class="output-box" id="charCount">0 characters</div>
+                        </article>
+                        <article class="project-card">
+                            <h3>10. Dark Mode Toggle</h3>
+                            <p>Top header ka Light/Dark button complete page theme toggle karta hai. Ye project bhi isi
+                                website mein live hai.</p>
+                            <button class="btn primary" onclick="document.getElementById('themeToggle').click()">Toggle
+                                Theme</button>
+                        </article>
+                        <article class="card full">
+                            <h3>Code Pattern + Practice + Quiz</h3>
+                            <pre class="code">const btn = document.querySelector("button");
+const output = document.querySelector("#output");
+btn.addEventListener("click", () =&gt; {
+  output.textContent = "Project state updated";
+});</pre>
+                            <div class="task"><strong>Practice:</strong> In 10 projects mein se kisi ek ko localStorage
+                                ke saath upgrade karo.</div>
+                            <div class="quiz" data-answer="b">
+                                <strong>Mini Quiz:</strong> Random quote generator mein output update karne ke liye
+                                commonly kya use hoga?
+                                <div class="demo-controls">
+                                    <button class="btn secondary quiz-option" data-option="a">removeAttribute</button>
+                                    <button class="btn secondary quiz-option" data-option="b">textContent</button>
+                                    <button class="btn secondary quiz-option" data-option="c">parentElement</button>
+                                </div>
+                                <div class="quiz-result"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="course-section" id="advanced"
+                    data-title="Advanced DOM Event Delegation Event Bubbling Event Capturing Prevent Default Stop Propagation">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 13: Advanced DOM</h2>
+                            <p>Advanced DOM mein event flow samajhna zaroori hai: capturing phase top se target tak,
+                                target phase, bubbling phase target se top tak.</p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="advanced">Mark Complete</button>
+                    </div>
+                    <div class="grid">
+                        <article class="card">
+                            <h3>Event Delegation</h3>
+                            <p>Parent par ek listener lagao aur child clicks handle karo. Dynamic lists ke liye powerful
+                                hai.</p>
+                            <ul class="todo-list" id="delegateList">
+                                <li><span>Delegated Item 1</span><button class="btn secondary">Click</button></li>
+                                <li><span>Delegated Item 2</span><button class="btn secondary">Click</button></li>
+                            </ul>
+                            <div class="output-box" id="delegateOutput">Child button click karo.</div>
+                            <pre class="code">list.addEventListener("click", (e) =&gt; {
+  if (e.target.matches("button")) {
+    console.log("Child clicked");
+  }
+});</pre>
+                        </article>
+                        <article class="card">
+                            <h3>Bubbling, Capturing, Stop Propagation</h3>
+                            <div class="bubble-box" id="outerBox">
+                                Outer
+                                <div class="bubble-box" id="middleBox" style="margin-top:10px;">
+                                    Middle
+                                    <button class="btn primary" id="innerBtn" style="margin-top:10px;">Inner
+                                        Button</button>
+                                </div>
+                            </div>
+                            <div class="demo-controls">
+                                <button class="btn secondary" id="toggleStop">Stop Propagation: Off</button>
+                                <button class="btn secondary" id="captureDemo">Capturing Demo</button>
+                            </div>
+                            <div class="output-box" id="bubbleOutput">Inner button click karo.</div>
+                        </article>
+                        <article class="card full">
+                            <h3>Prevent Default Demo</h3>
+                            <p>Default browser behavior rokna ho, jaise form submit reload ya link navigation, to
+                                <code>event.preventDefault()</code> use hota hai.
+                            </p>
+                            <a class="btn primary" href="https://example.com" id="preventLink">Example link, but
+                                preventDefault enabled</a>
+                            <div class="output-box" id="preventOutput">Link click karo.</div>
+                            <div class="task"><strong>Practice:</strong> Form submit par page reload rok kar success
+                                message show karo.</div>
+                            <div class="quiz" data-answer="a">
+                                <strong>Mini Quiz:</strong> Parent tak event jana rokne ke liye?
+                                <div class="demo-controls">
+                                    <button class="btn secondary quiz-option" data-option="a">stopPropagation()</button>
+                                    <button class="btn secondary quiz-option" data-option="b">preventDefault()</button>
+                                    <button class="btn secondary quiz-option" data-option="c">querySelector()</button>
+                                </div>
+                                <div class="quiz-result"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="course-section" id="interview" data-title="DOM Interview Questions 50 answers Hinglish">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 14: DOM Interview Questions</h2>
+                            <p>50 common DOM interview questions with short Hinglish answers. Inhe revise karoge to
+                                theory aur practical dono clear rahenge.</p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="interview">Mark Complete</button>
+                    </div>
+                    <article class="card full">
+                        <ol class="two-col-list">
+                            <li><strong>DOM kya hai?</strong> Browser ka live object tree jo HTML document represent
+                                karta hai.</li>
+                            <li><strong>Node kya hota hai?</strong> DOM tree ka har part node hai: element, text,
+                                comment, document.</li>
+                            <li><strong>Element node kya hai?</strong> HTML tag se bana node, jaise div, p, button.</li>
+                            <li><strong>HTMLCollection kya hai?</strong> Live collection jo DOM change ke saath update
+                                ho sakti hai.</li>
+                            <li><strong>NodeList kya hai?</strong> Nodes ki list; querySelectorAll static NodeList deta
+                                hai.</li>
+                            <li><strong>getElementById kya karta hai?</strong> ID se single element select karta hai.
+                            </li>
+                            <li><strong>querySelector kya karta hai?</strong> CSS selector se first matching element
+                                deta hai.</li>
+                            <li><strong>querySelectorAll kya karta hai?</strong> CSS selector se saare matching elements
+                                deta hai.</li>
+                            <li><strong>innerHTML kab use kare?</strong> Jab HTML markup inject karna ho; unsafe input
+                                se bachna hai.</li>
+                            <li><strong>textContent kab better hai?</strong> Plain text ke liye, safer aur faster.</li>
+                            <li><strong>innerText difference?</strong> Visible rendered text consider karta hai.</li>
+                            <li><strong>classList kya hai?</strong> Classes add, remove, toggle, check karne ka API.
+                            </li>
+                            <li><strong>Attribute methods?</strong> getAttribute, setAttribute, removeAttribute.</li>
+                            <li><strong>data attributes kya hain?</strong> Custom info store karne ke liye data-*
+                                attributes.</li>
+                            <li><strong>Event kya hai?</strong> User ya browser action, jaise click, input, submit.</li>
+                            <li><strong>addEventListener ka fayda?</strong> Multiple listeners attach kar sakte hain,
+                                clean pattern hai.</li>
+                            <li><strong>removeEventListener kab kaam karta hai?</strong> Same event, same function
+                                reference, same options ke saath.</li>
+                            <li><strong>Event object kya deta hai?</strong> Target, key, coordinates, default behavior
+                                control jaisi info.</li>
+                            <li><strong>event.target kya hai?</strong> Actual clicked/triggered element.</li>
+                            <li><strong>event.currentTarget kya hai?</strong> Jis element par listener attached hai.
+                            </li>
+                            <li><strong>Bubbling kya hai?</strong> Event target se ancestors tak upar jaata hai.</li>
+                            <li><strong>Capturing kya hai?</strong> Event document se target ki taraf neeche jaata hai.
+                            </li>
+                            <li><strong>stopPropagation kya karta hai?</strong> Event ko next ancestors tak jaane se
+                                rokta hai.</li>
+                            <li><strong>preventDefault kya karta hai?</strong> Browser ka default action rokta hai.</li>
+                            <li><strong>Event delegation kya hai?</strong> Parent listener se child events handle karna.
+                            </li>
+                            <li><strong>Delegation useful kyu?</strong> Dynamic items aur performance ke liye.</li>
+                            <li><strong>parentElement kya deta hai?</strong> Current element ka parent element.</li>
+                            <li><strong>children kya deta hai?</strong> Direct child elements ka HTMLCollection.</li>
+                            <li><strong>firstElementChild?</strong> Pehla child element.</li>
+                            <li><strong>lastElementChild?</strong> Last child element.</li>
+                            <li><strong>nextElementSibling?</strong> Same level ka next element.</li>
+                            <li><strong>previousElementSibling?</strong> Same level ka previous element.</li>
+                            <li><strong>createElement kya karta hai?</strong> Naya element node banata hai.</li>
+                            <li><strong>append vs appendChild?</strong> append text aur multiple nodes accept karta hai;
+                                appendChild single node.</li>
+                            <li><strong>prepend kya karta hai?</strong> Parent ke start mein content insert karta hai.
+                            </li>
+                            <li><strong>remove kya karta hai?</strong> Element ko DOM se hata deta hai.</li>
+                            <li><strong>replaceWith kya karta hai?</strong> Current node ko naye node/content se replace
+                                karta hai.</li>
+                            <li><strong>Form value kaise read kare?</strong> input.value se.</li>
+                            <li><strong>Form reload kaise roke?</strong> submit event mein preventDefault.</li>
+                            <li><strong>Validation error kaise show kare?</strong> Error element ka textContent update
+                                karo.</li>
+                            <li><strong>setTimeout kya hai?</strong> Delay ke baad function run karta hai.</li>
+                            <li><strong>setInterval kya hai?</strong> Fixed interval par function repeat karta hai.</li>
+                            <li><strong>clearTimeout?</strong> Pending timeout cancel karta hai.</li>
+                            <li><strong>clearInterval?</strong> Repeating interval stop karta hai.</li>
+                            <li><strong>DOMContentLoaded event?</strong> HTML parse hone ke baad fire hota hai.</li>
+                            <li><strong>window.onload?</strong> Page assets including images load hone ke baad fire hota
+                                hai.</li>
+                            <li><strong>Style change ka best way?</strong> Reusable CSS class toggle karna.</li>
+                            <li><strong>Reflow kya hai?</strong> Browser layout recalculate karta hai.</li>
+                            <li><strong>Repaint kya hai?</strong> Visual pixels redraw hote hain.</li>
+                            <li><strong>DOM performance tip?</strong> Batch updates karo, unnecessary repeated layout
+                                reads avoid karo.</li>
+                        </ol>
+                        <div class="task"><strong>Practice:</strong> In 50 mein se 10 questions ko apne words mein
+                            explain karo.</div>
+                        <div class="quiz" data-answer="c">
+                            <strong>Mini Quiz:</strong> event.target kya hota hai?
+                            <div class="demo-controls">
+                                <button class="btn secondary quiz-option" data-option="a">Always document</button>
+                                <button class="btn secondary quiz-option" data-option="b">CSS file</button>
+                                <button class="btn secondary quiz-option" data-option="c">Actual triggered
+                                    element</button>
+                            </div>
+                            <div class="quiz-result"></div>
+                        </div>
+                    </article>
+                </section>
+
+                <section class="course-section" id="cheatsheet"
+                    data-title="DOM Cheat Sheet Complete Quick Reference Table Most Used Methods Most Used Events">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 15: DOM Cheat Sheet</h2>
+                            <p>Fast revision ke liye quick reference. Jab project bana rahe ho, ye table open rakho.</p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="cheatsheet">Mark Complete</button>
+                    </div>
+                    <article class="card full">
+                        <h3>Quick Reference Table</h3>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Method/Property</th>
+                                        <th>Use</th>
+                                        <th>Example</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Select</td>
+                                        <td>getElementById</td>
+                                        <td>ID se one element</td>
+                                        <td>document.getElementById("app")</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Select</td>
+                                        <td>querySelector</td>
+                                        <td>CSS selector se first</td>
+                                        <td>document.querySelector(".card")</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Select</td>
+                                        <td>querySelectorAll</td>
+                                        <td>CSS selector se all</td>
+                                        <td>document.querySelectorAll("button")</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Content</td>
+                                        <td>textContent</td>
+                                        <td>Plain text set/read</td>
+                                        <td>el.textContent = "Hi"</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Content</td>
+                                        <td>innerHTML</td>
+                                        <td>HTML markup set/read</td>
+                                        <td>el.innerHTML = "&lt;b&gt;Hi&lt;/b&gt;"</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Style</td>
+                                        <td>style</td>
+                                        <td>Inline CSS</td>
+                                        <td>el.style.color = "red"</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Style</td>
+                                        <td>classList</td>
+                                        <td>Class control</td>
+                                        <td>el.classList.toggle("active")</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Attributes</td>
+                                        <td>setAttribute</td>
+                                        <td>Attribute set</td>
+                                        <td>img.setAttribute("src", url)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Events</td>
+                                        <td>addEventListener</td>
+                                        <td>Event attach</td>
+                                        <td>btn.addEventListener("click", fn)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Create</td>
+                                        <td>createElement</td>
+                                        <td>New element</td>
+                                        <td>document.createElement("li")</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Insert</td>
+                                        <td>append/prepend</td>
+                                        <td>End/start insert</td>
+                                        <td>list.append(li)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Remove</td>
+                                        <td>remove</td>
+                                        <td>Element delete</td>
+                                        <td>el.remove()</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Traverse</td>
+                                        <td>parentElement</td>
+                                        <td>Parent access</td>
+                                        <td>el.parentElement</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Timers</td>
+                                        <td>setInterval</td>
+                                        <td>Repeat</td>
+                                        <td>setInterval(fn, 1000)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h3>Most Used Events</h3>
+                        <div class="pill-row">
+                            <span class="pill">click</span><span class="pill">input</span><span
+                                class="pill">submit</span><span class="pill">change</span><span
+                                class="pill">keydown</span><span class="pill">keyup</span><span
+                                class="pill">focus</span><span class="pill">blur</span><span
+                                class="pill">mouseover</span><span class="pill">mouseout</span>
+                        </div>
+                        <div class="task"><strong>Practice:</strong> Cheat sheet se 5 methods choose karo aur ek page
+                            par use karo.</div>
+                        <div class="quiz" data-answer="a">
+                            <strong>Mini Quiz:</strong> Class add/remove/toggle ke liye API?
+                            <div class="demo-controls">
+                                <button class="btn secondary quiz-option" data-option="a">classList</button>
+                                <button class="btn secondary quiz-option" data-option="b">styleSheet</button>
+                                <button class="btn secondary quiz-option" data-option="c">eventList</button>
+                            </div>
+                            <div class="quiz-result"></div>
+                        </div>
+                    </article>
+                </section>
+
+                <section class="course-section" id="challenges"
+                    data-title="DOM Challenge Zone 20 Practice Questions 10 Mini Projects 5 Advanced Projects">
+                    <div class="section-head">
+                        <div>
+                            <h2>Section 16: DOM Challenge Zone</h2>
+                            <p>Ab real muscle build karo. Pehle practice questions, phir mini projects, phir advanced
+                                projects.</p>
+                        </div>
+                        <button class="btn primary complete-btn" data-section="challenges">Mark Complete</button>
+                    </div>
+                    <div class="grid">
+                        <article class="card">
+                            <h3>20 Practice Questions</h3>
+                            <ol>
+                                <li>Button click par heading ka text change karo.</li>
+                                <li>3 paragraphs select karke unka color update karo.</li>
+                                <li>Input value read karke greeting show karo.</li>
+                                <li>Image src button se change karo.</li>
+                                <li>List item add aur remove karo.</li>
+                                <li>classList.toggle se active card banao.</li>
+                                <li>Form submit par validation lagao.</li>
+                                <li>Mouse coordinates show karo.</li>
+                                <li>keydown par pressed key display karo.</li>
+                                <li>setTimeout se delayed message show karo.</li>
+                                <li>setInterval se stopwatch banao.</li>
+                                <li>parentElement aur children display karo.</li>
+                                <li>Event delegation se dynamic buttons handle karo.</li>
+                                <li>preventDefault se link navigation roko.</li>
+                                <li>stopPropagation demo banao.</li>
+                                <li>Search filter list banao.</li>
+                                <li>Tabs component banao.</li>
+                                <li>Modal open/close banao.</li>
+                                <li>Theme preference localStorage mein save karo.</li>
+                                <li>Progress bar update karo.</li>
+                            </ol>
+                        </article>
+                        <article class="card">
+                            <h3>10 Mini Projects</h3>
+                            <ol>
+                                <li>Counter App</li>
+                                <li>Color Palette Generator</li>
+                                <li>Quote App</li>
+                                <li>To-Do with Filters</li>
+                                <li>FAQ Accordion</li>
+                                <li>Tabs UI</li>
+                                <li>Modal Popup</li>
+                                <li>Live Search</li>
+                                <li>Password Strength Checker</li>
+                                <li>Expense List</li>
+                            </ol>
+                            <h3>5 Advanced Projects</h3>
+                            <ol>
+                                <li>Kanban Board with Drag UI</li>
+                                <li>Quiz App with Score and Timer</li>
+                                <li>Form Builder</li>
+                                <li>Markdown Previewer</li>
+                                <li>Mini Spreadsheet Grid</li>
+                            </ol>
+                        </article>
+                        <article class="card full">
+                            <h3>Final Output Preview</h3>
+                            <div class="output-box">Agar tumne ye section tak practice kar li, DOM beginner se advanced
+                                tak kaafi solid ho jayega. Ab project banao, break karo, debug karo, aur phir improve
+                                karo.</div>
+                            <div class="quiz" data-answer="b">
+                                <strong>Mini Quiz:</strong> Advanced project banate waqt best learning kaise hogi?
+                                <div class="demo-controls">
+                                    <button class="btn secondary quiz-option" data-option="a">Sirf theory padh
+                                        kar</button>
+                                    <button class="btn secondary quiz-option" data-option="b">Build, test, debug,
+                                        repeat</button>
+                                    <button class="btn secondary quiz-option" data-option="c">DOM avoid karke</button>
+                                </div>
+                                <div class="quiz-result"></div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const $ = (selector, root = document) => root.querySelector(selector);
+        const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+        const body = document.body;
+        const themeToggle = $("#themeToggle");
+        const menuBtn = $("#menuBtn");
+        const overlay = $("#mobileOverlay");
+        const sections = $$(".course-section");
+        const navLinks = $$("#navList a");
+        const progressFill = $("#progressFill");
+        const progressText = $("#progressText");
+        const completed = new Set(JSON.parse(localStorage.getItem("domCourseCompleted") || "[]"));
+
+        function saveCompleted() {
+            localStorage.setItem("domCourseCompleted", JSON.stringify([...completed]));
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const total = sections.length;
+            const percent = Math.round((completed.size / total) * 100);
+            progressFill.style.width = percent + "%";
+            progressText.textContent = percent + "% complete";
+            navLinks.forEach(link => {
+                const id = link.getAttribute("href").slice(1);
+                link.classList.toggle("completed", completed.has(id));
+            });
+        }
+
+        function setTheme(theme) {
+            document.documentElement.dataset.theme = theme;
+            localStorage.setItem("domTheme", theme);
+        }
+
+        setTheme(localStorage.getItem("domTheme") || "light");
+        updateProgress();
+
+        themeToggle.addEventListener("click", () => {
+            const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+            setTheme(next);
+        });
+
+        menuBtn.addEventListener("click", () => body.classList.add("sidebar-open"));
+        overlay.addEventListener("click", () => body.classList.remove("sidebar-open"));
+        navLinks.forEach(link => link.addEventListener("click", () => body.classList.remove("sidebar-open")));
+
+        $("#resetProgress").addEventListener("click", () => {
+            completed.clear();
+            saveCompleted();
+        });
+
+        $$(".complete-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const id = btn.dataset.section;
+                if (completed.has(id)) {
+                    completed.delete(id);
+                    btn.textContent = "Mark Complete";
+                } else {
+                    completed.add(id);
+                    btn.textContent = "Completed";
+                }
+                saveCompleted();
+            });
+            if (completed.has(btn.dataset.section)) btn.textContent = "Completed";
+        });
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const id = entry.target.id;
+                navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === "#" + id));
+            });
+        }, { rootMargin: "-35% 0px -55% 0px", threshold: 0 });
+
+        sections.forEach(section => observer.observe(section));
+
+        $("#searchInput").addEventListener("input", (e) => {
+            const query = e.target.value.trim().toLowerCase();
+            sections.forEach(section => {
+                const text = (section.dataset.title + " " + section.textContent).toLowerCase();
+                section.classList.toggle("hidden-by-search", query && !text.includes(query));
+            });
+        });
+
+        $$(".quiz").forEach(quiz => {
+            quiz.addEventListener("click", (e) => {
+                const btn = e.target.closest(".quiz-option");
+                if (!btn) return;
+                const result = $(".quiz-result", quiz);
+                const correct = btn.dataset.option === quiz.dataset.answer;
+                result.textContent = correct ? "Correct! Bilkul sahi." : "Try again. Concept ko ek baar aur dekho.";
+                result.style.color = correct ? "var(--success)" : "var(--danger)";
+            });
+        });
+
+        $$(".selector-demo").forEach(btn => {
+            btn.addEventListener("click", () => {
+                $$(".highlight", $("#selectorPlayground")).forEach(el => el.classList.remove("highlight"));
+                let message = "";
+                if (btn.dataset.type === "id") {
+                    $("#main-title").classList.add("highlight");
+                    message = "ID selector ne single title choose kiya.";
+                }
+                if (btn.dataset.type === "class") {
+                    $$(".note").forEach(el => el.classList.add("highlight"));
+                    message = "Class selector ne dono notes choose kiye.";
+                }
+                if (btn.dataset.type === "tag") {
+                    $$("p", $("#selectorPlayground")).forEach(el => el.classList.add("highlight"));
+                    message = "Tag selector ne saare p tags choose kiye.";
+                }
+                if (btn.dataset.type === "qs") {
+                    $(".note").classList.add("highlight");
+                    message = "querySelector ne first .note choose kiya.";
+                }
+                if (btn.dataset.type === "qsa") {
+                    $$(".note").forEach(el => el.classList.add("highlight"));
+                    $(".sample-btn").classList.add("highlight");
+                    message = "querySelectorAll ne multiple CSS matches choose kiye.";
+                }
+                $("#selectorOutput").textContent = message;
+            });
+        });
+
+        $$("[data-content-mode]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const box = $("#contentBox");
+                if (btn.dataset.contentMode === "html") box.innerHTML = "<strong>innerHTML:</strong> tag render ho gaya.";
+                if (btn.dataset.contentMode === "innerText") box.innerText = "innerText: visible text update ho gaya.";
+                if (btn.dataset.contentMode === "textContent") box.textContent = "<strong>textContent:</strong> tags text ki tarah dikhte hain.";
+            });
+        });
+
+        const imgA = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='420'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop stop-color='%230f766e'/%3E%3Cstop offset='1' stop-color='%232563eb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='420' fill='url(%23g)'/%3E%3Ctext x='50%25' y='52%25' text-anchor='middle' font-size='48' fill='white' font-family='Arial'%3EImage A%3C/text%3E%3C/svg%3E";
+        const imgB = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='420'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop stop-color='%23be123c'/%3E%3Cstop offset='1' stop-color='%23eab308'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='420' fill='url(%23g)'/%3E%3Ctext x='50%25' y='52%25' text-anchor='middle' font-size='48' fill='white' font-family='Arial'%3EImage B%3C/text%3E%3C/svg%3E";
+        $("#getAttrBtn").addEventListener("click", () => $("#attrOutput").textContent = "alt = " + $("#attrImage").getAttribute("alt"));
+        $("#setAttrBtn").addEventListener("click", () => {
+            const img = $("#attrImage");
+            img.setAttribute("src", img.getAttribute("src") === imgA ? imgB : imgA);
+            img.setAttribute("title", "setAttribute se title add hua");
+            $("#attrOutput").textContent = "src aur title update ho gaye.";
+        });
+        $("#removeAttrBtn").addEventListener("click", () => {
+            $("#attrImage").removeAttribute("title");
+            $("#attrOutput").textContent = "title attribute remove ho gaya.";
+        });
+
+        const eventLog = $("#eventLog");
+        const logEvent = (name) => eventLog.textContent = name + " event fired at " + new Date().toLocaleTimeString();
+        ["click", "dblclick", "mouseover", "mouseout", "mousemove"].forEach(eventName => {
+            $("#mousePad").addEventListener(eventName, (e) => {
+                if (eventName === "mousemove") {
+                    logEvent("mousemove x:" + e.offsetX + " y:" + e.offsetY);
+                } else {
+                    logEvent(eventName);
+                }
+            });
+        });
+        ["keydown", "keyup", "keypress"].forEach(eventName => {
+            $("#keyInput").addEventListener(eventName, (e) => logEvent(eventName + " key:" + e.key));
+        });
+        $("#eventForm").addEventListener("submit", e => {
+            e.preventDefault();
+            logEvent("submit");
+        });
+        $("#eventSelect").addEventListener("change", () => logEvent("change"));
+        $("#eventName").addEventListener("input", () => logEvent("input"));
+        $("#eventName").addEventListener("focus", () => logEvent("focus"));
+        $("#eventName").addEventListener("blur", () => logEvent("blur"));
+
+        function listenerMessage() {
+            $("#listenerOutput").textContent = "Listener active tha, click handle ho gaya.";
+        }
+        $("#attachListener").addEventListener("click", () => {
+            $("#fireListener").addEventListener("click", listenerMessage);
+            $("#listenerOutput").textContent = "Listener attach ho gaya.";
+        });
+        $("#removeListener").addEventListener("click", () => {
+            $("#fireListener").removeEventListener("click", listenerMessage);
+            $("#listenerOutput").textContent = "Listener remove ho gaya.";
+        });
+
+        $$(".traverse-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                $$(".highlight", $("#family")).forEach(el => el.classList.remove("highlight"));
+                const middle = $("#middleChild");
+                let target;
+                if (btn.dataset.traverse === "parent") target = middle.parentElement.parentElement;
+                if (btn.dataset.traverse === "children") target = $("#parentBox").children[0];
+                if (btn.dataset.traverse === "first") target = $(".child-node");
+                if (btn.dataset.traverse === "last") target = $$(".child-node").at(-1);
+                if (btn.dataset.traverse === "next") target = middle.nextElementSibling;
+                if (btn.dataset.traverse === "prev") target = middle.previousElementSibling;
+                if (target) target.classList.add("highlight");
+                $("#traverseOutput").textContent = btn.textContent + " highlight ho gaya.";
+            });
+        });
+
+        function makeTodo(text) {
+            const li = document.createElement("li");
+            const span = document.createElement("span");
+            const remove = document.createElement("button");
+            span.textContent = text || "New DOM task";
+            remove.textContent = "remove()";
+            remove.className = "btn secondary remove-todo";
+            li.append(span, remove);
+            li.addEventListener("click", e => {
+                if (!e.target.matches("button")) li.classList.toggle("done");
+            });
+            return li;
+        }
+        $("#addTodo").addEventListener("click", () => $("#todoList").appendChild(makeTodo($("#todoInput").value.trim())));
+        $("#prependTodo").addEventListener("click", () => $("#todoList").prepend(makeTodo($("#todoInput").value.trim() || "Prepended task")));
+        $("#replaceTodo").addEventListener("click", () => {
+            const first = $("#todoList li");
+            if (first) first.replaceWith(makeTodo("Replaced task"));
+        });
+        $("#todoList").addEventListener("click", e => {
+            if (e.target.matches(".remove-todo")) e.target.closest("li").remove();
+        });
+
+        $("#registerForm").addEventListener("submit", e => {
+            e.preventDefault();
+            const name = $("#regName").value.trim();
+            const email = $("#regEmail").value.trim();
+            const pass = $("#regPass").value;
+            $("#nameErr").textContent = name.length < 2 ? "Name kam se kam 2 letters ka hona chahiye." : "";
+            $("#emailErr").textContent = email.includes("@") ? "" : "Valid email enter karo.";
+            $("#passErr").textContent = pass.length >= 6 ? "" : "Password 6 characters ya zyada hona chahiye.";
+            const ok = name.length >= 2 && email.includes("@") && pass.length >= 6;
+            $("#formOutput").textContent = ok ? "Registration valid! Data DOM se read ho gaya." : "Please errors fix karo.";
+            $("#formOutput").style.color = ok ? "var(--success)" : "var(--danger)";
+        });
+
+        setInterval(() => {
+            $("#clock").textContent = new Date().toLocaleTimeString();
+        }, 1000);
+
+        let countInterval;
+        $("#startCountdown").addEventListener("click", () => {
+            clearInterval(countInterval);
+            let count = 10;
+            $("#countdown").textContent = count;
+            countInterval = setInterval(() => {
+                count -= 1;
+                $("#countdown").textContent = count;
+                if (count <= 0) {
+                    clearInterval(countInterval);
+                    $("#timerOutput").textContent = "Countdown complete!";
+                }
+            }, 1000);
+        });
+        $("#stopCountdown").addEventListener("click", () => {
+            clearInterval(countInterval);
+            $("#timerOutput").textContent = "clearInterval se countdown stop ho gaya.";
+        });
+        $("#timeoutDemo").addEventListener("click", () => {
+            $("#timerOutput").textContent = "Wait 2 seconds...";
+            setTimeout(() => $("#timerOutput").textContent = "setTimeout complete!", 2000);
+        });
+
+        let counter = 0;
+        function changeCounter(step) {
+            counter += step;
+            $("#counterValue").textContent = counter;
+        }
+        function resetCounter() {
+            counter = 0;
+            $("#counterValue").textContent = counter;
+        }
+        function generateColor() {
+            const color = "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0");
+            $("#colorBox").textContent = color;
+            $("#colorBox").style.background = color;
+            $("#colorBox").style.color = "#fff";
+        }
+        const quotes = [
+            "DOM page ka remote control hai.",
+            "Select karo, change karo, observe karo.",
+            "Small project banao, concept lock ho jayega.",
+            "Events website ko alive banate hain."
+        ];
+        function randomQuote() {
+            $("#quoteBox").textContent = quotes[Math.floor(Math.random() * quotes.length)];
+        }
+        const slides = [
+            { text: "Slide 1", bg: "linear-gradient(135deg, #0f766e, #2563eb)" },
+            { text: "Slide 2", bg: "linear-gradient(135deg, #be123c, #eab308)" },
+            { text: "Slide 3", bg: "linear-gradient(135deg, #4338ca, #16a34a)" }
+        ];
+        let slideIndex = 0;
+        function moveSlide(step) {
+            slideIndex = (slideIndex + step + slides.length) % slides.length;
+            $("#sliderFrame").textContent = slides[slideIndex].text;
+            $("#sliderFrame").style.background = slides[slideIndex].bg;
+        }
+
+        const calcButtons = ["7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", ".", "=", "+", "C"];
+        calcButtons.forEach(label => {
+            const btn = document.createElement("button");
+            btn.className = label === "=" ? "btn primary" : "btn secondary";
+            btn.textContent = label;
+            btn.addEventListener("click", () => {
+                const display = $("#calcDisplay");
+                if (label === "C") display.value = "";
+                else if (label === "=") {
+                    try {
+                        display.value = Function("'use strict'; return (" + display.value + ")")();
+                    } catch {
+                        display.value = "Error";
+                    }
+                } else display.value += label;
+            });
+            $("#calcGrid").appendChild(btn);
+        });
+
+        function addProjectTodo() {
+            const input = $("#projectTodoInput");
+            if (!input.value.trim()) return;
+            const li = document.createElement("li");
+            li.innerHTML = "<span></span><button class='btn secondary'>Done</button>";
+            $("span", li).textContent = input.value.trim();
+            $("button", li).addEventListener("click", () => li.remove());
+            $("#projectTodoList").append(li);
+            input.value = "";
+        }
+
+        $$(".faq-item button").forEach(btn => {
+            btn.addEventListener("click", () => btn.parentElement.classList.toggle("open"));
+        });
+
+        function generatePassword() {
+            const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%";
+            let pass = "";
+            for (let i = 0; i < 12; i++) pass += chars[Math.floor(Math.random() * chars.length)];
+            $("#passwordOut").value = pass;
+        }
+
+        $("#charText").addEventListener("input", e => {
+            $("#charCount").textContent = e.target.value.length + " characters";
+        });
+
+        $("#delegateList").addEventListener("click", e => {
+            if (e.target.matches("button")) {
+                $("#delegateOutput").textContent = e.target.previousElementSibling.textContent + " handled by parent listener.";
+            }
+        });
+
+        let stopBubble = false;
+        $("#toggleStop").addEventListener("click", () => {
+            stopBubble = !stopBubble;
+            $("#toggleStop").textContent = "Stop Propagation: " + (stopBubble ? "On" : "Off");
+        });
+        function addBubbleLog(name, el) {
+            el.addEventListener("click", e => {
+                const old = $("#bubbleOutput").textContent;
+                $("#bubbleOutput").textContent = name + " clicked -> " + old;
+                if (stopBubble && name === "Inner") e.stopPropagation();
+            });
+        }
+        addBubbleLog("Outer", $("#outerBox"));
+        addBubbleLog("Middle", $("#middleBox"));
+        addBubbleLog("Inner", $("#innerBtn"));
+        $("#captureDemo").addEventListener("click", () => {
+            $("#bubbleOutput").textContent = "Capturing: document se target ki taraf, bubbling: target se document ki taraf.";
+        });
+        $("#preventLink").addEventListener("click", e => {
+            e.preventDefault();
+            $("#preventOutput").textContent = "preventDefault ne link navigation rok di.";
+        });
+    </script>
+
+</body>
+
+</html>

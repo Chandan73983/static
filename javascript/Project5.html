@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Game</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        #shape {
+            width: 200px;
+            height: 200px;
+            background: red;
+            position: absolute;
+            display: none;
+        }
+
+        #bold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Test your Reaction</h1>
+
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+    <p id="bold">Your time: <span id="timeTaken"></span></p>
+
+    <div id="shape"></div>
+
+    <script>
+        let start = new Date().getTime();
+
+        function getRandomColor() {
+            let letters = '0123456789ABCDEF';
+            let color = '#';
+
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+
+            return color;
+        }
+
+        function makeShapeAppear() {
+            let top = Math.random() * 300;
+            let left = Math.random() * 300;
+            let size = Math.random() * 200 + 50;
+
+            let shape = document.getElementById('shape');
+
+            shape.style.top = top + "px";
+            shape.style.left = left + "px";
+            shape.style.width = size + "px";
+            shape.style.height = size + "px";
+
+            shape.style.backgroundColor = getRandomColor();
+
+            if (Math.random() > 0.5) {
+                shape.style.borderRadius = "0";
+            } else {
+                shape.style.borderRadius = "50%";
+            }
+
+            shape.style.display = "block";
+
+            start = new Date().getTime();
+        }
+
+        function appearAfterDelay() {
+            setTimeout(makeShapeAppear, Math.random() * 2000);
+        }
+
+        appearAfterDelay();
+
+        document.getElementById('shape').onclick = function () {
+            this.style.display = 'none';
+
+            let end = new Date().getTime();
+            let timeTaken = (end - start) / 100000;
+
+            document.getElementById('timeTaken').innerHTML = timeTaken + "s";
+
+            appearAfterDelay();
+        };
+    </script>
+</body>
+
+</html>

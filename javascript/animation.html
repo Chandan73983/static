@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            height: 100px;
+            width: 100px;
+            background-image: url(/images/fuzi.jpg);
+            animation: slide 3s infinite alternate  ;
+            animation-delay: 2s;
+        }
+
+        @keyframes slide {
+            0% {
+                margin-left: 0%;
+                transform: rotate(90deg) scale(1);
+            }
+
+            /* 50% {
+                margin-left: 80%;
+                transform: skew(120deg) translate(50px, 110px);
+            } */
+                100% {
+                    margin-left: 80%;
+                    transform: skew(120deg) translate(50px, 110px);
+                }
+            }
+    </style>
+</head>
+
+<body>
+    <div class="box">This is a box</div>
+</body>
+
+</html>

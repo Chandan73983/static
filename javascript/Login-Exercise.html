@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        body {
+            background: #f2f5f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        div {
+            width: 380px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        label {
+            font-weight: bold;
+            color: #444;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+        
+        input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h2>Login</h2>
+        <label>Full Name</label><br>
+        <input type="text" id="name" placeholder="Full Name"><br><br>
+        <label>Enter Email</label><br>
+        <input type="email" id="email" placeholder="Eneter Email"><br><br>
+        <label>Enter Number</label><br>
+        <input type="number" id="number" placeholder="Enter Number"><br><br>
+        <label>Enter Password</label><br>
+        <input type="password" id="password" placeholder="Enter Password"><br><br>
+        <label>Enter Confirm Password</label><br>
+        <input type="password" id="password1" placeholder="Enter Confirm Password">
+        <br><br>
+
+        <button type="button" id="button">Login</button>
+
+    </div>
+    <Script>
+        let button = document.getElementById("button");
+
+        button.addEventListener("click", function() {
+
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let number = document.getElementById("number").value;
+            let password = document.getElementById("password").value;
+            let password1 = document.getElementById("password1").value;
+
+            if (name === "") {
+                alert("Name is required");
+            } else if (email === "" || !email.includes("@")) {
+                alert("Please enter a valid email");
+            } else if (number.length !== 10) {
+                alert("Please enter a valid 10-digit number");
+            } else if (password.length < 8) {
+                alert("Password must be at least 8 characters");
+            } else if (password !== password1) {
+                alert("Passwords do not match");
+            } else {
+                alert("Login Successful");
+            }
+
+
+        });
+    </Script>
+</body>
+
+</html>

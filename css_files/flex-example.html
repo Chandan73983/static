@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Flexbox Self-Explained Demo</title>
+
+    <style>
+        /* ===============================
+   GLOBAL STYLES
+================================ */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f6f9;
+            line-height: 1.6;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        section {
+            margin: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ===============================
+   FLEX CONTAINER BASE
+================================ */
+        .flex-container {
+            display: flex;
+            border: 3px dotted #333;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .box {
+            padding: 20px;
+            margin: 5px;
+            background: steelblue;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* ===============================
+   FLEX DIRECTIONS
+================================ */
+        .row {
+            flex-direction: row;
+        }
+
+        .column {
+            flex-direction: column;
+        }
+
+        /* ===============================
+   JUSTIFY CONTENT
+================================ */
+        .justify-center {
+            justify-content: center;
+        }
+
+        .justify-space {
+            justify-content: space-between;
+        }
+
+        /* ===============================
+   ALIGN ITEMS
+================================ */
+        .align-center {
+            align-items: center;
+            height: 150px;
+        }
+
+        /* ===============================
+   FLEX WRAP
+================================ */
+        .wrap {
+            flex-wrap: wrap;
+        }
+
+        /* ===============================
+   FLEX GROW
+================================ */
+        .grow .box {
+            flex-grow: 1;
+        }
+
+        /* ===============================
+   COLORS
+================================ */
+        .box:nth-child(1) {
+            background: #e74c3c;
+        }
+
+        .box:nth-child(2) {
+            background: #3498db;
+        }
+
+        .box:nth-child(3) {
+            background: #2ecc71;
+        }
+
+        .box:nth-child(4) {
+            background: #f39c12;
+        }
+
+        .code {
+            background: #222;
+            color: #0f0;
+            padding: 10px;
+            margin-top: 10px;
+            font-family: monospace;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>📦 Flexbox Self-Explained Tutorial</h1>
+
+    <!-- ================================= -->
+    <section>
+        <h2>1. What is Flexbox?</h2>
+        <p>
+            Flexbox is a layout system in CSS that helps arrange items in a row or column.
+            It uses a <b>flex container</b> and <b>flex items</b>.
+        </p>
+
+        <div class="code">
+            display: flex;
+        </div>
+
+        <div class="flex-container">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+        </div>
+    </section>
+
+    <!-- ================================= -->
+    <section>
+        <h2>2. Flex Direction</h2>
+        <p>
+            Controls direction of items (row or column).
+        </p>
+
+        <div class="code">
+            flex-direction: row; (default)<br>
+            flex-direction: column;
+        </div>
+
+        <h3>Row</h3>
+        <div class="flex-container row">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+        </div>
+
+        <h3>Column</h3>
+        <div class="flex-container column">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+        </div>
+    </section>
+
+    <!-- ================================= -->
+    <section>
+        <h2>3. Justify Content</h2>
+        <p>
+            Aligns items horizontally.
+        </p>
+
+        <div class="code">
+            justify-content: center;<br>
+            justify-content: space-between;
+        </div>
+
+        <h3>Center</h3>
+        <div class="flex-container justify-center">
+            <div class="box">1</div>
+            <div class="box">2</div>
+        </div>
+
+        <h3>Space Between</h3>
+        <div class="flex-container justify-space">
+            <div class="box">1</div>
+            <div class="box">2</div>
+        </div>
+    </section>
+
+    <!-- ================================= -->
+    <section>
+        <h2>4. Align Items</h2>
+        <p>
+            Aligns items vertically.
+        </p>
+
+        <div class="code">
+            align-items: center;
+        </div>
+
+        <div class="flex-container align-center">
+            <div class="box">1</div>
+            <div class="box">2</div>
+        </div>
+    </section>
+
+    <!-- ================================= -->
+    <section>
+        <h2>5. Flex Wrap</h2>
+        <p>
+            Allows items to move to next line if needed.
+        </p>
+
+        <div class="code">
+            flex-wrap: wrap;
+        </div>
+
+        <div class="flex-container wrap">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+            <div class="box">4</div>
+            <div class="box">5</div>
+            <div class="box">6</div>
+            <div class="box">5</div>
+            <div class="box">6</div>
+            <div class="box">5</div>
+            <div class="box">6</div>
+            <div class="box">5</div>
+            <div class="box">6</div>
+            <div class="box">5</div>
+            <div class="box">6</div>
+            <div class="box">5</div>
+            <div class="box">6</div>
+        </div>
+    </section>
+
+    <!-- ================================= -->
+    <section>
+        <h2>6. Flex Grow</h2>
+        <p>
+            Items grow equally to fill space.
+        </p>
+
+        <div class="code">
+            flex-grow: 1;
+        </div>
+
+        <div class="flex-container grow">
+            <div class="" style="flex-grow: 5; background-color: yellow;">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+        </div>
+    </section>
+
+    <!-- ================================= -->
+    <section>
+        <h2>7. Summary</h2>
+        <ul>
+            <li>display: flex → activates flexbox</li>
+            <li>flex-direction → row / column</li>
+            <li>justify-content → horizontal alignment</li>
+            <li>align-items → vertical alignment</li>
+            <li>flex-wrap → wrapping items</li>
+            <li>flex-grow → expanding items</li>
+        </ul>
+    </section>
+
+</body>
+
+</html>

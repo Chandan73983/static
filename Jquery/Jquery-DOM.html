@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <style>
+        body {
+            background: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>DOM Manipulation Using Jquery</h1>
+    <h2>Text</h2>
+    <h1 id="demo">Welcome chandan</h1>
+    <button id="su">click</button>
+
+    <h1>Prepend and Append </h1>
+
+    <ol id="ol">
+        <li>chandan</li>
+        <li>prince</li>
+        <li>Ravi</li>
+    </ol>
+    <button id="prepend">Prepend</button>
+    <button id="append">Append</button>
+    <script>
+        $("#su").click(function() {
+            $("#demo").text("Chandan")
+            $("#demo").append(" <p>Rahul</p> ")
+            $("#demo").prepend(" <p>Prince</p> ")
+        });
+        //Prepend and append
+        $("#prepend").click(function() {
+            $("#ol").prepend(" <li>Himanshu</li> ");
+        });
+        $("#append").click(function() {
+            $("#ol").append(" <li>Ajay</li> ");
+        });
+    </script>
+</body>
+
+</html>

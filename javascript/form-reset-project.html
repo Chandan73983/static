@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="demo">
+        <label>Name:</label>
+        <input type="text" name="name" placeholder="Last Name"><br><br>
+        <label>Last Name:</label>
+        <input type="text" name="last name" placeholder="Last Name"><br><br>
+        <label>Number</label>
+        <input type="number" placeholder="Number"><br><br>
+
+        <button type="button" onclick="reset()">Reset Form</button>
+
+    </form>
+
+    <script>
+        function reset() {
+            document.getElementById("demo").reset();
+        }
+    </script>
+</body>
+
+</html>

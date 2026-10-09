@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>App</h1>
+    <h2 id="questions"></h2>
+    <button onclick="check('A')">A</button>
+    <button onclick="check('B')">B</button>
+    <button onclick="check('C')">C</button>
+    <button onclick="check('D')">D</button>
+
+    <h2 id="result"></h2>
+    <script>
+        let question = "What is the Capital of India";
+        let correctanswer = "B";
+
+        document.getElementById("questions").innerHTML = question;
+
+        function check(answer) {
+            if (answer === correctanswer) {
+                document.getElementById("result").innerText = "Correct";
+            } else {
+                document.getElementById("result").innerText = "Wrong";
+            }
+        };
+    </script>
+</body>
+
+</html>

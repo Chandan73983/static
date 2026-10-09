@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let arr = [12, 25, 25, 45, 65, 32, 4, 78];
+        let user;
+        while (true) {
+            user = Number(prompt("Enter Any Numbers"));
+            if (user === 0) {
+                break;
+            }
+
+            arr.push(user);
+        }
+        document.writeln(arr);
+    </script>
+</body>
+
+</html>

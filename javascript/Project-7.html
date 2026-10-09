@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Image Slider</h1>
+    <img src="/images/cloud.jpg" id="slider" width="400">
+    <br><br>
+    <button onclick="chandan()">Previos</button>
+    <button onclick="prince()">Next</button>
+
+    <script>
+        let img = ["/images/cloud1.jpg",
+
+            "/images/itachi.jpg",
+            "/images/itchi.jpg"
+        ];
+        let index = 0;
+        function prince() {
+            index++;
+            if (index >= img.length) {
+                index = 0;
+            }
+            document.getElementById('slider').src = img[index];
+        }
+        function chandan() {
+            index--;
+            if (index<0) {
+                index=img.length - 1;
+            }
+            document.getElementById('slider').src = img[index];
+        }
+    </script>
+</body>
+
+</html>

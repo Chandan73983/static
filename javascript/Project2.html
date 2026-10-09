@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        let totalnumber = Number(prompt("kitne number"));
+        let operator = prompt("+ ,- , *, /");
+        let first = Number(prompt("first Number"));
+
+        let i = 2;
+
+        while (i <= totalnumber) {
+            let second = Number(prompt("second number"));
+            if (operator == "+") {
+                first += second;
+            }
+            else if (operator == "-") {
+                first -= second;
+            }
+
+            else if (operator == "*") {
+                first *= second;
+            }
+
+            else if (operator == "/") {
+                first /= second;
+            }
+
+            i++;
+        }
+        alert("Answer " + first);
+    </script>
+</body>
+
+</html>

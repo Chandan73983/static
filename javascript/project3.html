@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 id="demo" onclick="name()">0</h1>
+    <br><br><br>
+
+
+
+    <h1 id="demo2">0</h1>
+    <button onclick="increse()">+</button>
+    <button onclick="dcrese()">-</button>
+    <button onclick="reset()">reset</button>
+    <br><br><br>
+
+    <h1 id="demo3">0</h1>
+
+    <div style="height: 200px; width: 200px; background-color: red;"> </div>
+    <script>
+        let i = 0;
+        function name() {
+            document.getElementById("demo").innerHTML = i;
+            i++;
+        }
+        //1
+        let x = 0;
+        function increse() {
+            x++;
+            document.getElementById("demo2").innerHTML = x;
+        }
+
+        function dcrese() {
+            x--;
+            document.getElementById("demo2").innerHTML = x;
+        }
+
+        function reset() {
+            x = 0;
+            document.getElementById("demo2").innerHTML = x;
+        }
+
+        //time
+        let y = 0;
+        setInterval(function () {
+            y++;
+            document.getElementById("demo3").innerHTML = y;
+        }, 1000);
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img {
+            height: 500px;
+
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        img:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgb(194, 4, 4);
+        }
+
+        .chan {
+            padding: 25px;
+            font-family: serif;
+            border-radius: 12px;
+            border: none;
+            font-size: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .chan:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(194, 0, 0, 0.897);
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="demo">Hello</h1>
+    <button onclick="chandan()">click</button>
+    <h2 id="demo1">Hello</h2>
+
+    <img id="demo2" src="/images/Miyamizu Mitsuha.jfif">
+    <br><br>
+    <button class="chan" onclick="chandan1()">click</button>
+    <br><br>
+
+    <input oninput="prince()" id="name">
+    <h1 id="name2"></h1>
+    <script>
+        function chandan() {
+            document.getElementById("demo").innerHTML = "welcome Chandan";
+        }
+        document.getElementById("demo1").style.color = "red";
+
+        document.body.style.backgroundColor = "pink";
+
+        function chandan1() {
+            document.getElementById("demo2").src = "/images/luffy1.jpg";
+        }
+        function prince() {
+            let a = document.getElementById("name").value;
+
+            document.getElementById("name2").innerHTML = a;
+        }
+
+    </script>
+</body>
+
+</html>

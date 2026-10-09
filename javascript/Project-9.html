@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Password Genrator</h1>
+    <input type="text" id="password">
+    <button onclick="chandan()">Password Genrator</button>
+    <script>
+        function chandan() {
+            let i = ["ABC", "DEF", "GHIJK", "LMNO", "PQRSTU", "VWXYZ123", 654789, "@##$%^&*"];
+            let pass = "";
+            for (let j = 0; j < 4; j++) {
+
+                let ing = Math.floor(Math.random() * i.length);
+                pass += i[ing];
+            }
+            return document.getElementById("password").value = pass;
+        }
+    </script>
+</body>
+
+</html>

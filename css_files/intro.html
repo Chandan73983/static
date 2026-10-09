@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap Container Explained</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .box {
+            background: #0d6efd;
+            color: white;
+            padding: 20px;
+            margin-bottom: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .section {
+            padding: 50px 0;
+        }
+
+        .highlight {
+            background: #f8f9fa;
+            padding: 20px;
+            border-left: 5px solid #0d6efd;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="bg-primary text-danger text-center p-4">
+        <h1>Bootstrap Container Tutorial</h1>
+        <p>Understanding how containers work in Bootstrap</p>
+    </header>
+
+    <!-- SECTION 1: INTRO -->
+    <section class="section container">
+        <div class="highlight">
+            <h2>What is a Container?</h2>
+            <p>
+                In Bootstrap, a <strong>container</strong> is used to wrap your content.
+                It provides proper alignment, spacing, and responsiveness.
+            </p>
+            <p>
+                Containers are the most basic layout element in Bootstrap and are required
+                when using the grid system.
+            </p>
+        </div>
+    </section>
+
+    <!-- SECTION 2: DEFAULT CONTAINER -->
+    <section class="section">
+        <div class="border border-danger container">
+            <h2 class="text-center mb-4">.container (Fixed Width)</h2>
+
+            <div class="highlight">
+                <p>
+                    The <strong>.container</strong> class creates a responsive fixed-width layout.
+                    Its width changes at different screen sizes (breakpoints).
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="box">Column 1</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box">Column 2</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box">Column 3</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: FLUID CONTAINER -->
+    <section class="section bg-light">
+        <div class="border border-danger container-fluid">
+            <h2 class="text-center mb-4">.container-fluid (Full Width)</h2>
+
+            <div class="highlight">
+                <p>
+                    The <strong>.container-fluid</strong> class always takes up 100% width
+                    of the screen, no matter the device size.
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="box">Box 1</div>
+                </div>
+                <div class="col-md-3">
+                    <div class="box">Box 2</div>
+                </div>
+                <div class="col-md-3">
+                    <div class="box">Box 3</div>
+                </div>
+                <div class="col-md-3">
+                    <div class="box">Box 4</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: RESPONSIVE CONTAINERS -->
+    <section class="section">
+        <div class="border border-danger container">
+            <h2 class="text-center mb-4">Responsive Containers</h2>
+
+            <div class="highlight">
+                <p>
+                    Bootstrap also provides responsive containers like:
+                </p>
+                <ul>
+                    <li><code>.container-sm</code></li>
+                    <li><code>.container-md</code></li>
+                    <li><code>.container-lg</code></li>
+                    <li><code>.container-xl</code></li>
+                </ul>
+                <p>
+                    These containers are fluid until a specific breakpoint, then become fixed-width.
+                </p>
+            </div>
+        </div>
+
+        <div class="border border-danger container-md bg-secondary text-white p-4">
+            <p class="text-center">
+                This is <strong>.container-md</strong> — it behaves like fluid on small screens,
+                and fixed width on medium and larger screens.
+            </p>
+        </div>
+    </section>
+
+    <!-- SECTION 5: NESTING -->
+    <section class="section bg-light">
+        <div class="border border-danger container">
+            <h2 class="text-center mb-4">Nested Containers & Grid</h2>
+
+            <div class="highlight">
+                <p>
+                    Containers usually contain rows, and rows contain columns.
+                    You can also nest rows inside columns for more complex layouts.
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box">Parent Column</div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="box bg-success">Nested 1</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="box bg-danger">Nested 2</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="box">Another Column</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: SUMMARY -->
+    <section class="section container">
+        <div class="highlight">
+            <h2>Summary</h2>
+            <ul>
+                <li><strong>.container</strong> → fixed width (responsive)</li>
+                <li><strong>.container-fluid</strong> → full width</li>
+                <li><strong>.container-{breakpoint}</strong> → responsive behavior</li>
+                <li>Used with <strong>row</strong> and <strong>col</strong> for layouts</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-white text-center p-3">
+        <p>Bootstrap Container Example © 2026</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

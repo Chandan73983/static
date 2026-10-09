@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+    <style>
+        img {
+            height: 400px;
+            width: 600px;
+        }
+
+        button {
+            background-color: rgb(176, 170, 170);
+            margin-top: 15px;
+            justify-content: center;
+            text-align: center;
+            margin-left: 10px;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            transition: transform 0.3s ;
+        }
+
+        button:hover{
+            background-color: lightgray;
+            transform: translatey(-4px);
+           
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <img src="/images/luffy.jpg"><br>
+    </div>
+    <button onclick="chandan()">click</button>
+    <p id="demo"></p>
+    <script>
+        function chandan() {
+            let name = prompt("what is your name")
+
+            document.getElementById("demo").innerHTML = ("Hello! " + name + " " + "Nice to Meet you");
+        }
+    </script>
+</body>
+
+</html>

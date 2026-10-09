@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js">
+    </script>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container mt-5 shadow p-3 mb-5 bg-body rounded">
+        <form>
+            <div class="mb-3">
+                <label for="exampleInputName1" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="exampleInputName1" aria-describedby="nameHelp">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputNumber1" class="form-label">Number</label>
+                <input type="text" class="form-control" id="exampleInputNumber1" aria-describedby="NumberHelp">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password">
+                    <span class="input-group-text">
+                        <i class="fa-solid fa-eye" id="togglepassword" style="cursor:pointer;"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+            <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+
+        </form>
+    </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+
+            $("#togglepassword").click(function() {
+
+                let type = $("#password").attr("type");
+
+                if (type === "password") {
+                    $("#password").attr("type", "text");
+                } else {
+                    $("#password").attr("type", "password");
+                }
+                $(this).toggleClass("fa-eye fa-eye-slash")
+            });
+
+
+        });
+    </script>
+</body>
+
+</html>

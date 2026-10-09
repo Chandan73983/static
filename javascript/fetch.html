@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Send JSON with Fetch</title>
+</head>
+
+<body>
+
+    <form id="formData">
+        Name: <input type="text" id="name"><br> Course: <input type="text" id="course"><br> Subject: <input type="text" id="subject"><br>
+        <button type="button" onclick="submitData()">Submit</button>
+    </form>
+
+    <script>
+        function submitData() {
+            var name = document.getElementById("name").value;
+            var course = document.getElementById("course").value;
+            var subject = document.getElementById("subject").value;
+            var data = {
+                name: name,
+                course: course,
+                subject: subject
+            };
+
+            fetch("https://jsonplaceholder.typicode.com/posts", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(result) {
+                    document.writeln("Server Response: " + JSON.stringify(result));
+                })
+                .catch(function(error) {
+                    document.writeln("Error: " + error);
+                });
+        }
+    </script>
+</body>
+
+</html>
